@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Customer POs — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Customer POs</h1>
+        <p class="page-subtitle">Customer purchase orders</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            {% if status %}<input type="hidden" name="status" value="{{ status }}">{% endif %}
+            <input type="text" name="q" value="{{ search }}" placeholder="Search PO#, customer, product…" class="input-search" style="min-width:250px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search or status %}
+            <a href="{{ url_for('scs.customer_pos') }}" class="btn btn-ghost btn-sm">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="filter-pills">
+    <a href="{{ url_for('scs.customer_pos', q=search) }}" class="pill {% if not status %}active{% endif %}">All</a>
+    <a href="{{ url_for('scs.customer_pos', q=search, status='open') }}" class="pill {% if status == 'open' %}active{% endif %}">Open</a>
+    <a href="{{ url_for('scs.customer_pos', q=search, status='closed') }}" class="pill {% if status == 'closed' %}active{% endif %}">Closed</a>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if pos %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>PO No</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Total</th>
+                        <th>PO Date</th>
+                        <th>Delivery</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for po in pos %}
+                    <tr>
+                        <td class="text-bold">{{ po.po_no or '—' }}</td>
+                        <td>{{ po.customer_name or '—' }}</td>
+                        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ po.product_name or '' }}">{{ po.product_name or '—' }}</td>
+                        <td>{% if po.qty %}{{ po.qty|currency }} {{ po.uom or '' }}{% else %}—{% endif %}</td>
+                        <td>{% if po.unit_price %}{{ po.unit_price|currency }} {{ po.currency or '' }}{% else %}—{% endif %}</td>
+                        <td>{% if po.total_value %}{{ po.total_value|currency }}{% else %}—{% endif %}</td>
+                        <td>{{ po.po_date|date_fmt }}</td>
+                        <td>{{ po.delivery_date|date_fmt }}</td>
+                        <td><span class="badge {% if po.is_closed %}badge-closed{% else %}badge-open{% endif %}">{% if po.is_closed %}Closed{% else %}Open{% endif %}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('scs.customer_pos', page=pagination.prev_num, q=search, status=status) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('scs.customer_pos', page=pagination.next_num, q=search, status=status) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No customer POs found</h3>
+            <p>{% if search or status %}Try adjusting your search or filters.{% else %}No customer purchase orders yet.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

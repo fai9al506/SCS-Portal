@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Supply Chain System Overview</p>
+    </div>
+</div>
+
+<div class="status-cards">
+    {% for status_name, color in [
+        ('Open', 'var(--blue)'),
+        ('Ordered', '#6366f1'),
+        ('Incoming', 'var(--purple)'),
+        ('In Transit', 'var(--purple)'),
+        ('At Port', 'var(--yellow)'),
+        ('Clearing', '#ec4899'),
+        ('Cleared', '#10b981'),
+        ('Delivered', 'var(--green)'),
+        ('Closed', '#64748b'),
+        ('Cancelled', 'var(--red)'),
+    ] %}
+    {% if counts.get(status_name, 0) > 0 %}
+    <a href="{{ url_for('scs.shipments', status=status_name) }}" class="status-card" style="--card-color: {{ color }};">
+        <span class="status-count">{{ counts.get(status_name, 0) }}</span>
+        <span class="status-label">{{ status_name }}</span>
+    </a>
+    {% endif %}
+    {% endfor %}
+    <a href="{{ url_for('scs.shipments') }}" class="status-card" style="--card-color: var(--primary);">
+        <span class="status-count">{{ counts.total }}</span>
+        <span class="status-label">Total</span>
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        Recent Shipments
+        <a href="{{ url_for('scs.shipments') }}" class="btn btn-ghost btn-sm">View All</a>
+    </div>
+    <div class="card-body" style="padding: 0;">
+        {% if recent %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SF #</th>
+                        <th>PO Ref</th>
+                        <th>Supplier</th>
+                        <th>Product</th>
+                        <th>Status</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>Entry Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sf in recent %}
+                    <tr>
+                        <td><a href="{{ url_for('scs.shipment_detail', sid=sf.id) }}" class="link">{{ sf.sf_number or '—' }}</a></td>
+                        <td>{{ sf.po_ref or '—' }}</td>
+                        <td>{{ sf.supplier_name or '—' }}</td>
+                        <td>{{ sf.product_name or '—' }}</td>
+                        <td><span class="badge badge-{{ sf.status|lower|replace(' ', '') }}">{{ sf.status }}</span></td>
+                        <td>{{ sf.etd|date_fmt }}</td>
+                        <td>{{ sf.eta|date_fmt }}</td>
+                        <td>{{ sf.entry_date|date_fmt }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+                <rect x="1" y="3" width="15" height="13" rx="2"/>
+                <path d="M16 8h4l3 3v5h-7V8z"/>
+                <circle cx="5.5" cy="18.5" r="2.5"/>
+                <circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+            <h3>No shipments yet</h3>
+            <p>Import data from Access database or create your first shipment file.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

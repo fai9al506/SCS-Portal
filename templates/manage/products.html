@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Products — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Products</h1>
+        <p class="page-subtitle">{{ products|length }} products</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            <input type="text" name="q" value="{{ search }}" placeholder="Search name or SAP code…" class="input-search">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search %}<a href="{{ url_for('manage.products') }}" class="btn btn-ghost btn-sm">Clear</a>{% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if products %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>SAP Code</th>
+                        <th>Category</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in products %}
+                    <tr>
+                        <td class="text-bold">{{ p.name }}</td>
+                        <td>{{ p.sap_code or '—' }}</td>
+                        <td>{{ p.category.name if p.category else '—' }}</td>
+                        <td><span class="badge {% if p.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if p.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No products found</h3>
+            <p>{% if search %}Try a different search term.{% else %}No products in the system.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

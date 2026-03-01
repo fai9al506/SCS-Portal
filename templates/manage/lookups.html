@@ -1,0 +1,208 @@
+{% extends "base.html" %}
+{% block title %}Lookups — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Lookup Tables</h1>
+        <p class="page-subtitle">Reference data used across the system</p>
+    </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs" id="lookupTabs">
+    <button class="tab active" data-tab="brokers">Brokers ({{ brokers|length }})</button>
+    <button class="tab" data-tab="transporters">Transporters ({{ transporters|length }})</button>
+    <button class="tab" data-tab="storage">Storage ({{ storage_locations|length }})</button>
+    <button class="tab" data-tab="shipping">Shipping Lines ({{ shipping_lines|length }})</button>
+    <button class="tab" data-tab="ports">Ports ({{ ports|length }})</button>
+    <button class="tab" data-tab="terminals">Return Terminals ({{ return_terminals|length }})</button>
+    <button class="tab" data-tab="categories">Categories ({{ product_categories|length }})</button>
+    <button class="tab" data-tab="currencies">Currencies ({{ currencies|length }})</button>
+</div>
+
+<!-- Brokers -->
+<div class="tab-content active" id="tab-brokers">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Full Name</th><th>Phone</th><th>Email</th></tr></thead>
+                    <tbody>
+                        {% for b in brokers %}
+                        <tr>
+                            <td class="text-bold">{{ b.name }}</td>
+                            <td>{{ b.full_name or '—' }}</td>
+                            <td>{{ b.phone or '—' }}</td>
+                            <td>{{ b.email or '—' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Transporters -->
+<div class="tab-content" id="tab-transporters">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th></tr></thead>
+                    <tbody>
+                        {% for t in transporters %}
+                        <tr>
+                            <td class="text-bold">{{ t.name }}</td>
+                            <td>{{ t.email or '—' }}</td>
+                            <td>{{ t.phone or '—' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Storage Locations -->
+<div class="tab-content" id="tab-storage">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Email</th></tr></thead>
+                    <tbody>
+                        {% for s in storage_locations %}
+                        <tr>
+                            <td class="text-bold">{{ s.name }}</td>
+                            <td>{{ s.email or '—' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Shipping Lines -->
+<div class="tab-content" id="tab-shipping">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for sl in shipping_lines %}
+                        <tr>
+                            <td class="text-bold">{{ sl.name }}</td>
+                            <td><span class="badge {% if sl.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if sl.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ports -->
+<div class="tab-content" id="tab-ports">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Port Name</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for p in ports %}
+                        <tr>
+                            <td class="text-bold">{{ p.name }}</td>
+                            <td><span class="badge {% if p.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if p.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Return Terminals -->
+<div class="tab-content" id="tab-terminals">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Terminal Name</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for rt in return_terminals %}
+                        <tr>
+                            <td class="text-bold">{{ rt.name }}</td>
+                            <td><span class="badge {% if rt.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if rt.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product Categories -->
+<div class="tab-content" id="tab-categories">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Category Name</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for pc in product_categories %}
+                        <tr>
+                            <td class="text-bold">{{ pc.name }}</td>
+                            <td><span class="badge {% if pc.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if pc.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Currencies -->
+<div class="tab-content" id="tab-currencies">
+    <div class="card">
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Code</th><th>Name</th><th>Status</th></tr></thead>
+                    <tbody>
+                        {% for cur in currencies %}
+                        <tr>
+                            <td class="text-bold">{{ cur.code }}</td>
+                            <td>{{ cur.name or '—' }}</td>
+                            <td><span class="badge {% if cur.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if cur.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('#lookupTabs .tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+        document.querySelectorAll('#lookupTabs .tab').forEach(function(t) { t.classList.remove('active'); });
+        document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+        tab.classList.add('active');
+        document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Login — MPC SCS Portal{% endblock %}
+
+{% block public_content %}
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="auth-logo">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="MPC">
+        </div>
+        <h1 class="auth-title">Supply Chain System</h1>
+        <p class="auth-subtitle">Sign in to your account</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}" style="margin-bottom: 1rem;">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="your@email.com" autofocus>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required placeholder="Enter password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-full">Sign In</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

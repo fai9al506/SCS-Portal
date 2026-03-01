@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Import Permits — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Import Permits</h1>
+        <p class="page-subtitle">Track import permits and utilization</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            <input type="text" name="q" value="{{ search }}" placeholder="Search permit#, product, HS code…" class="input-search" style="min-width:250px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search %}
+            <a href="{{ url_for('scs.permits') }}" class="btn btn-ghost btn-sm">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if permits %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Permit No</th>
+                        <th>Product</th>
+                        <th>HS Code</th>
+                        <th>Duty %</th>
+                        <th>Qty</th>
+                        <th>Used</th>
+                        <th>Remaining</th>
+                        <th>Expiry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for p in permits %}
+                    <tr>
+                        <td class="text-bold">{{ p.permit_no or '—' }}</td>
+                        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ p.product_name or '' }}">{{ p.product_name or '—' }}</td>
+                        <td>{{ p.hs_code or '—' }}</td>
+                        <td>{% if p.duty_percent is not none %}{{ p.duty_percent }}%{% else %}—{% endif %}</td>
+                        <td>{% if p.qty %}{{ p.qty|currency }}{% else %}—{% endif %}</td>
+                        <td>{% if p.qty_used %}{{ p.qty_used|currency }}{% else %}—{% endif %}</td>
+                        <td>{% if p.qty and p.qty_used %}{{ (p.qty - p.qty_used)|currency }}{% elif p.qty %}{{ p.qty|currency }}{% else %}—{% endif %}</td>
+                        <td>{{ p.expiry_date|date_fmt }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('scs.permits', page=pagination.prev_num, q=search) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('scs.permits', page=pagination.next_num, q=search) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No permits found</h3>
+            <p>{% if search %}Try adjusting your search.{% else %}No import permits yet.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

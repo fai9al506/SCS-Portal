@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Customers — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Customers</h1>
+        <p class="page-subtitle">{{ customers|length }} customers</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            <input type="text" name="q" value="{{ search }}" placeholder="Search name or SAP ID…" class="input-search">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search %}<a href="{{ url_for('manage.customers') }}" class="btn btn-ghost btn-sm">Clear</a>{% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if customers %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>SAP ID</th>
+                        <th>Addresses</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in customers %}
+                    <tr>
+                        <td class="text-bold">{{ c.name }}</td>
+                        <td>{{ c.sap_id or '—' }}</td>
+                        <td>{{ c.addresses|length }}</td>
+                        <td><span class="badge {% if c.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if c.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No customers found</h3>
+            <p>{% if search %}Try a different search term.{% else %}No customers in the system.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Suppliers — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Suppliers</h1>
+        <p class="page-subtitle">{{ suppliers|length }} suppliers</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            <input type="text" name="q" value="{{ search }}" placeholder="Search name, SAP#, email…" class="input-search">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search %}<a href="{{ url_for('manage.suppliers') }}" class="btn btn-ghost btn-sm">Clear</a>{% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if suppliers %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>SAP No</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in suppliers %}
+                    <tr>
+                        <td class="text-bold">{{ s.name }}</td>
+                        <td>{{ s.sap_no or '—' }}</td>
+                        <td>{{ s.contact_person or '—' }}</td>
+                        <td>{{ s.email or '—' }}</td>
+                        <td>{{ s.phone or '—' }}</td>
+                        <td><span class="badge {% if s.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if s.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No suppliers found</h3>
+            <p>{% if search %}Try a different search term.{% else %}No suppliers in the system.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

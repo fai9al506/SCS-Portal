@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Payment Tracking — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Payment Tracking</h1>
+        <p class="page-subtitle">Track supplier payment status for shipments</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            <input type="text" name="q" value="{{ search }}" placeholder="Search SF#, supplier, LC#…" class="input-search" style="min-width:250px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search %}
+            <a href="{{ url_for('scs.payments') }}" class="btn btn-ghost btn-sm">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if payments %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SF #</th>
+                        <th>Supplier</th>
+                        <th>LC No</th>
+                        <th>LC Amount</th>
+                        <th>LC Expiry</th>
+                        <th>Advance</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pt in payments %}
+                    <tr>
+                        <td><a href="{{ url_for('scs.shipment_detail', sid=pt.shipment_id) }}" class="link">{{ pt.shipment.sf_number or '—' }}</a></td>
+                        <td>{{ pt.shipment.supplier_name or '—' }}</td>
+                        <td>{{ pt.lc_no or '—' }}</td>
+                        <td>{{ pt.lc_amount|currency }}</td>
+                        <td>{{ pt.lc_expiry|date_fmt }}</td>
+                        <td>{{ pt.advance_payment_amount|currency }}</td>
+                        <td>{{ pt.balance_payment_amount|currency }}</td>
+                        <td><span class="badge badge-{{ (pt.payment_status or 'pending')|lower }}">{{ pt.payment_status or 'Pending' }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('scs.payments', page=pagination.prev_num, q=search) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('scs.payments', page=pagination.next_num, q=search) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No payment records found</h3>
+            <p>{% if search %}Try adjusting your search.{% else %}No payment tracking records yet.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Shipment Files — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Shipment Files</h1>
+        <p class="page-subtitle">Track all shipments from PO to delivery</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            {% if status_filter %}<input type="hidden" name="status" value="{{ status_filter }}">{% endif %}
+            <input type="text" name="q" value="{{ search }}" placeholder="Search SF#, supplier, product, PO, container…" class="input-search" style="min-width:280px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search or status_filter %}
+            <a href="{{ url_for('scs.shipments') }}" class="btn btn-ghost btn-sm">Clear</a>
+            {% endif %}
+        </form>
+    </div>
+</div>
+
+<!-- Status filter pills -->
+<div class="filter-pills">
+    <a href="{{ url_for('scs.shipments', q=search) }}" class="pill {% if not status_filter %}active{% endif %}">All ({{ status_counts.values()|sum }})</a>
+    {% for st in ['Open', 'In Transit', 'At Port', 'Clearing', 'Cleared', 'Delivered', 'Closed', 'Cancelled'] %}
+    {% if status_counts.get(st, 0) > 0 %}
+    <a href="{{ url_for('scs.shipments', q=search, status=st) }}" class="pill {% if status_filter == st %}active{% endif %}">{{ st }} ({{ status_counts.get(st, 0) }})</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if shipments %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SF #</th>
+                        <th>PO Ref</th>
+                        <th>Supplier</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Container</th>
+                        <th>Status</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>Entry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sf in shipments %}
+                    <tr>
+                        <td><a href="{{ url_for('scs.shipment_detail', sid=sf.id) }}" class="link">{{ sf.sf_number or '—' }}</a></td>
+                        <td>{{ sf.po_ref or '—' }}</td>
+                        <td>{{ sf.supplier_name or '—' }}</td>
+                        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ sf.product_name or '' }}">{{ sf.product_name or '—' }}</td>
+                        <td>{% if sf.qty %}{{ sf.qty|currency }} {{ sf.uom or '' }}{% else %}—{% endif %}</td>
+                        <td>{{ sf.container_no or '—' }}</td>
+                        <td><span class="badge badge-{{ sf.status|lower|replace(' ', '') }}">{{ sf.status }}</span></td>
+                        <td>{{ sf.etd|date_fmt }}</td>
+                        <td>{{ sf.eta|date_fmt }}</td>
+                        <td>{{ sf.entry_date|date_fmt }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('scs.shipments', page=pagination.prev_num, q=search, status=status_filter) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('scs.shipments', page=pagination.next_num, q=search, status=status_filter) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No shipments found</h3>
+            <p>{% if search or status_filter %}Try adjusting your search or filters.{% else %}No shipment files have been created yet.{% endif %}</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
