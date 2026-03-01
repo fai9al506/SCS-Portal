@@ -12,10 +12,14 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    # Fix Railway Postgres URL (postgres:// → postgresql://)
+    # Fix Railway Postgres URL and use psycopg3 driver
     uri = app.config.get("SQLALCHEMY_DATABASE_URI", "")
     if uri.startswith("postgres://"):
-        app.config["SQLALCHEMY_DATABASE_URI"] = uri.replace("postgres://", "postgresql://", 1)
+        uri = uri.replace("postgres://", "postgresql+psycopg://", 1)
+    elif uri.startswith("postgresql://") and "+psycopg" not in uri:
+        uri = uri.replace("postgresql://", "postgresql+psycopg://", 1)
+    if uri != app.config.get("SQLALCHEMY_DATABASE_URI", ""):
+        app.config["SQLALCHEMY_DATABASE_URI"] = uri
 
     # Health check
     @app.route("/health")
