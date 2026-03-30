@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}DN {{ dn.dn_number or dn.id }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('delivery.delivery_list') }}">Deliveries</a>
+            <span>/</span>
+            <span>DN {{ dn.dn_number or dn.id }}</span>
+        </div>
+        <h1 class="page-title">DN {{ dn.dn_number or '' }}</h1>
+        <p class="page-subtitle">
+            <span class="badge badge-{{ dn.status|lower }}">{{ dn.status }}</span>
+            {% if dn.customer_name %} &mdash; {{ dn.customer_name }}{% endif %}
+        </p>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('delivery.delivery_list') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+    </div>
+</div>
+
+<!-- Header Info -->
+<div class="detail-grid" style="margin-bottom: 1.5rem;">
+    <div class="card">
+        <div class="card-header">Delivery Details</div>
+        <div class="card-body">
+            <div class="detail-list">
+                <div class="detail-item"><span class="detail-label">DN Number</span><span class="detail-value">{{ dn.dn_number or '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Delivery Date</span><span class="detail-value">{{ dn.delivery_date|date_fmt }}</span></div>
+                <div class="detail-item"><span class="detail-label">Customer</span><span class="detail-value">{{ dn.customer.name if dn.customer else (dn.customer_name or '—') }}</span></div>
+                <div class="detail-item">
+                    <span class="detail-label">Affiliate</span>
+                    <span class="detail-value">
+                        {% if dn.affiliate %}
+                        {{ dn.affiliate.plant or '' }}
+                        {% if dn.affiliate.address_line1 %}<br><span style="font-size: 0.85rem; color: var(--text-muted);">{{ dn.affiliate.address_line1 }}{% if dn.affiliate.city %}, {{ dn.affiliate.city }}{% endif %}</span>{% endif %}
+                        {% else %}
+                        —
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="detail-item"><span class="detail-label">Transporter</span><span class="detail-value">{{ dn.transporter.name if dn.transporter else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Status</span><span class="detail-value"><span class="badge badge-{{ dn.status|lower }}">{{ dn.status }}</span></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Reference & Notes</div>
+        <div class="card-body">
+            <div class="detail-list">
+                <div class="detail-item"><span class="detail-label">Customer PO</span><span class="detail-value">{{ dn.customer_po.po_no if dn.customer_po else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">SO Number</span><span class="detail-value">{{ dn.so_number or '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Packing</span><span class="detail-value">{{ dn.packing or '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">GP Docs Required</span><span class="detail-value">{% if dn.gp_docs_required %}Yes{% else %}No{% endif %}</span></div>
+                <div class="detail-item"><span class="detail-label">Total Qty</span><span class="detail-value">{{ dn.total_qty|currency if dn.total_qty else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Created</span><span class="detail-value">{{ dn.created_at|riyadh_fmt }}</span></div>
+                <div class="detail-item"><span class="detail-label">Created By</span><span class="detail-value">{{ dn.creator.name if dn.creator else '—' }}</span></div>
+                {% if dn.remarks %}
+                <div class="detail-item"><span class="detail-label">Remarks</span><span class="detail-value" style="white-space: pre-wrap;">{{ dn.remarks }}</span></div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Items Table -->
+<div class="card">
+    <div class="card-header">Delivery Items ({{ dn.items|length }})</div>
+    <div class="card-body" style="padding: 0;">
+        {% if dn.items %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>SF #</th>
+                        <th>Container #</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>UOM</th>
+                        <th>Storage Location</th>
+                        <th>Packing</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in dn.items %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ item.sf_number or '—' }}</td>
+                        <td>{{ item.container_no or '—' }}</td>
+                        <td>{{ item.product.name if item.product else (item.product_name or '—') }}</td>
+                        <td>{{ item.qty|currency if item.qty else '—' }}</td>
+                        <td>{{ item.uom or '—' }}</td>
+                        <td>{{ item.storage_location.name if item.storage_location else '—' }}</td>
+                        <td>{{ item.packing or '—' }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No items</h3>
+            <p>This delivery note has no items.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

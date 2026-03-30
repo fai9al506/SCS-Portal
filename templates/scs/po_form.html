@@ -1,0 +1,254 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit PO ' + po.po_number if po and po.po_number else 'Edit PO' if po else 'New Purchase Order' }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('po.po_list') }}">Purchase Orders</a>
+            <span>/</span>
+            <span>{{ 'Edit PO ' + (po.po_number or '') if po else 'New PO' }}</span>
+        </div>
+        <h1 class="page-title">{{ 'Edit Purchase Order' if po else 'New Purchase Order' }}</h1>
+    </div>
+    <div class="header-actions">
+        {% if po %}
+        <a href="{{ url_for('po.po_detail', po_id=po.id) }}" class="btn btn-ghost btn-sm">&larr; Back to PO</a>
+        {% else %}
+        <a href="{{ url_for('po.po_list') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+        {% endif %}
+    </div>
+</div>
+
+<form method="post" id="poForm">
+    <!-- PO Header -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">PO Details</div>
+        <div class="card-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="po_number">PO Number</label>
+                    <input type="text" id="po_number" name="po_number" value="{{ po.po_number or '' if po else '' }}" placeholder="e.g. 4501305187">
+                </div>
+                <div class="form-group">
+                    <label for="supplier_id">Supplier</label>
+                    <select id="supplier_id" name="supplier_id">
+                        <option value="">— Select Supplier —</option>
+                        {% for s in suppliers %}
+                        <option value="{{ s.id }}" {% if po and po.supplier_id == s.id %}selected{% endif %}>{{ s.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payment_terms_id">Payment Terms</label>
+                    <select id="payment_terms_id" name="payment_terms_id">
+                        <option value="">— Select Payment Terms —</option>
+                        {% for pt in payment_terms %}
+                        <option value="{{ pt.id }}" {% if po and po.payment_terms_id == pt.id %}selected{% endif %}>{{ pt.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" name="status">
+                        {% for st in ['Ordered', 'Incoming', 'Cleared', 'Canceled'] %}
+                        <option value="{{ st }}" {% if po and po.status == st %}selected{% elif not po and st == 'Ordered' %}selected{% endif %}>{{ st }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group form-group-wide">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="2" placeholder="Optional notes…">{{ po.notes or '' if po else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Line Items -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+            Line Items
+            <button type="button" class="btn btn-primary btn-sm" id="addItemBtn">+ Add Item</button>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th style="width:40px;">#</th>
+                            <th>Product</th>
+                            <th style="width:90px;">Qty</th>
+                            <th style="width:80px;">UOM</th>
+                            <th style="width:100px;">Unit Price</th>
+                            <th style="width:80px;">Currency</th>
+                            <th style="width:110px;">Total</th>
+                            <th style="width:130px;">ETD</th>
+                            <th style="width:130px;">ETA</th>
+                            <th>POD</th>
+                            <th>Permit</th>
+                            <th style="width:100px;">SAP Code</th>
+                            <th style="width:100px;">Status</th>
+                            <th style="width:100px;">1st Pay</th>
+                            <th style="width:100px;">2nd Pay</th>
+                            <th style="width:40px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody">
+                        <!-- Rows populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        {% if po %}
+        <a href="{{ url_for('po.po_detail', po_id=po.id) }}" class="btn btn-ghost">Cancel</a>
+        {% else %}
+        <a href="{{ url_for('po.po_list') }}" class="btn btn-ghost">Cancel</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">{{ 'Update PO' if po else 'Create PO' }}</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    // Dropdown data (rendered server-side for JS use)
+    var products = [
+        {% for p in products %}
+        { id: {{ p.id }}, name: "{{ p.name|e }}", sap: "{{ p.sap_code or ''|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var uoms = [
+        {% for u in uoms %}
+        { name: "{{ u.name|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var currencies = [
+        {% for c in currencies %}
+        { code: "{{ c.code|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var pods = [
+        {% for p in pods %}
+        { id: {{ p.id }}, name: "{{ p.name|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var permits = [
+        {% for p in permits %}
+        { id: {{ p.id }}, label: "{{ p.permit_no or ''|e }}{% if p.product_name %} — {{ p.product_name|e }}{% endif %}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var statusOptions = ["Ordered", "Incoming", "Cleared", "Canceled"];
+    var payOptions = ["Pending", "Required", "Requested", "Done", "NA"];
+
+    var itemsBody = document.getElementById("itemsBody");
+    var rowCount = 0;
+
+    function buildSelect(name, options, valueFn, labelFn, selected) {
+        var html = '<select name="' + name + '" class="form-item-select">';
+        html += '<option value="">—</option>';
+        for (var i = 0; i < options.length; i++) {
+            var val = valueFn(options[i]);
+            var lbl = labelFn(options[i]);
+            html += '<option value="' + val + '"' + (String(val) === String(selected) ? ' selected' : '') + '>' + lbl + '</option>';
+        }
+        html += '</select>';
+        return html;
+    }
+
+    function addRow(data) {
+        rowCount++;
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+            '<td class="row-num">' + rowCount + '</td>' +
+            '<td>' + buildSelect("product_id[]", products, function(o){return o.id}, function(o){return o.name}, data ? data.product_id : "") + '</td>' +
+            '<td><input type="number" name="qty[]" step="any" value="' + (data ? (data.qty || "") : "") + '" class="form-item-input qty-input"></td>' +
+            '<td>' + buildSelect("uom[]", uoms, function(o){return o.name}, function(o){return o.name}, data ? data.uom : "") + '</td>' +
+            '<td><input type="number" name="unit_price[]" step="any" value="' + (data ? (data.unit_price || "") : "") + '" class="form-item-input price-input"></td>' +
+            '<td>' + buildSelect("currency[]", currencies, function(o){return o.code}, function(o){return o.code}, data ? data.currency : "") + '</td>' +
+            '<td><input type="text" name="total[]" value="' + (data ? (data.total_amount || "") : "") + '" class="form-item-input total-input" readonly tabindex="-1"></td>' +
+            '<td><input type="date" name="etd[]" value="' + (data ? (data.etd || "") : "") + '" class="form-item-input"></td>' +
+            '<td><input type="date" name="eta[]" value="' + (data ? (data.eta || "") : "") + '" class="form-item-input"></td>' +
+            '<td>' + buildSelect("pod_id[]", pods, function(o){return o.id}, function(o){return o.name}, data ? data.pod_id : "") + '</td>' +
+            '<td>' + buildSelect("permit_id[]", permits, function(o){return o.id}, function(o){return o.label}, data ? data.permit_id : "") + '</td>' +
+            '<td><input type="text" name="sap_code[]" value="' + (data ? (data.sap_code || "") : "") + '" class="form-item-input"></td>' +
+            '<td>' + buildSelect("item_status[]", statusOptions, function(o){return o}, function(o){return o}, data ? data.status : "Ordered") + '</td>' +
+            '<td>' + buildSelect("first_payment[]", payOptions, function(o){return o}, function(o){return o}, data ? data.first_pay : "Pending") + '</td>' +
+            '<td>' + buildSelect("second_payment[]", payOptions, function(o){return o}, function(o){return o}, data ? data.second_pay : "Pending") + '</td>' +
+            '<td><button type="button" class="btn btn-danger btn-sm remove-btn" title="Remove">&times;</button></td>';
+        itemsBody.appendChild(tr);
+
+        // Auto-fill SAP code when product changes
+        var prodSelect = tr.querySelector('select[name="product_id[]"]');
+        var sapInput = tr.querySelector('input[name="sap_code[]"]');
+        prodSelect.addEventListener("change", function() {
+            var pid = parseInt(this.value);
+            for (var i = 0; i < products.length; i++) {
+                if (products[i].id === pid) {
+                    sapInput.value = products[i].sap || "";
+                    break;
+                }
+            }
+        });
+
+        // Auto-calc total
+        var qtyInput = tr.querySelector(".qty-input");
+        var priceInput = tr.querySelector(".price-input");
+        var totalInput = tr.querySelector(".total-input");
+        function calcTotal() {
+            var q = parseFloat(qtyInput.value) || 0;
+            var p = parseFloat(priceInput.value) || 0;
+            totalInput.value = (q && p) ? (q * p).toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) : "";
+        }
+        qtyInput.addEventListener("input", calcTotal);
+        priceInput.addEventListener("input", calcTotal);
+
+        // Remove button
+        tr.querySelector(".remove-btn").addEventListener("click", function() {
+            tr.remove();
+            renumberRows();
+        });
+    }
+
+    function renumberRows() {
+        var rows = itemsBody.querySelectorAll("tr");
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].querySelector(".row-num").textContent = i + 1;
+        }
+        rowCount = rows.length;
+    }
+
+    document.getElementById("addItemBtn").addEventListener("click", function() {
+        addRow(null);
+    });
+
+    // Pre-populate existing items (edit mode)
+    {% if po and po.items %}
+    {% for item in po.items %}
+    addRow({
+        product_id: "{{ item.product_id or '' }}",
+        qty: "{{ item.qty or '' }}",
+        uom: "{{ item.uom or '' }}",
+        unit_price: "{{ item.unit_price or '' }}",
+        currency: "{{ item.currency or '' }}",
+        total_amount: "{{ item.total_amount|currency if item.total_amount else '' }}",
+        etd: "{{ item.etd.isoformat() if item.etd else '' }}",
+        eta: "{{ item.eta.isoformat() if item.eta else '' }}",
+        pod_id: "{{ item.port_of_destination_id or '' }}",
+        permit_id: "{{ item.permit_id or '' }}",
+        sap_code: "{{ item.sap_code or '' }}",
+        status: "{{ item.status or 'Ordered' }}",
+        first_pay: "{{ item.first_payment_status or 'Pending' }}",
+        second_pay: "{{ item.second_payment_status or 'Pending' }}"
+    });
+    {% endfor %}
+    {% else %}
+    // Start with one empty row for new POs
+    addRow(null);
+    {% endif %}
+})();
+</script>
+{% endblock %}

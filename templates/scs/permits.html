@@ -5,7 +5,7 @@
 <div class="page-header">
     <div>
         <h1 class="page-title">Import Permits</h1>
-        <p class="page-subtitle">Track import permits and utilization</p>
+        <p class="page-subtitle">Track import permits, utilization, and expiry</p>
     </div>
     <div class="header-actions">
         <form method="get" style="display:flex; gap:0.5rem;">
@@ -15,12 +15,13 @@
             <a href="{{ url_for('scs.permits') }}" class="btn btn-ghost btn-sm">Clear</a>
             {% endif %}
         </form>
+        <a href="{{ url_for('scs.permit_new') }}" class="btn btn-primary btn-sm">+ New Permit</a>
     </div>
 </div>
 
 <div class="card">
     <div class="card-body" style="padding: 0;">
-        {% if permits %}
+        {% if permits_data %}
         <div class="table-wrapper">
             <table class="table">
                 <thead>
@@ -28,24 +29,59 @@
                         <th>Permit No</th>
                         <th>Product</th>
                         <th>HS Code</th>
+                        <th>Requirement</th>
                         <th>Duty %</th>
                         <th>Qty</th>
                         <th>Used</th>
                         <th>Remaining</th>
+                        <th style="min-width:120px;">Usage</th>
                         <th>Expiry</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for p in permits %}
+                    {% for d in permits_data %}
+                    {% set p = d.permit %}
                     <tr>
                         <td class="text-bold">{{ p.permit_no or '—' }}</td>
                         <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ p.product_name or '' }}">{{ p.product_name or '—' }}</td>
                         <td>{{ p.hs_code or '—' }}</td>
+                        <td>{{ p.permit_requirement.name if p.permit_requirement else '—' }}</td>
                         <td>{% if p.duty_percent is not none %}{{ p.duty_percent }}%{% else %}—{% endif %}</td>
                         <td>{% if p.qty %}{{ p.qty|currency }}{% else %}—{% endif %}</td>
-                        <td>{% if p.qty_used %}{{ p.qty_used|currency }}{% else %}—{% endif %}</td>
-                        <td>{% if p.qty and p.qty_used %}{{ (p.qty - p.qty_used)|currency }}{% elif p.qty %}{{ p.qty|currency }}{% else %}—{% endif %}</td>
-                        <td>{{ p.expiry_date|date_fmt }}</td>
+                        <td>{% if p.qty_used %}{{ p.qty_used|currency }}{% else %}0{% endif %}</td>
+                        <td>
+                            <span class="{% if d.remaining <= 0 %}text-danger text-bold{% endif %}">
+                                {{ d.remaining|currency }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if p.qty and p.qty > 0 %}
+                            <div class="progress-bar-mini">
+                                <div class="progress-fill {% if d.pct_used >= 90 %}progress-danger{% elif d.pct_used >= 70 %}progress-warning{% else %}progress-ok{% endif %}" style="width:{{ d.pct_used }}%;"></div>
+                            </div>
+                            <span style="font-size:0.75rem; color:var(--text-light);">{{ d.pct_used|round(0)|int }}% used</span>
+                            {% else %}—{% endif %}
+                        </td>
+                        <td>
+                            {% if d.days_to_expiry is not none %}
+                            <span class="{% if d.days_to_expiry < 0 %}text-danger text-bold{% elif d.days_to_expiry < 30 %}text-danger{% elif d.days_to_expiry < 90 %}text-muted{% endif %}">
+                                {{ p.expiry_date|date_fmt }}
+                            </span>
+                            {% if d.days_to_expiry < 0 %}
+                            <span style="font-size:0.75rem; color:var(--red);">(expired)</span>
+                            {% elif d.days_to_expiry < 30 %}
+                            <span style="font-size:0.75rem; color:var(--red);">({{ d.days_to_expiry }}d left)</span>
+                            {% elif d.days_to_expiry < 90 %}
+                            <span style="font-size:0.75rem; color:var(--yellow);">({{ d.days_to_expiry }}d left)</span>
+                            {% endif %}
+                            {% else %}
+                            {{ p.expiry_date|date_fmt }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('scs.permit_edit', permit_id=p.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -67,6 +103,7 @@
         <div class="empty-state">
             <h3>No permits found</h3>
             <p>{% if search %}Try adjusting your search.{% else %}No import permits yet.{% endif %}</p>
+            <a href="{{ url_for('scs.permit_new') }}" class="btn btn-primary">Create First Permit</a>
         </div>
         {% endif %}
     </div>

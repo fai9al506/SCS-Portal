@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit Customer" if customer else "New Customer" }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('manage.customers') }}">Customers</a>
+            <span>/</span>
+            <span>{{ "Edit" if customer else "New" }}</span>
+        </div>
+        <h1 class="page-title">{{ "Edit Customer" if customer else "New Customer" }}</h1>
+    </div>
+</div>
+
+<!-- Customer Details -->
+<div class="card" style="max-width: 600px; margin-bottom: 1.5rem;">
+    <div class="card-header">Customer Details</div>
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Customer Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter customer name" value="{{ customer.name if customer else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="sap_id">SAP ID</label>
+                    <input type="text" id="sap_id" name="sap_id" placeholder="e.g. 300001234" value="{{ customer.sap_id if customer and customer.sap_id else '' }}">
+                </div>
+            </div>
+            <div class="form-actions">
+                <a href="{{ url_for('manage.customers') }}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-primary">{{ "Save Changes" if customer else "Create Customer" }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if customer %}
+<!-- Addresses -->
+<div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header">
+        Delivery Addresses ({{ customer.addresses|length }})
+        <button class="btn btn-primary btn-sm" onclick="document.getElementById('newAddrForm').style.display = document.getElementById('newAddrForm').style.display === 'none' ? 'block' : 'none'">Add Address</button>
+    </div>
+
+    <!-- Add address form (hidden by default) -->
+    <div id="newAddrForm" style="display: none; border-bottom: 1px solid var(--border);">
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('manage.customer_address_new', cid=customer.id) }}">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="new_plant">Plant</label>
+                        <input type="text" id="new_plant" name="plant" placeholder="Plant name">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_city">City</label>
+                        <input type="text" id="new_city" name="city" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_address_line1">Address Line 1</label>
+                        <input type="text" id="new_address_line1" name="address_line1" placeholder="Street address">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_address_line2">Address Line 2</label>
+                        <input type="text" id="new_address_line2" name="address_line2" placeholder="Suite, unit, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_contact_person">Contact Person</label>
+                        <input type="text" id="new_contact_person" name="contact_person" placeholder="Contact name">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_contact_phone">Contact Phone</label>
+                        <input type="text" id="new_contact_phone" name="contact_phone" placeholder="+966 ...">
+                    </div>
+                    <div class="form-group">
+                        <label for="new_contact_email">Contact Email</label>
+                        <input type="email" id="new_contact_email" name="contact_email" placeholder="contact@example.com">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-ghost" onclick="document.getElementById('newAddrForm').style.display='none'">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-body" style="padding: 0;">
+        {% if customer.addresses %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Plant</th>
+                        <th>City</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for addr in customer.addresses %}
+                    <tr id="addr-row-{{ addr.id }}">
+                        <td class="text-bold">{{ addr.plant or '—' }}</td>
+                        <td>{{ addr.city or '—' }}</td>
+                        <td>{{ addr.address_line1 or '—' }}</td>
+                        <td>{{ addr.contact_person or '—' }}</td>
+                        <td>{{ addr.contact_phone or '—' }}</td>
+                        <td style="white-space: nowrap;">
+                            <button class="btn btn-ghost btn-sm" onclick="toggleEditAddr({{ addr.id }})">Edit</button>
+                            <form method="POST" action="{{ url_for('manage.customer_address_delete', cid=customer.id, aid=addr.id) }}" style="display:inline;" onsubmit="return confirm('Delete this address?')">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <!-- Inline edit row (hidden) -->
+                    <tr id="addr-edit-{{ addr.id }}" style="display: none;">
+                        <td colspan="6" style="padding: 1rem;">
+                            <form method="POST" action="{{ url_for('manage.customer_address_edit', cid=customer.id, aid=addr.id) }}">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Plant</label>
+                                        <input type="text" name="plant" value="{{ addr.plant or '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>City</label>
+                                        <input type="text" name="city" value="{{ addr.city or '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address Line 1</label>
+                                        <input type="text" name="address_line1" value="{{ addr.address_line1 or '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Address Line 2</label>
+                                        <input type="text" name="address_line2" value="{{ addr.address_line2 or '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact Person</label>
+                                        <input type="text" name="contact_person" value="{{ addr.contact_person or '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact Phone</label>
+                                        <input type="text" name="contact_phone" value="{{ addr.contact_phone or '' }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Contact Email</label>
+                                        <input type="email" name="contact_email" value="{{ addr.contact_email or '' }}">
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-ghost" onclick="toggleEditAddr({{ addr.id }})">Cancel</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No addresses</h3>
+            <p>Click "Add Address" to add a delivery address for this customer.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+function toggleEditAddr(id) {
+    var row = document.getElementById('addr-row-' + id);
+    var edit = document.getElementById('addr-edit-' + id);
+    if (edit.style.display === 'none') {
+        row.style.display = 'none';
+        edit.style.display = 'table-row';
+    } else {
+        row.style.display = '';
+        edit.style.display = 'none';
+    }
+}
+</script>
+{% endblock %}

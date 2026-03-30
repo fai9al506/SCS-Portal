@@ -10,7 +10,7 @@
 </div>
 
 <!-- Tabs -->
-<div class="tabs" id="lookupTabs">
+<div class="tabs" id="lookupTabs" style="flex-wrap: wrap;">
     <button class="tab active" data-tab="brokers">Brokers ({{ brokers|length }})</button>
     <button class="tab" data-tab="transporters">Transporters ({{ transporters|length }})</button>
     <button class="tab" data-tab="storage">Storage ({{ storage_locations|length }})</button>
@@ -19,15 +19,38 @@
     <button class="tab" data-tab="terminals">Return Terminals ({{ return_terminals|length }})</button>
     <button class="tab" data-tab="categories">Categories ({{ product_categories|length }})</button>
     <button class="tab" data-tab="currencies">Currencies ({{ currencies|length }})</button>
+    <button class="tab" data-tab="packing">Packing Types ({{ packing_types|length }})</button>
+    <button class="tab" data-tab="ptsupp">Pmt Terms Supp. ({{ payment_terms_supplier|length }})</button>
+    <button class="tab" data-tab="ptcust">Pmt Terms Cust. ({{ payment_terms_customer|length }})</button>
+    <button class="tab" data-tab="delivery">Delivery Terms ({{ delivery_terms|length }})</button>
+    <button class="tab" data-tab="permit">Permit Req. ({{ permit_requirements|length }})</button>
+    <button class="tab" data-tab="uom">UOM ({{ uom|length }})</button>
 </div>
 
-<!-- Brokers -->
+<!-- ── Brokers ──────────────────────────────────────────────────── -->
 <div class="tab-content active" id="tab-brokers">
     <div class="card">
+        <div class="card-header">
+            Brokers
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('brokers')">Add</button>
+        </div>
+        <div id="add-form-brokers" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='brokers') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                        <div class="form-group"><label>Full Name</label><input type="text" name="full_name"></div>
+                        <div class="form-group"><label>Email</label><input type="text" name="email"></div>
+                        <div class="form-group"><label>Phone</label><input type="text" name="phone"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('brokers')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Broker</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Name</th><th>Full Name</th><th>Phone</th><th>Email</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Full Name</th><th>Phone</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for b in brokers %}
                         <tr>
@@ -35,6 +58,15 @@
                             <td>{{ b.full_name or '—' }}</td>
                             <td>{{ b.phone or '—' }}</td>
                             <td>{{ b.email or '—' }}</td>
+                            <td><span class="badge {% if b.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if b.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='brokers', id=b.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if b.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='brokers', id=b.id) }}" style="display:inline;" onsubmit="return confirm('Delete this broker?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -44,19 +76,44 @@
     </div>
 </div>
 
-<!-- Transporters -->
+<!-- ── Transporters ────────────────────────────────────────────── -->
 <div class="tab-content" id="tab-transporters">
     <div class="card">
+        <div class="card-header">
+            Transporters
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('transporters')">Add</button>
+        </div>
+        <div id="add-form-transporters" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='transporters') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                        <div class="form-group"><label>Email</label><input type="text" name="email"></div>
+                        <div class="form-group"><label>Phone</label><input type="text" name="phone"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('transporters')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Transporter</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Phone</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for t in transporters %}
                         <tr>
                             <td class="text-bold">{{ t.name }}</td>
                             <td>{{ t.email or '—' }}</td>
                             <td>{{ t.phone or '—' }}</td>
+                            <td><span class="badge {% if t.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if t.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='transporters', id=t.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if t.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='transporters', id=t.id) }}" style="display:inline;" onsubmit="return confirm('Delete this transporter?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -66,18 +123,42 @@
     </div>
 </div>
 
-<!-- Storage Locations -->
+<!-- ── Storage Locations ───────────────────────────────────────── -->
 <div class="tab-content" id="tab-storage">
     <div class="card">
+        <div class="card-header">
+            Storage Locations
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('storage')">Add</button>
+        </div>
+        <div id="add-form-storage" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='storage_locations') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                        <div class="form-group"><label>Email</label><input type="text" name="email"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('storage')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Location</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Name</th><th>Email</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for s in storage_locations %}
                         <tr>
                             <td class="text-bold">{{ s.name }}</td>
                             <td>{{ s.email or '—' }}</td>
+                            <td><span class="badge {% if s.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if s.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='storage_locations', id=s.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if s.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='storage_locations', id=s.id) }}" style="display:inline;" onsubmit="return confirm('Delete this location?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -87,18 +168,40 @@
     </div>
 </div>
 
-<!-- Shipping Lines -->
+<!-- ── Shipping Lines ──────────────────────────────────────────── -->
 <div class="tab-content" id="tab-shipping">
     <div class="card">
+        <div class="card-header">
+            Shipping Lines
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('shipping')">Add</button>
+        </div>
+        <div id="add-form-shipping" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='shipping_lines') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('shipping')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Shipping Line</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Name</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for sl in shipping_lines %}
                         <tr>
                             <td class="text-bold">{{ sl.name }}</td>
                             <td><span class="badge {% if sl.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if sl.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='shipping_lines', id=sl.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if sl.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='shipping_lines', id=sl.id) }}" style="display:inline;" onsubmit="return confirm('Delete this shipping line?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -108,18 +211,40 @@
     </div>
 </div>
 
-<!-- Ports -->
+<!-- ── Ports ────────────────────────────────────────────────────── -->
 <div class="tab-content" id="tab-ports">
     <div class="card">
+        <div class="card-header">
+            Ports of Destination
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('ports')">Add</button>
+        </div>
+        <div id="add-form-ports" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='ports') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('ports')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Port</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Port Name</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Port Name</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for p in ports %}
                         <tr>
                             <td class="text-bold">{{ p.name }}</td>
                             <td><span class="badge {% if p.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if p.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='ports', id=p.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if p.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='ports', id=p.id) }}" style="display:inline;" onsubmit="return confirm('Delete this port?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -129,18 +254,40 @@
     </div>
 </div>
 
-<!-- Return Terminals -->
+<!-- ── Return Terminals ────────────────────────────────────────── -->
 <div class="tab-content" id="tab-terminals">
     <div class="card">
+        <div class="card-header">
+            Return Terminals
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('terminals')">Add</button>
+        </div>
+        <div id="add-form-terminals" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='return_terminals') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('terminals')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Terminal</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Terminal Name</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Terminal Name</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for rt in return_terminals %}
                         <tr>
                             <td class="text-bold">{{ rt.name }}</td>
                             <td><span class="badge {% if rt.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if rt.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='return_terminals', id=rt.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if rt.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='return_terminals', id=rt.id) }}" style="display:inline;" onsubmit="return confirm('Delete this terminal?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -150,18 +297,40 @@
     </div>
 </div>
 
-<!-- Product Categories -->
+<!-- ── Product Categories ──────────────────────────────────────── -->
 <div class="tab-content" id="tab-categories">
     <div class="card">
+        <div class="card-header">
+            Product Categories
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('categories')">Add</button>
+        </div>
+        <div id="add-form-categories" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='product_categories') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('categories')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Category</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Category Name</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Category Name</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for pc in product_categories %}
                         <tr>
                             <td class="text-bold">{{ pc.name }}</td>
                             <td><span class="badge {% if pc.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if pc.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='product_categories', id=pc.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if pc.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='product_categories', id=pc.id) }}" style="display:inline;" onsubmit="return confirm('Delete this category?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -171,19 +340,42 @@
     </div>
 </div>
 
-<!-- Currencies -->
+<!-- ── Currencies ──────────────────────────────────────────────── -->
 <div class="tab-content" id="tab-currencies">
     <div class="card">
+        <div class="card-header">
+            Currencies
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('currencies')">Add</button>
+        </div>
+        <div id="add-form-currencies" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='currencies') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Code *</label><input type="text" name="code" required placeholder="e.g. USD"></div>
+                        <div class="form-group"><label>Name</label><input type="text" name="name" placeholder="e.g. US Dollar"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('currencies')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Currency</button></div>
+                </form>
+            </div>
+        </div>
         <div class="card-body" style="padding: 0;">
             <div class="table-wrapper">
                 <table class="table">
-                    <thead><tr><th>Code</th><th>Name</th><th>Status</th></tr></thead>
+                    <thead><tr><th>Code</th><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
                         {% for cur in currencies %}
                         <tr>
                             <td class="text-bold">{{ cur.code }}</td>
                             <td>{{ cur.name or '—' }}</td>
                             <td><span class="badge {% if cur.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if cur.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='currencies', id=cur.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if cur.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='currencies', id=cur.id) }}" style="display:inline;" onsubmit="return confirm('Delete this currency?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -192,10 +384,270 @@
         </div>
     </div>
 </div>
+
+<!-- ── Packing Types ───────────────────────────────────────────── -->
+<div class="tab-content" id="tab-packing">
+    <div class="card">
+        <div class="card-header">
+            Packing Types
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('packing')">Add</button>
+        </div>
+        <div id="add-form-packing" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='packing_types') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required placeholder="e.g. Container, Drums"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('packing')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Packing Type</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for pt in packing_types %}
+                        <tr>
+                            <td class="text-bold">{{ pt.name }}</td>
+                            <td><span class="badge {% if pt.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if pt.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='packing_types', id=pt.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if pt.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='packing_types', id=pt.id) }}" style="display:inline;" onsubmit="return confirm('Delete this packing type?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Payment Terms (Supplier) ────────────────────────────────── -->
+<div class="tab-content" id="tab-ptsupp">
+    <div class="card">
+        <div class="card-header">
+            Payment Terms (Supplier)
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('ptsupp')">Add</button>
+        </div>
+        <div id="add-form-ptsupp" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='payment_terms_supplier') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required placeholder="e.g. 30-70, LC 60 Days"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('ptsupp')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Payment Term</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for pt in payment_terms_supplier %}
+                        <tr>
+                            <td class="text-bold">{{ pt.name }}</td>
+                            <td><span class="badge {% if pt.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if pt.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='payment_terms_supplier', id=pt.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if pt.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='payment_terms_supplier', id=pt.id) }}" style="display:inline;" onsubmit="return confirm('Delete this payment term?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Payment Terms (Customer) ────────────────────────────────── -->
+<div class="tab-content" id="tab-ptcust">
+    <div class="card">
+        <div class="card-header">
+            Payment Terms (Customer)
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('ptcust')">Add</button>
+        </div>
+        <div id="add-form-ptcust" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='payment_terms_customer') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required placeholder="e.g. Credit 30, Credit 60"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('ptcust')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Payment Term</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for pt in payment_terms_customer %}
+                        <tr>
+                            <td class="text-bold">{{ pt.name }}</td>
+                            <td><span class="badge {% if pt.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if pt.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='payment_terms_customer', id=pt.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if pt.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='payment_terms_customer', id=pt.id) }}" style="display:inline;" onsubmit="return confirm('Delete this payment term?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Delivery Terms ──────────────────────────────────────────── -->
+<div class="tab-content" id="tab-delivery">
+    <div class="card">
+        <div class="card-header">
+            Delivery Terms (Incoterms)
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('delivery')">Add</button>
+        </div>
+        <div id="add-form-delivery" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='delivery_terms') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required placeholder="e.g. CIF, FOB, DDP"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('delivery')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Delivery Term</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for dt in delivery_terms %}
+                        <tr>
+                            <td class="text-bold">{{ dt.name }}</td>
+                            <td><span class="badge {% if dt.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if dt.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='delivery_terms', id=dt.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if dt.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='delivery_terms', id=dt.id) }}" style="display:inline;" onsubmit="return confirm('Delete this delivery term?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Permit Requirements ─────────────────────────────────────── -->
+<div class="tab-content" id="tab-permit">
+    <div class="card">
+        <div class="card-header">
+            Permit Requirements
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('permit')">Add</button>
+        </div>
+        <div id="add-form-permit" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='permit_requirements') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required placeholder="e.g. 24-MOC, 61-SFDA"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('permit')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add Permit Requirement</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for pr in permit_requirements %}
+                        <tr>
+                            <td class="text-bold">{{ pr.name }}</td>
+                            <td><span class="badge {% if pr.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if pr.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='permit_requirements', id=pr.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if pr.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='permit_requirements', id=pr.id) }}" style="display:inline;" onsubmit="return confirm('Delete this permit requirement?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Units of Measure ────────────────────────────────────────── -->
+<div class="tab-content" id="tab-uom">
+    <div class="card">
+        <div class="card-header">
+            Units of Measure
+            <button class="btn btn-primary btn-sm" onclick="toggleAddForm('uom')">Add</button>
+        </div>
+        <div id="add-form-uom" style="display: none; border-bottom: 1px solid var(--border);">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('manage.lookup_add', type_slug='uom') }}">
+                    <div class="form-grid">
+                        <div class="form-group"><label>Name *</label><input type="text" name="name" required placeholder="e.g. MT, KG, Liter"></div>
+                    </div>
+                    <div class="form-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="toggleAddForm('uom')">Cancel</button><button type="submit" class="btn btn-primary btn-sm">Add UOM</button></div>
+                </form>
+            </div>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead><tr><th>Name</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        {% for u in uom %}
+                        <tr>
+                            <td class="text-bold">{{ u.name }}</td>
+                            <td><span class="badge {% if u.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if u.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                            <td style="white-space: nowrap;">
+                                <form method="POST" action="{{ url_for('manage.lookup_toggle', type_slug='uom', id=u.id) }}" style="display:inline;">
+                                    <button type="submit" class="btn btn-ghost btn-sm">{{ "Deactivate" if u.is_active else "Activate" }}</button>
+                                </form>
+                                <form method="POST" action="{{ url_for('manage.lookup_delete', type_slug='uom', id=u.id) }}" style="display:inline;" onsubmit="return confirm('Delete this unit?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
 <script>
+// Tab switching
 document.querySelectorAll('#lookupTabs .tab').forEach(function(tab) {
     tab.addEventListener('click', function() {
         document.querySelectorAll('#lookupTabs .tab').forEach(function(t) { t.classList.remove('active'); });
@@ -204,5 +656,11 @@ document.querySelectorAll('#lookupTabs .tab').forEach(function(tab) {
         document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
     });
 });
+
+// Toggle add forms
+function toggleAddForm(id) {
+    var form = document.getElementById('add-form-' + id);
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
 </script>
 {% endblock %}

@@ -1,0 +1,308 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit Customer PO ' + cpo.po_no if cpo and cpo.po_no else 'Edit Customer PO' if cpo else 'New Customer PO' }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('scs.customer_pos') }}">Customer POs</a>
+            <span>/</span>
+            <span>{{ 'Edit ' + (cpo.po_no or '') if cpo else 'New Customer PO' }}</span>
+        </div>
+        <h1 class="page-title">{{ 'Edit Customer PO' if cpo else 'New Customer PO' }}</h1>
+    </div>
+    <div class="header-actions">
+        {% if cpo %}
+        <a href="{{ url_for('scs.customer_po_detail', cpo_id=cpo.id) }}" class="btn btn-ghost btn-sm">&larr; Back to PO</a>
+        {% else %}
+        <a href="{{ url_for('scs.customer_pos') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+        {% endif %}
+    </div>
+</div>
+
+<form method="post" id="cpoForm">
+    <!-- PO Header -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">PO Details</div>
+        <div class="card-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="po_no">PO Number</label>
+                    <input type="text" id="po_no" name="po_no" value="{{ cpo.po_no or '' if cpo else '' }}" placeholder="e.g. CPO-2026-001">
+                </div>
+                <div class="form-group">
+                    <label for="customer_id">Customer</label>
+                    <select id="customer_id" name="customer_id">
+                        <option value="">— Select Customer —</option>
+                        {% for c in customers %}
+                        <option value="{{ c.id }}" {% if cpo and cpo.customer_id == c.id %}selected{% endif %}>{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="po_date">PO Date</label>
+                    <input type="date" id="po_date" name="po_date" value="{{ cpo.po_date.isoformat() if cpo and cpo.po_date else '' }}">
+                </div>
+                <div class="form-group">
+                    <label>PO Issued To</label>
+                    <div style="display:flex; gap:1.25rem; padding-top:0.4rem;">
+                        {% for opt in ['MPC', 'Grace', 'Other'] %}
+                        <label style="display:flex; align-items:center; gap:0.35rem; font-size:0.9rem; cursor:pointer;">
+                            <input type="radio" name="po_issued_to" value="{{ opt }}" {% if cpo and cpo.po_issued_to == opt %}checked{% elif not cpo and opt == 'MPC' %}checked{% endif %}>
+                            {{ opt }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="delivery_terms_id">Delivery Terms</label>
+                    <select id="delivery_terms_id" name="delivery_terms_id">
+                        <option value="">— Select Delivery Terms —</option>
+                        {% for dt in delivery_terms %}
+                        <option value="{{ dt.id }}" {% if cpo and cpo.delivery_terms_id == dt.id %}selected{% endif %}>{{ dt.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="payment_terms_id">Payment Terms</label>
+                    <select id="payment_terms_id" name="payment_terms_id">
+                        <option value="">— Select Payment Terms —</option>
+                        {% for pt in payment_terms %}
+                        <option value="{{ pt.id }}" {% if cpo and cpo.payment_terms_id == pt.id %}selected{% endif %}>{{ pt.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% if cpo %}
+                <div class="form-group">
+                    <label for="is_closed">Status</label>
+                    <select id="is_closed" name="is_closed">
+                        <option value="0" {% if not cpo.is_closed %}selected{% endif %}>Open</option>
+                        <option value="1" {% if cpo.is_closed %}selected{% endif %}>Closed</option>
+                    </select>
+                </div>
+                {% endif %}
+                <div class="form-group form-group-wide">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="2" placeholder="Optional notes…">{{ cpo.notes or '' if cpo else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Line Items -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+            Line Items
+            <button type="button" class="btn btn-primary btn-sm" id="addItemBtn">+ Add Item</button>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table" id="itemsTable">
+                    <thead>
+                        <tr>
+                            <th style="width:35px;">#</th>
+                            <th>Product</th>
+                            <th>Affiliate</th>
+                            <th style="width:80px;">Qty</th>
+                            <th style="width:70px;">UOM</th>
+                            <th style="width:90px;">Unit Price</th>
+                            <th style="width:70px;">Currency</th>
+                            <th style="width:65px;">VAT%</th>
+                            <th style="width:85px;">VAT Value</th>
+                            <th style="width:95px;">Total</th>
+                            <th style="width:100px;">Total+VAT</th>
+                            <th>Packing</th>
+                            <th style="width:120px;">Delivery Date</th>
+                            <th style="width:90px;">SO#</th>
+                            <th style="width:90px;">Contract#</th>
+                            <th style="width:35px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="itemsBody">
+                        <!-- Rows populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        {% if cpo %}
+        <a href="{{ url_for('scs.customer_po_detail', cpo_id=cpo.id) }}" class="btn btn-ghost">Cancel</a>
+        {% else %}
+        <a href="{{ url_for('scs.customer_pos') }}" class="btn btn-ghost">Cancel</a>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">{{ 'Update Customer PO' if cpo else 'Create Customer PO' }}</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    // Dropdown data
+    var products = [
+        {% for p in products %}
+        { id: {{ p.id }}, name: "{{ p.name|e }}", sap: "{{ p.sap_code or ''|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var uoms = [
+        {% for u in uoms %}
+        { name: "{{ u.name|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var currencies = [
+        {% for c in currencies %}
+        { code: "{{ c.code|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+    var packingTypes = [
+        {% for pt in packing_types %}
+        { name: "{{ pt.name|e }}" }{{ "," if not loop.last }}
+        {% endfor %}
+    ];
+
+    // Customer -> addresses mapping for affiliate filtering
+    var customerAddresses = {{ customer_addresses|tojson }};
+
+    var itemsBody = document.getElementById("itemsBody");
+    var rowCount = 0;
+
+    function buildSelect(name, options, valueFn, labelFn, selected) {
+        var html = '<select name="' + name + '" class="form-item-select">';
+        html += '<option value="">—</option>';
+        for (var i = 0; i < options.length; i++) {
+            var val = valueFn(options[i]);
+            var lbl = labelFn(options[i]);
+            html += '<option value="' + val + '"' + (String(val) === String(selected) ? ' selected' : '') + '>' + lbl + '</option>';
+        }
+        html += '</select>';
+        return html;
+    }
+
+    function getAffiliateOptions() {
+        var custId = document.getElementById("customer_id").value;
+        if (!custId || !customerAddresses[custId]) return [];
+        return customerAddresses[custId];
+    }
+
+    function refreshAllAffiliates() {
+        var opts = getAffiliateOptions();
+        var rows = itemsBody.querySelectorAll("tr");
+        for (var i = 0; i < rows.length; i++) {
+            var sel = rows[i].querySelector('select[name="affiliate_id[]"]');
+            if (!sel) continue;
+            var current = sel.value;
+            sel.innerHTML = '<option value="">—</option>';
+            for (var j = 0; j < opts.length; j++) {
+                var o = document.createElement("option");
+                o.value = opts[j].id;
+                o.textContent = opts[j].label;
+                if (String(opts[j].id) === String(current)) o.selected = true;
+                sel.appendChild(o);
+            }
+        }
+    }
+
+    document.getElementById("customer_id").addEventListener("change", refreshAllAffiliates);
+
+    function addRow(data) {
+        rowCount++;
+        var affiliates = getAffiliateOptions();
+        var tr = document.createElement("tr");
+        tr.innerHTML =
+            '<td class="row-num">' + rowCount + '</td>' +
+            '<td>' + buildSelect("product_id[]", products, function(o){return o.id}, function(o){return o.name}, data ? data.product_id : "") + '</td>' +
+            '<td>' + buildSelect("affiliate_id[]", affiliates, function(o){return o.id}, function(o){return o.label}, data ? data.affiliate_id : "") + '</td>' +
+            '<td><input type="number" name="qty[]" step="any" value="' + (data ? (data.qty || "") : "") + '" class="form-item-input qty-input"></td>' +
+            '<td>' + buildSelect("uom[]", uoms, function(o){return o.name}, function(o){return o.name}, data ? data.uom : "") + '</td>' +
+            '<td><input type="number" name="unit_price[]" step="any" value="' + (data ? (data.unit_price || "") : "") + '" class="form-item-input price-input"></td>' +
+            '<td>' + buildSelect("currency[]", currencies, function(o){return o.code}, function(o){return o.code}, data ? data.currency : "") + '</td>' +
+            '<td><input type="number" name="vat_percent[]" step="any" value="' + (data ? (data.vat_percent || "15") : "15") + '" class="form-item-input vat-pct-input" style="width:55px;"></td>' +
+            '<td><input type="text" name="vat_value_display[]" value="' + (data ? (data.vat_value || "") : "") + '" class="form-item-input vat-val-display" readonly tabindex="-1"></td>' +
+            '<td><input type="text" name="total_display[]" value="' + (data ? (data.total_value || "") : "") + '" class="form-item-input total-display" readonly tabindex="-1"></td>' +
+            '<td><input type="text" name="total_inc_vat_display[]" value="' + (data ? (data.total_value_inc_vat || "") : "") + '" class="form-item-input total-vat-display" readonly tabindex="-1"></td>' +
+            '<td>' + buildSelect("packing[]", packingTypes, function(o){return o.name}, function(o){return o.name}, data ? data.packing : "") + '</td>' +
+            '<td><input type="date" name="delivery_date[]" value="' + (data ? (data.delivery_date || "") : "") + '" class="form-item-input"></td>' +
+            '<td><input type="text" name="so_number[]" value="' + (data ? (data.so_number || "") : "") + '" class="form-item-input"></td>' +
+            '<td><input type="text" name="contract_no[]" value="' + (data ? (data.contract_no || "") : "") + '" class="form-item-input"></td>' +
+            '<td><button type="button" class="btn btn-danger btn-sm remove-btn" title="Remove">&times;</button></td>';
+        // Hidden remarks field
+        var remarksInput = document.createElement("input");
+        remarksInput.type = "hidden";
+        remarksInput.name = "item_remarks[]";
+        remarksInput.value = data ? (data.remarks || "") : "";
+        tr.appendChild(remarksInput);
+
+        itemsBody.appendChild(tr);
+
+        // Auto-calc
+        var qtyInput = tr.querySelector(".qty-input");
+        var priceInput = tr.querySelector(".price-input");
+        var vatPctInput = tr.querySelector(".vat-pct-input");
+        var vatValDisplay = tr.querySelector(".vat-val-display");
+        var totalDisplay = tr.querySelector(".total-display");
+        var totalVatDisplay = tr.querySelector(".total-vat-display");
+
+        function calcTotals() {
+            var q = parseFloat(qtyInput.value) || 0;
+            var p = parseFloat(priceInput.value) || 0;
+            var vp = parseFloat(vatPctInput.value) || 0;
+            var total = q * p;
+            var vatVal = total * vp / 100;
+            var totalInc = total + vatVal;
+            var fmt = function(n) { return n ? n.toLocaleString("en-US", {minimumFractionDigits: 2, maximumFractionDigits: 2}) : ""; };
+            totalDisplay.value = (q && p) ? fmt(total) : "";
+            vatValDisplay.value = (q && p) ? fmt(vatVal) : "";
+            totalVatDisplay.value = (q && p) ? fmt(totalInc) : "";
+        }
+        qtyInput.addEventListener("input", calcTotals);
+        priceInput.addEventListener("input", calcTotals);
+        vatPctInput.addEventListener("input", calcTotals);
+
+        // Remove button
+        tr.querySelector(".remove-btn").addEventListener("click", function() {
+            tr.remove();
+            renumberRows();
+        });
+    }
+
+    function renumberRows() {
+        var rows = itemsBody.querySelectorAll("tr");
+        for (var i = 0; i < rows.length; i++) {
+            rows[i].querySelector(".row-num").textContent = i + 1;
+        }
+        rowCount = rows.length;
+    }
+
+    document.getElementById("addItemBtn").addEventListener("click", function() {
+        addRow(null);
+    });
+
+    // Pre-populate existing items (edit mode)
+    {% if cpo and cpo.items %}
+    {% for item in cpo.items %}
+    addRow({
+        product_id: "{{ item.product_id or '' }}",
+        affiliate_id: "{{ item.affiliate_id or '' }}",
+        qty: "{{ item.qty or '' }}",
+        uom: "{{ item.uom or '' }}",
+        unit_price: "{{ item.unit_price or '' }}",
+        currency: "{{ item.currency or '' }}",
+        vat_percent: "{{ item.vat_percent if item.vat_percent is not none else '15' }}",
+        vat_value: "{{ item.vat_value|currency if item.vat_value else '' }}",
+        total_value: "{{ item.total_value|currency if item.total_value else '' }}",
+        total_value_inc_vat: "{{ item.total_value_inc_vat|currency if item.total_value_inc_vat else '' }}",
+        packing: "{{ item.packing or '' }}",
+        delivery_date: "{{ item.delivery_date.isoformat() if item.delivery_date else '' }}",
+        so_number: "{{ item.so_number or '' }}",
+        contract_no: "{{ item.contract_no or '' }}",
+        remarks: "{{ item.remarks or '' }}"
+    });
+    {% endfor %}
+    {% else %}
+    addRow(null);
+    {% endif %}
+})();
+</script>
+{% endblock %}

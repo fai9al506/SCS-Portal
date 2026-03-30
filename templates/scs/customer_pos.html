@@ -5,7 +5,7 @@
 <div class="page-header">
     <div>
         <h1 class="page-title">Customer POs</h1>
-        <p class="page-subtitle">Customer purchase orders</p>
+        <p class="page-subtitle">Customer purchase orders and delivery tracking</p>
     </div>
     <div class="header-actions">
         <form method="get" style="display:flex; gap:0.5rem;">
@@ -16,6 +16,7 @@
             <a href="{{ url_for('scs.customer_pos') }}" class="btn btn-ghost btn-sm">Clear</a>
             {% endif %}
         </form>
+        <a href="{{ url_for('scs.customer_po_new') }}" class="btn btn-primary btn-sm">+ New Customer PO</a>
     </div>
 </div>
 
@@ -34,27 +35,29 @@
                     <tr>
                         <th>PO No</th>
                         <th>Customer</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Unit Price</th>
-                        <th>Total</th>
+                        <th>Issued To</th>
+                        <th>Items</th>
                         <th>PO Date</th>
-                        <th>Delivery</th>
+                        <th>Delivery Terms</th>
+                        <th>Payment Terms</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for po in pos %}
                     <tr>
-                        <td class="text-bold">{{ po.po_no or '—' }}</td>
-                        <td>{{ po.customer_name or '—' }}</td>
-                        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ po.product_name or '' }}">{{ po.product_name or '—' }}</td>
-                        <td>{% if po.qty %}{{ po.qty|currency }} {{ po.uom or '' }}{% else %}—{% endif %}</td>
-                        <td>{% if po.unit_price %}{{ po.unit_price|currency }} {{ po.currency or '' }}{% else %}—{% endif %}</td>
-                        <td>{% if po.total_value %}{{ po.total_value|currency }}{% else %}—{% endif %}</td>
+                        <td><a href="{{ url_for('scs.customer_po_detail', cpo_id=po.id) }}" class="link">{{ po.po_no or '—' }}</a></td>
+                        <td>{{ po.customer.name if po.customer else (po.customer_name or '—') }}</td>
+                        <td>{{ po.po_issued_to or '—' }}</td>
+                        <td>{{ po.items|length }}</td>
                         <td>{{ po.po_date|date_fmt }}</td>
-                        <td>{{ po.delivery_date|date_fmt }}</td>
+                        <td>{{ po.delivery_term.name if po.delivery_term else '—' }}</td>
+                        <td>{{ po.payment_term.name if po.payment_term else '—' }}</td>
                         <td><span class="badge {% if po.is_closed %}badge-closed{% else %}badge-open{% endif %}">{% if po.is_closed %}Closed{% else %}Open{% endif %}</span></td>
+                        <td>
+                            <a href="{{ url_for('scs.customer_po_edit', cpo_id=po.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -76,6 +79,7 @@
         <div class="empty-state">
             <h3>No customer POs found</h3>
             <p>{% if search or status %}Try adjusting your search or filters.{% else %}No customer purchase orders yet.{% endif %}</p>
+            <a href="{{ url_for('scs.customer_po_new') }}" class="btn btn-primary">Create First Customer PO</a>
         </div>
         {% endif %}
     </div>

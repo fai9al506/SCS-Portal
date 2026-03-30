@@ -1,0 +1,288 @@
+{% extends "base.html" %}
+{% block title %}New Delivery Note — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('delivery.delivery_list') }}">Deliveries</a>
+            <span>/</span>
+            <span>New Delivery Note</span>
+        </div>
+        <h1 class="page-title">New Delivery Note</h1>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('delivery.delivery_list') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+    </div>
+</div>
+
+<form method="post" id="dnForm">
+    <!-- Header -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">Delivery Details</div>
+        <div class="card-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="dn_number">DN Number</label>
+                    <input type="text" id="dn_number" name="dn_number" placeholder="e.g. DN-001">
+                </div>
+                <div class="form-group">
+                    <label for="delivery_date">Delivery Date</label>
+                    <input type="date" id="delivery_date" name="delivery_date">
+                </div>
+                <div class="form-group">
+                    <label for="customer_id">Customer</label>
+                    <select id="customer_id" name="customer_id">
+                        <option value="">— Select Customer —</option>
+                        {% for c in customers %}
+                        <option value="{{ c.id }}">{{ c.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="affiliate_id">Affiliate / Plant</label>
+                    <select id="affiliate_id" name="affiliate_id" disabled>
+                        <option value="">— Select customer first —</option>
+                    </select>
+                </div>
+                <div class="form-group" id="affiliate_address_group" style="display:none;">
+                    <label>Delivery Address</label>
+                    <div id="affiliate_address" style="font-size: 0.85rem; color: var(--text-muted); padding: 0.5rem; background: var(--bg); border-radius: var(--radius);"></div>
+                </div>
+                <div class="form-group">
+                    <label for="transporter_id">Transporter</label>
+                    <select id="transporter_id" name="transporter_id">
+                        <option value="">— Select Transporter —</option>
+                        {% for t in transporters %}
+                        <option value="{{ t.id }}">{{ t.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="customer_po_id">Customer PO No</label>
+                    <input type="text" id="customer_po_id" name="customer_po_id" placeholder="Customer PO reference">
+                </div>
+                <div class="form-group">
+                    <label for="so_number">SO Number</label>
+                    <input type="text" id="so_number" name="so_number" placeholder="SAP SO#">
+                </div>
+                <div class="form-group">
+                    <label for="packing">Packing</label>
+                    <select id="packing" name="packing">
+                        <option value="">— Select —</option>
+                        {% for pt in packing_types %}
+                        <option value="{{ pt.name }}">{{ pt.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label style="display:flex; align-items:center; gap:0.5rem;">
+                        <input type="checkbox" id="gp_docs_required" name="gp_docs_required" value="1" style="width: auto;">
+                        GP Docs Required
+                    </label>
+                </div>
+                <div class="form-group form-group-wide">
+                    <label for="remarks">Remarks</label>
+                    <textarea id="remarks" name="remarks" rows="2" placeholder="Optional remarks…"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Available Stock -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">
+            Available Stock
+            <span id="stockHint" style="font-weight: 400; color: var(--text-muted); margin-left: 0.5rem;">Select a customer to load stock</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <div id="stockLoading" style="display:none; padding: 2rem; text-align: center; color: var(--text-muted);">Loading available stock...</div>
+            <div id="stockEmpty" style="display:none;" class="empty-state">
+                <h3>No available stock</h3>
+                <p>No cleared containers found for this customer.</p>
+            </div>
+            <div class="table-wrapper" id="stockTableWrapper" style="display:none;">
+                <table class="table" id="stockTable">
+                    <thead>
+                        <tr>
+                            <th style="width:40px;"><input type="checkbox" id="selectAllStock" title="Select all"></th>
+                            <th>SF #</th>
+                            <th>Container #</th>
+                            <th>Product</th>
+                            <th>Available Qty</th>
+                            <th>UOM</th>
+                            <th>Storage Location</th>
+                            <th style="width:120px;">Deliver Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stockBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a href="{{ url_for('delivery.delivery_list') }}" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary">Create Delivery Note</button>
+    </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    var customerSelect = document.getElementById("customer_id");
+    var affiliateSelect = document.getElementById("affiliate_id");
+    var affiliateAddress = document.getElementById("affiliate_address");
+    var affiliateAddrGroup = document.getElementById("affiliate_address_group");
+    var stockBody = document.getElementById("stockBody");
+    var stockTableWrapper = document.getElementById("stockTableWrapper");
+    var stockEmpty = document.getElementById("stockEmpty");
+    var stockLoading = document.getElementById("stockLoading");
+    var stockHint = document.getElementById("stockHint");
+    var selectAllCheckbox = document.getElementById("selectAllStock");
+
+    var affiliatesCache = {};
+
+    // ── Customer change → load affiliates + stock ──────────────────
+    customerSelect.addEventListener("change", function() {
+        var customerId = this.value;
+        affiliateSelect.innerHTML = '<option value="">— Select Affiliate —</option>';
+        affiliateAddrGroup.style.display = "none";
+        affiliateAddress.textContent = "";
+
+        if (!customerId) {
+            affiliateSelect.disabled = true;
+            stockTableWrapper.style.display = "none";
+            stockEmpty.style.display = "none";
+            stockHint.textContent = "Select a customer to load stock";
+            return;
+        }
+
+        affiliateSelect.disabled = false;
+
+        // Load affiliates
+        fetch("{{ url_for('scs.api_customer_affiliates', customer_id=0) }}".replace("/0/", "/" + customerId + "/"))
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                affiliatesCache = {};
+                for (var i = 0; i < data.length; i++) {
+                    var a = data[i];
+                    affiliatesCache[a.id] = a;
+                    var opt = document.createElement("option");
+                    opt.value = a.id;
+                    opt.textContent = a.plant || a.address_line1 || ("Affiliate #" + a.id);
+                    affiliateSelect.appendChild(opt);
+                }
+            });
+
+        // Load available stock
+        loadStock(customerId);
+    });
+
+    // ── Affiliate change → show address ────────────────────────────
+    affiliateSelect.addEventListener("change", function() {
+        var aId = this.value;
+        if (aId && affiliatesCache[aId]) {
+            var a = affiliatesCache[aId];
+            var parts = [];
+            if (a.plant) parts.push(a.plant);
+            if (a.address_line1) parts.push(a.address_line1);
+            if (a.address_line2) parts.push(a.address_line2);
+            if (a.city) parts.push(a.city);
+            if (a.contact_person) parts.push("Contact: " + a.contact_person);
+            if (a.contact_phone) parts.push("Phone: " + a.contact_phone);
+            affiliateAddress.innerHTML = parts.join("<br>");
+            affiliateAddrGroup.style.display = "block";
+        } else {
+            affiliateAddrGroup.style.display = "none";
+        }
+    });
+
+    // ── Load stock for customer ────────────────────────────────────
+    function loadStock(customerId) {
+        stockLoading.style.display = "block";
+        stockTableWrapper.style.display = "none";
+        stockEmpty.style.display = "none";
+        stockHint.textContent = "";
+
+        var url = "{{ url_for('scs.api_available_stock') }}";
+        if (customerId) url += "?customer_id=" + customerId;
+
+        fetch(url)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+                stockLoading.style.display = "none";
+                stockBody.innerHTML = "";
+
+                if (!data.length) {
+                    stockEmpty.style.display = "block";
+                    stockTableWrapper.style.display = "none";
+                    return;
+                }
+
+                stockEmpty.style.display = "none";
+                stockTableWrapper.style.display = "block";
+
+                for (var i = 0; i < data.length; i++) {
+                    var s = data[i];
+                    var tr = document.createElement("tr");
+                    tr.innerHTML =
+                        '<td><input type="checkbox" class="stock-check" data-idx="' + i + '"></td>' +
+                        '<td>' + (s.sf_number || '—') + '</td>' +
+                        '<td>' + (s.container_no || '—') + '</td>' +
+                        '<td>' + (s.product_name || '—') + '</td>' +
+                        '<td>' + s.available_qty + '</td>' +
+                        '<td>' + (s.uom || '') + '</td>' +
+                        '<td>' + (s.storage_location || '—') + '</td>' +
+                        '<td>' +
+                            '<input type="hidden" name="item_container_id[]" value="" disabled>' +
+                            '<input type="number" name="item_qty[]" step="any" max="' + s.available_qty + '" value="' + s.available_qty + '" class="form-item-input qty-field" disabled style="padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); width: 100px;">' +
+                        '</td>';
+                    stockBody.appendChild(tr);
+
+                    // Store container_id on the hidden input
+                    tr.querySelector('input[name="item_container_id[]"]').dataset.cid = s.container_id;
+
+                    // Checkbox toggle
+                    (function(row, cid) {
+                        var cb = row.querySelector(".stock-check");
+                        var hiddenInput = row.querySelector('input[name="item_container_id[]"]');
+                        var qtyInput = row.querySelector('input[name="item_qty[]"]');
+                        cb.addEventListener("change", function() {
+                            if (this.checked) {
+                                hiddenInput.value = cid;
+                                hiddenInput.disabled = false;
+                                qtyInput.disabled = false;
+                                row.style.background = "rgba(16, 185, 129, 0.05)";
+                            } else {
+                                hiddenInput.value = "";
+                                hiddenInput.disabled = true;
+                                qtyInput.disabled = true;
+                                row.style.background = "";
+                            }
+                        });
+                    })(tr, s.container_id);
+                }
+            })
+            .catch(function() {
+                stockLoading.style.display = "none";
+                stockEmpty.style.display = "block";
+            });
+    }
+
+    // ── Select All ─────────────────────────────────────────────────
+    selectAllCheckbox.addEventListener("change", function() {
+        var checks = stockBody.querySelectorAll(".stock-check");
+        for (var i = 0; i < checks.length; i++) {
+            if (checks[i].checked !== selectAllCheckbox.checked) {
+                checks[i].checked = selectAllCheckbox.checked;
+                checks[i].dispatchEvent(new Event("change"));
+            }
+        }
+    });
+})();
+</script>
+{% endblock %}

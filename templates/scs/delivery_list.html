@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Deliveries — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Deliveries</h1>
+        <p class="page-subtitle">Track delivery notes and shipments to customers</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            {% if status_filter %}<input type="hidden" name="status" value="{{ status_filter }}">{% endif %}
+            {% if date_from %}<input type="hidden" name="date_from" value="{{ date_from }}">{% endif %}
+            {% if date_to %}<input type="hidden" name="date_to" value="{{ date_to }}">{% endif %}
+            <input type="text" name="q" value="{{ search }}" placeholder="Search DN#, customer, product…" class="input-search" style="min-width:250px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search or status_filter or date_from or date_to %}
+            <a href="{{ url_for('delivery.delivery_list') }}" class="btn btn-ghost btn-sm">Clear</a>
+            {% endif %}
+        </form>
+        <a href="{{ url_for('delivery.delivery_new') }}" class="btn btn-primary btn-sm">+ New Delivery Note</a>
+    </div>
+</div>
+
+<!-- Status filter pills -->
+<div class="filter-pills">
+    <a href="{{ url_for('delivery.delivery_list', q=search, date_from=date_from, date_to=date_to) }}" class="pill {% if not status_filter %}active{% endif %}">All ({{ status_counts.values()|sum }})</a>
+    {% for st in ['Delivered', 'Invoiced', 'Draft', 'Reversed'] %}
+    {% if status_counts.get(st, 0) > 0 %}
+    <a href="{{ url_for('delivery.delivery_list', q=search, status=st, date_from=date_from, date_to=date_to) }}" class="pill {% if status_filter == st %}active{% endif %}">{{ st }} ({{ status_counts.get(st, 0) }})</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Date Range Filter -->
+<div style="margin-bottom: 1rem; display: flex; gap: 0.5rem; align-items: center;">
+    <form method="get" style="display:flex; gap:0.5rem; align-items: center;">
+        {% if search %}<input type="hidden" name="q" value="{{ search }}">{% endif %}
+        {% if status_filter %}<input type="hidden" name="status" value="{{ status_filter }}">{% endif %}
+        <label style="font-size: 0.85rem; color: var(--text-muted); white-space: nowrap;">Date:</label>
+        <input type="date" name="date_from" value="{{ date_from }}" style="padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius);">
+        <span style="font-size: 0.85rem; color: var(--text-muted);">to</span>
+        <input type="date" name="date_to" value="{{ date_to }}" style="padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius);">
+        <button type="submit" class="btn btn-ghost btn-sm">Filter</button>
+    </form>
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if dn_data %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>DN #</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Affiliate</th>
+                        <th>Products</th>
+                        <th>Total Qty</th>
+                        <th>Transporter</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in dn_data %}
+                    <tr>
+                        <td><a href="{{ url_for('delivery.delivery_detail', dn_id=d.dn.id) }}" class="link">{{ d.dn.dn_number or '—' }}</a></td>
+                        <td>{{ d.dn.delivery_date|date_fmt }}</td>
+                        <td>{{ d.dn.customer.name if d.dn.customer else (d.dn.customer_name or '—') }}</td>
+                        <td>{{ d.dn.affiliate.plant if d.dn.affiliate else '—' }}</td>
+                        <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ d.products }}">{{ d.products }}</td>
+                        <td>{{ d.total_qty|currency if d.total_qty else '—' }}</td>
+                        <td>{{ d.dn.transporter.name if d.dn.transporter else '—' }}</td>
+                        <td><span class="badge badge-{{ d.dn.status|lower }}">{{ d.dn.status }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('delivery.delivery_list', page=pagination.prev_num, q=search, status=status_filter, date_from=date_from, date_to=date_to) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('delivery.delivery_list', page=pagination.next_num, q=search, status=status_filter, date_from=date_from, date_to=date_to) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No deliveries found</h3>
+            <p>{% if search or status_filter or date_from or date_to %}Try adjusting your search or filters.{% else %}No delivery notes have been created yet.{% endif %}</p>
+            <a href="{{ url_for('delivery.delivery_new') }}" class="btn btn-primary">Create First Delivery Note</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

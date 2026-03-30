@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Customer PO {{ cpo.po_no or cpo.id }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('scs.customer_pos') }}">Customer POs</a>
+            <span>/</span>
+            <span>{{ cpo.po_no or cpo.id }}</span>
+        </div>
+        <h1 class="page-title">Customer PO {{ cpo.po_no or '' }}</h1>
+        <p class="page-subtitle">
+            <span class="badge {% if cpo.is_closed %}badge-closed{% else %}badge-open{% endif %}">{% if cpo.is_closed %}Closed{% else %}Open{% endif %}</span>
+            {% if cpo.customer %} &mdash; {{ cpo.customer.name }}{% elif cpo.customer_name %} &mdash; {{ cpo.customer_name }}{% endif %}
+        </p>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('scs.customer_pos') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+        <a href="{{ url_for('scs.customer_po_edit', cpo_id=cpo.id) }}" class="btn btn-primary btn-sm">Edit PO</a>
+    </div>
+</div>
+
+<!-- PO Header Info -->
+<div class="detail-grid" style="margin-bottom: 1.5rem;">
+    <div class="card">
+        <div class="card-header">PO Details</div>
+        <div class="card-body">
+            <div class="detail-list">
+                <div class="detail-item"><span class="detail-label">PO Number</span><span class="detail-value">{{ cpo.po_no or '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Customer</span><span class="detail-value">{{ cpo.customer.name if cpo.customer else (cpo.customer_name or '—') }}</span></div>
+                <div class="detail-item"><span class="detail-label">PO Date</span><span class="detail-value">{{ cpo.po_date|date_fmt }}</span></div>
+                <div class="detail-item"><span class="detail-label">Issued To</span><span class="detail-value">{{ cpo.po_issued_to or '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Delivery Terms</span><span class="detail-value">{{ cpo.delivery_term.name if cpo.delivery_term else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Payment Terms</span><span class="detail-value">{{ cpo.payment_term.name if cpo.payment_term else '—' }}</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Status</div>
+        <div class="card-body">
+            <div class="detail-list">
+                <div class="detail-item">
+                    <span class="detail-label">Status</span>
+                    <span class="detail-value">
+                        <span class="badge {% if cpo.is_closed %}badge-closed{% else %}badge-open{% endif %}">{% if cpo.is_closed %}Closed{% else %}Open{% endif %}</span>
+                    </span>
+                </div>
+                <div class="detail-item"><span class="detail-label">Created</span><span class="detail-value">{{ cpo.created_at|riyadh_fmt }}</span></div>
+                <div class="detail-item"><span class="detail-label">Updated</span><span class="detail-value">{{ cpo.updated_at|riyadh_fmt if cpo.updated_at else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Total Items</span><span class="detail-value">{{ cpo.items|length }}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if cpo.notes %}
+<div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header">Notes</div>
+    <div class="card-body">
+        <p style="white-space: pre-wrap;">{{ cpo.notes }}</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Line Items Table -->
+<div class="card">
+    <div class="card-header">Line Items ({{ cpo.items|length }})</div>
+    <div class="card-body" style="padding: 0;">
+        {% if items_data %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Affiliate</th>
+                        <th>Qty</th>
+                        <th>UOM</th>
+                        <th>Unit Price</th>
+                        <th>Currency</th>
+                        <th>VAT%</th>
+                        <th>Total</th>
+                        <th>Total+VAT</th>
+                        <th>Packing</th>
+                        <th>Delivery Date</th>
+                        <th>SO#</th>
+                        <th>Contract#</th>
+                        <th>Delivered</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in items_data %}
+                    {% set item = d.item %}
+                    <tr>
+                        <td>{{ item.item_no or loop.index }}</td>
+                        <td>{{ item.product.name if item.product else (item.product_name or '—') }}</td>
+                        <td>{{ item.affiliate.plant if item.affiliate else '—' }}</td>
+                        <td>{{ item.qty|currency if item.qty else '—' }}</td>
+                        <td>{{ item.uom or '—' }}</td>
+                        <td>{{ item.unit_price|currency if item.unit_price else '—' }}</td>
+                        <td>{{ item.currency or '—' }}</td>
+                        <td>{% if item.vat_percent is not none %}{{ item.vat_percent }}%{% else %}—{% endif %}</td>
+                        <td>{{ item.total_value|currency if item.total_value else '—' }}</td>
+                        <td>{{ item.total_value_inc_vat|currency if item.total_value_inc_vat else '—' }}</td>
+                        <td>{{ item.packing or '—' }}</td>
+                        <td>{{ item.delivery_date|date_fmt }}</td>
+                        <td>{{ item.so_number or '—' }}</td>
+                        <td>{{ item.contract_no or '—' }}</td>
+                        <td>{{ d.delivered_qty|currency if d.delivered_qty else '0' }}</td>
+                        <td>
+                            <span class="{% if d.balance_qty <= 0 %}text-danger{% endif %}" style="font-weight:600;">
+                                {{ d.balance_qty|currency }}
+                            </span>
+                            {% if item.qty and item.qty > 0 %}
+                            <div class="progress-bar-mini" style="margin-top:3px;">
+                                <div class="progress-fill {% if d.pct_delivered >= 100 %}progress-complete{% elif d.pct_delivered >= 50 %}progress-half{% else %}progress-low{% endif %}" style="width:{{ d.pct_delivered }}%;"></div>
+                            </div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No line items</h3>
+            <p>This Customer PO has no items yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

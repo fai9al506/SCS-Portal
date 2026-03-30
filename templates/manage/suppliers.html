@@ -13,6 +13,7 @@
             <button type="submit" class="btn btn-ghost btn-sm">Search</button>
             {% if search %}<a href="{{ url_for('manage.suppliers') }}" class="btn btn-ghost btn-sm">Clear</a>{% endif %}
         </form>
+        <a href="{{ url_for('manage.supplier_new') }}" class="btn btn-primary btn-sm">New Supplier</a>
     </div>
 </div>
 
@@ -29,6 +30,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +42,14 @@
                         <td>{{ s.email or '—' }}</td>
                         <td>{{ s.phone or '—' }}</td>
                         <td><span class="badge {% if s.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if s.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        <td style="white-space: nowrap;">
+                            <a href="{{ url_for('manage.supplier_edit', id=s.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                            {% if s.is_active %}
+                            <form method="POST" action="{{ url_for('manage.supplier_delete', id=s.id) }}" style="display:inline;" onsubmit="return confirm('Deactivate this supplier?')">
+                                <button type="submit" class="btn btn-danger btn-sm">Deactivate</button>
+                            </form>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

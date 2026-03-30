@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit Supplier" if supplier else "New Supplier" }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('manage.suppliers') }}">Suppliers</a>
+            <span>/</span>
+            <span>{{ "Edit" if supplier else "New" }}</span>
+        </div>
+        <h1 class="page-title">{{ "Edit Supplier" if supplier else "New Supplier" }}</h1>
+    </div>
+</div>
+
+<div class="card" style="max-width: 600px;">
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Supplier Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter supplier name" value="{{ supplier.name if supplier else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="sap_no">SAP No.</label>
+                    <input type="text" id="sap_no" name="sap_no" placeholder="e.g. 200001234" value="{{ supplier.sap_no if supplier and supplier.sap_no else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="contact_person">Contact Person</label>
+                    <input type="text" id="contact_person" name="contact_person" placeholder="Enter contact name" value="{{ supplier.contact_person if supplier and supplier.contact_person else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="supplier@example.com" value="{{ supplier.email if supplier and supplier.email else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="text" id="phone" name="phone" placeholder="+966 ..." value="{{ supplier.phone if supplier and supplier.phone else '' }}">
+                </div>
+                <div class="form-group form-group-wide">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" rows="3" placeholder="Enter address">{{ supplier.address if supplier and supplier.address else '' }}</textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <a href="{{ url_for('manage.suppliers') }}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-primary">{{ "Save Changes" if supplier else "Create Supplier" }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -13,6 +13,7 @@
             <button type="submit" class="btn btn-ghost btn-sm">Search</button>
             {% if search %}<a href="{{ url_for('manage.customers') }}" class="btn btn-ghost btn-sm">Clear</a>{% endif %}
         </form>
+        <a href="{{ url_for('manage.customer_new') }}" class="btn btn-primary btn-sm">New Customer</a>
     </div>
 </div>
 
@@ -27,6 +28,7 @@
                         <th>SAP ID</th>
                         <th>Addresses</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +38,14 @@
                         <td>{{ c.sap_id or '—' }}</td>
                         <td>{{ c.addresses|length }}</td>
                         <td><span class="badge {% if c.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if c.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        <td style="white-space: nowrap;">
+                            <a href="{{ url_for('manage.customer_edit', id=c.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                            {% if c.is_active %}
+                            <form method="POST" action="{{ url_for('manage.customer_delete', id=c.id) }}" style="display:inline;" onsubmit="return confirm('Deactivate this customer?')">
+                                <button type="submit" class="btn btn-danger btn-sm">Deactivate</button>
+                            </form>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

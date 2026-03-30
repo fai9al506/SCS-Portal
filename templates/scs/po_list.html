@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Purchase Orders — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <h1 class="page-title">Purchase Orders</h1>
+        <p class="page-subtitle">Manage supplier purchase orders and track deliveries</p>
+    </div>
+    <div class="header-actions">
+        <form method="get" style="display:flex; gap:0.5rem;">
+            {% if status_filter %}<input type="hidden" name="status" value="{{ status_filter }}">{% endif %}
+            <input type="text" name="q" value="{{ search }}" placeholder="Search PO#, supplier, product…" class="input-search" style="min-width:280px;">
+            <button type="submit" class="btn btn-ghost btn-sm">Search</button>
+            {% if search or status_filter %}
+            <a href="{{ url_for('po.po_list') }}" class="btn btn-ghost btn-sm">Clear</a>
+            {% endif %}
+        </form>
+        <a href="{{ url_for('po.po_new') }}" class="btn btn-primary btn-sm">+ New PO</a>
+    </div>
+</div>
+
+<!-- Status filter pills -->
+<div class="filter-pills">
+    <a href="{{ url_for('po.po_list', q=search) }}" class="pill {% if not status_filter %}active{% endif %}">All ({{ status_counts.values()|sum }})</a>
+    {% for st in ['Ordered', 'Incoming', 'Cleared', 'Canceled'] %}
+    {% if status_counts.get(st, 0) > 0 %}
+    <a href="{{ url_for('po.po_list', q=search, status=st) }}" class="pill {% if status_filter == st %}active{% endif %}">{{ st }} ({{ status_counts.get(st, 0) }})</a>
+    {% endif %}
+    {% endfor %}
+</div>
+
+<div class="card">
+    <div class="card-body" style="padding: 0;">
+        {% if po_data %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>PO No.</th>
+                        <th>Supplier</th>
+                        <th>Products</th>
+                        <th>Qty</th>
+                        <th>Payment Terms</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>DTA</th>
+                        <th>Status</th>
+                        <th>1st Pay</th>
+                        <th>2nd Pay</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in po_data %}
+                    <tr>
+                        <td><a href="{{ url_for('po.po_detail', po_id=d.po.id) }}" class="link">{{ d.po.po_number or '—' }}</a></td>
+                        <td>{{ d.po.supplier.name if d.po.supplier else '—' }}</td>
+                        <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ d.products }}">{{ d.products }}</td>
+                        <td>{{ d.total_qty|currency if d.total_qty else '—' }}</td>
+                        <td>{{ d.po.payment_terms.name if d.po.payment_terms else '—' }}</td>
+                        <td>{{ d.earliest_etd|date_fmt }}</td>
+                        <td>{{ d.earliest_eta|date_fmt }}</td>
+                        <td>
+                            {% if d.dta is not none %}
+                            <span class="dta-badge {% if d.dta < 0 %}dta-overdue{% elif d.dta < 7 %}dta-urgent{% elif d.dta < 14 %}dta-warning{% else %}dta-ok{% endif %}">
+                                {{ d.dta }}d
+                            </span>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </td>
+                        <td><span class="badge badge-{{ d.po.status|lower }}">{{ d.po.status }}</span></td>
+                        <td><span class="badge badge-pay-{{ d.first_pay|lower }}">{{ d.first_pay }}</span></td>
+                        <td><span class="badge badge-pay-{{ d.second_pay|lower }}">{{ d.second_pay }}</span></td>
+                        <td>
+                            <a href="{{ url_for('po.po_edit', po_id=d.po.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if pagination.pages > 1 %}
+        <div class="pagination">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('po.po_list', page=pagination.prev_num, q=search, status=status_filter) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            {% endif %}
+            <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
+            {% if pagination.has_next %}
+            <a href="{{ url_for('po.po_list', page=pagination.next_num, q=search, status=status_filter) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="empty-state">
+            <h3>No purchase orders found</h3>
+            <p>{% if search or status_filter %}Try adjusting your search or filters.{% else %}No purchase orders have been created yet.{% endif %}</p>
+            <a href="{{ url_for('po.po_new') }}" class="btn btn-primary">Create First PO</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

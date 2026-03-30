@@ -27,16 +27,27 @@
                 Dashboard
             </a>
 
-            <!-- Supply Chain -->
-            <div class="nav-group-label">Supply Chain</div>
+            <!-- Operations -->
+            <div class="nav-group-label">Operations</div>
+            <a href="{{ url_for('po.po_list') }}" class="nav-item {% if 'po.' in (request.endpoint or '') %}active{% endif %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+                Purchase Orders
+            </a>
             <a href="{{ url_for('scs.shipments') }}" class="nav-item {% if 'scs.shipment' in (request.endpoint or '') %}active{% endif %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
                 Shipment Files
+            </a>
+            <a href="{{ url_for('delivery.delivery_list') }}" class="nav-item {% if 'delivery.' in (request.endpoint or '') %}active{% endif %}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+                Deliveries
             </a>
             <a href="{{ url_for('scs.customer_pos') }}" class="nav-item {% if 'scs.customer_po' in (request.endpoint or '') %}active{% endif %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
                 Customer POs
             </a>
+
+            <!-- Tracking -->
+            <div class="nav-group-label">Tracking</div>
             <a href="{{ url_for('scs.payments') }}" class="nav-item {% if 'scs.payment' in (request.endpoint or '') %}active{% endif %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
                 Payments
@@ -67,9 +78,9 @@
             </a>
             {% endif %}
 
-            <!-- Manager -->
+            <!-- Admin -->
             {% if current_user.role in ('Admin', 'Manager') %}
-            <div class="nav-group-label">Manager</div>
+            <div class="nav-group-label">Admin</div>
             {% if current_user.role == 'Admin' %}
             <a href="{{ url_for('manage.users') }}" class="nav-item {% if 'manage.user' in (request.endpoint or '') %}active{% endif %}">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>

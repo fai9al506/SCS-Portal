@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}{{ "Edit Product" if product else "New Product" }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('manage.products') }}">Products</a>
+            <span>/</span>
+            <span>{{ "Edit" if product else "New" }}</span>
+        </div>
+        <h1 class="page-title">{{ "Edit Product" if product else "New Product" }}</h1>
+    </div>
+</div>
+
+<div class="card" style="max-width: 600px;">
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="name">Product Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter product name" value="{{ product.name if product else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="sap_code">SAP Code</label>
+                    <input type="text" id="sap_code" name="sap_code" placeholder="e.g. 100001234" value="{{ product.sap_code if product and product.sap_code else '' }}">
+                </div>
+                <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select id="category_id" name="category_id">
+                        <option value="">— None —</option>
+                        {% for cat in categories %}
+                        <option value="{{ cat.id }}" {% if product and product.category_id == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-actions">
+                <a href="{{ url_for('manage.products') }}" class="btn btn-ghost">Cancel</a>
+                <button type="submit" class="btn btn-primary">{{ "Save Changes" if product else "Create Product" }}</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

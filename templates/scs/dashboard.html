@@ -9,64 +9,83 @@
     </div>
 </div>
 
-<div class="status-cards">
-    {% for status_name, color in [
-        ('Open', 'var(--blue)'),
-        ('Ordered', '#6366f1'),
-        ('Incoming', 'var(--purple)'),
-        ('In Transit', 'var(--purple)'),
-        ('At Port', 'var(--yellow)'),
-        ('Clearing', '#ec4899'),
-        ('Cleared', '#10b981'),
-        ('Delivered', 'var(--green)'),
-        ('Closed', '#64748b'),
-        ('Cancelled', 'var(--red)'),
-    ] %}
-    {% if counts.get(status_name, 0) > 0 %}
-    <a href="{{ url_for('scs.shipments', status=status_name) }}" class="status-card" style="--card-color: {{ color }};">
-        <span class="status-count">{{ counts.get(status_name, 0) }}</span>
-        <span class="status-label">{{ status_name }}</span>
+<!-- Summary Cards -->
+<div class="dashboard-cards">
+    <a href="{{ url_for('scs.shipments', status='Incoming') }}" class="dash-card" style="--card-accent: var(--blue);">
+        <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="dash-card-info">
+            <span class="dash-card-count">{{ incoming_shipments }}</span>
+            <span class="dash-card-label">Incoming Shipments</span>
+        </div>
     </a>
-    {% endif %}
-    {% endfor %}
-    <a href="{{ url_for('scs.shipments') }}" class="status-card" style="--card-color: var(--primary);">
-        <span class="status-count">{{ counts.total }}</span>
-        <span class="status-label">Total</span>
+    <div class="dash-card" style="--card-accent: var(--yellow);">
+        <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="dash-card-info">
+            <span class="dash-card-count">{{ pending_clearance }}</span>
+            <span class="dash-card-label">Pending Clearance</span>
+        </div>
+    </div>
+    <a href="{{ url_for('scs.customer_pos', status='open') }}" class="dash-card" style="--card-accent: var(--purple);">
+        <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
+        </div>
+        <div class="dash-card-info">
+            <span class="dash-card-count">{{ open_customer_pos }}</span>
+            <span class="dash-card-label">Open Customer POs</span>
+        </div>
+    </a>
+    <a href="{{ url_for('po.po_list') }}" class="dash-card" style="--card-accent: var(--green);">
+        <div class="dash-card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
+        </div>
+        <div class="dash-card-info">
+            <span class="dash-card-count">{{ active_pos }}</span>
+            <span class="dash-card-label">Active POs</span>
+        </div>
     </a>
 </div>
 
-<div class="card">
+<!-- Arriving Soon -->
+<div class="card" style="margin-bottom: 1.5rem;">
     <div class="card-header">
-        Recent Shipments
-        <a href="{{ url_for('scs.shipments') }}" class="btn btn-ghost btn-sm">View All</a>
+        Arriving Soon
+        <a href="{{ url_for('scs.shipments', status='Incoming') }}" class="btn btn-ghost btn-sm">View All</a>
     </div>
     <div class="card-body" style="padding: 0;">
-        {% if recent %}
+        {% if arriving_data %}
         <div class="table-wrapper">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>SF #</th>
-                        <th>PO Ref</th>
-                        <th>Supplier</th>
+                        <th>S/F #</th>
                         <th>Product</th>
-                        <th>Status</th>
-                        <th>ETD</th>
+                        <th>Supplier</th>
                         <th>ETA</th>
-                        <th>Entry Date</th>
+                        <th>DTA</th>
+                        <th>POD</th>
+                        <th>Containers</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sf in recent %}
+                    {% for d in arriving_data %}
                     <tr>
-                        <td><a href="{{ url_for('scs.shipment_detail', sid=sf.id) }}" class="link">{{ sf.sf_number or '—' }}</a></td>
-                        <td>{{ sf.po_ref or '—' }}</td>
-                        <td>{{ sf.supplier_name or '—' }}</td>
-                        <td>{{ sf.product_name or '—' }}</td>
-                        <td><span class="badge badge-{{ sf.status|lower|replace(' ', '') }}">{{ sf.status }}</span></td>
-                        <td>{{ sf.etd|date_fmt }}</td>
-                        <td>{{ sf.eta|date_fmt }}</td>
-                        <td>{{ sf.entry_date|date_fmt }}</td>
+                        <td><a href="{{ url_for('scs.shipment_detail', sid=d.sf.id) }}" class="link">{{ d.sf.sf_number or '—' }}</a></td>
+                        <td>{{ d.sf.product_name or '—' }}</td>
+                        <td>{{ d.sf.supplier_name or '—' }}</td>
+                        <td>{{ d.sf.eta|date_fmt }}</td>
+                        <td>
+                            {% if d.dta is not none %}
+                            <span class="dta-badge {% if d.dta < 0 %}dta-overdue{% elif d.dta < 7 %}dta-urgent{% elif d.dta < 14 %}dta-warning{% else %}dta-ok{% endif %}">
+                                {{ d.dta }}d
+                            </span>
+                            {% else %}—{% endif %}
+                        </td>
+                        <td>{{ d.sf.port_of_destination_name or (d.sf.port_of_destination.name if d.sf.port_of_destination else '—') }}</td>
+                        <td>{{ d.container_count }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -74,14 +93,49 @@
         </div>
         {% else %}
         <div class="empty-state">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
-                <rect x="1" y="3" width="15" height="13" rx="2"/>
-                <path d="M16 8h4l3 3v5h-7V8z"/>
-                <circle cx="5.5" cy="18.5" r="2.5"/>
-                <circle cx="18.5" cy="18.5" r="2.5"/>
-            </svg>
-            <h3>No shipments yet</h3>
-            <p>Import data from Access database or create your first shipment file.</p>
+            <h3>No incoming shipments</h3>
+            <p>No shipments with upcoming ETAs found.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Recent POs -->
+<div class="card">
+    <div class="card-header">
+        Recent Purchase Orders
+        <a href="{{ url_for('po.po_list') }}" class="btn btn-ghost btn-sm">View All</a>
+    </div>
+    <div class="card-body" style="padding: 0;">
+        {% if recent_pos %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>PO No.</th>
+                        <th>Supplier</th>
+                        <th>Status</th>
+                        <th>Items</th>
+                        <th>Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for po in recent_pos %}
+                    <tr>
+                        <td><a href="{{ url_for('po.po_detail', po_id=po.id) }}" class="link">{{ po.po_number or '—' }}</a></td>
+                        <td>{{ po.supplier.name if po.supplier else '—' }}</td>
+                        <td><span class="badge badge-{{ po.status|lower }}">{{ po.status }}</span></td>
+                        <td>{{ po.items|length }}</td>
+                        <td>{{ po.created_at|riyadh_fmt }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No purchase orders yet</h3>
+            <p>Create your first purchase order to get started.</p>
         </div>
         {% endif %}
     </div>

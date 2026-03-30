@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% block title %}PO {{ po.po_number or po.id }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('po.po_list') }}">Purchase Orders</a>
+            <span>/</span>
+            <span>PO {{ po.po_number or po.id }}</span>
+        </div>
+        <h1 class="page-title">PO {{ po.po_number or '' }}</h1>
+        <p class="page-subtitle">
+            <span class="badge badge-{{ po.status|lower }}">{{ po.status }}</span>
+            {% if po.supplier %} &mdash; {{ po.supplier.name }}{% endif %}
+        </p>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('po.po_list') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+        <a href="{{ url_for('po.po_edit', po_id=po.id) }}" class="btn btn-primary btn-sm">Edit PO</a>
+    </div>
+</div>
+
+<!-- PO Header Info -->
+<div class="detail-grid" style="margin-bottom: 1.5rem;">
+    <div class="card">
+        <div class="card-header">PO Details</div>
+        <div class="card-body">
+            <div class="detail-list">
+                <div class="detail-item"><span class="detail-label">PO Number</span><span class="detail-value">{{ po.po_number or '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Supplier</span><span class="detail-value">{{ po.supplier.name if po.supplier else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Payment Terms</span><span class="detail-value">{{ po.payment_terms.name if po.payment_terms else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Status</span><span class="detail-value"><span class="badge badge-{{ po.status|lower }}">{{ po.status }}</span></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">Metadata</div>
+        <div class="card-body">
+            <div class="detail-list">
+                <div class="detail-item"><span class="detail-label">Created</span><span class="detail-value">{{ po.created_at|riyadh_fmt }}</span></div>
+                <div class="detail-item"><span class="detail-label">Updated</span><span class="detail-value">{{ po.updated_at|riyadh_fmt if po.updated_at else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Created By</span><span class="detail-value">{{ po.creator.name if po.creator else '—' }}</span></div>
+                <div class="detail-item"><span class="detail-label">Total Items</span><span class="detail-value">{{ po.items|length }}</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if po.notes %}
+<div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header">Notes</div>
+    <div class="card-body">
+        <p style="white-space: pre-wrap;">{{ po.notes }}</p>
+    </div>
+</div>
+{% endif %}
+
+<!-- Line Items Table -->
+<div class="card" style="margin-bottom: 1.5rem;">
+    <div class="card-header">Line Items ({{ po.items|length }})</div>
+    <div class="card-body" style="padding: 0;">
+        {% if items_data %}
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>UOM</th>
+                        <th>Unit Price</th>
+                        <th>Currency</th>
+                        <th>Total</th>
+                        <th>ETD</th>
+                        <th>ETA</th>
+                        <th>DTA</th>
+                        <th>POD</th>
+                        <th>Permit</th>
+                        <th>SAP Code</th>
+                        <th>Status</th>
+                        <th>1st Pay</th>
+                        <th>2nd Pay</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in items_data %}
+                    {% set item = d.item %}
+                    <tr>
+                        <td>{{ item.item_no or loop.index }}</td>
+                        <td>{{ item.product.name if item.product else '—' }}</td>
+                        <td>{{ item.qty|currency if item.qty else '—' }}</td>
+                        <td>{{ item.uom or '—' }}</td>
+                        <td>{{ item.unit_price|currency if item.unit_price else '—' }}</td>
+                        <td>{{ item.currency or '—' }}</td>
+                        <td>{{ item.total_amount|currency if item.total_amount else '—' }}</td>
+                        <td>{{ item.etd|date_fmt }}</td>
+                        <td>{{ item.eta|date_fmt }}</td>
+                        <td>
+                            {% if d.dta is not none %}
+                            <span class="dta-badge {% if d.dta < 0 %}dta-overdue{% elif d.dta < 7 %}dta-urgent{% elif d.dta < 14 %}dta-warning{% else %}dta-ok{% endif %}">
+                                {{ d.dta }}d
+                            </span>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </td>
+                        <td>{{ item.port_of_destination.name if item.port_of_destination else '—' }}</td>
+                        <td>{{ item.permit.permit_no if item.permit else '—' }}</td>
+                        <td>{{ item.sap_code or '—' }}</td>
+                        <td><span class="badge badge-{{ item.status|lower }}">{{ item.status }}</span></td>
+                        <td><span class="badge badge-pay-{{ item.first_payment_status|lower }}">{{ item.first_payment_status }}</span></td>
+                        <td><span class="badge badge-pay-{{ item.second_payment_status|lower }}">{{ item.second_payment_status }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <h3>No line items</h3>
+            <p>This PO has no items yet.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Quick Status Update -->
+<div class="card">
+    <div class="card-header">Quick Actions</div>
+    <div class="card-body">
+        <form method="post" action="{{ url_for('po.po_update_status', po_id=po.id) }}" style="display:flex; align-items:center; gap:0.75rem;">
+            <label style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted); white-space: nowrap;">Update Status:</label>
+            <select name="status" class="form-item-select" style="max-width: 200px; padding: 0.45rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.9rem;">
+                {% for st in ['Ordered', 'Incoming', 'Cleared', 'Canceled'] %}
+                <option value="{{ st }}" {% if po.status == st %}selected{% endif %}>{{ st }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn btn-primary btn-sm">Update</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

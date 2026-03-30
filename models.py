@@ -75,6 +75,54 @@ class ReturnTerminal(db.Model):
     is_active = db.Column(db.Boolean, default=True)
 
 
+class PackingType(db.Model):
+    __tablename__ = "packing_types"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+
+
+class PaymentTermSupplier(db.Model):
+    __tablename__ = "payment_terms_supplier"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+
+
+class PaymentTermCustomer(db.Model):
+    __tablename__ = "payment_terms_customer"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+
+
+class DeliveryTerm(db.Model):
+    __tablename__ = "delivery_terms"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+
+
+class PermitRequirement(db.Model):
+    __tablename__ = "permit_requirements"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+
+
+class UnitOfMeasure(db.Model):
+    __tablename__ = "units_of_measure"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=True)
+
+
 # ── Master Data ─────────────────────────────────────────────────────
 
 class Product(db.Model):
@@ -182,126 +230,124 @@ class Permit(db.Model):
     permit_no = db.Column(db.String(50), nullable=True)
     product_name = db.Column(db.String(200), nullable=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
+    name_in_customs = db.Column(db.String(200), nullable=True)
     hs_code = db.Column(db.String(20), nullable=True)
     expiry_date = db.Column(db.Date, nullable=True)
     duty_percent = db.Column(db.Float, nullable=True)
     qty = db.Column(db.Float, nullable=True)
     qty_used = db.Column(db.Float, nullable=True)
+    permit_requirement_id = db.Column(db.Integer, db.ForeignKey("permit_requirements.id"), nullable=True)
     notes = db.Column(db.Text, nullable=True)
     legacy_id = db.Column(db.Integer, nullable=True)
     is_active = db.Column(db.Boolean, default=True)
     created_at = db.Column(db.DateTime, default=utcnow)
 
     product = db.relationship("Product")
+    permit_requirement = db.relationship("PermitRequirement")
 
 
-# ── Shipment File (Core) ────────────────────────────────────────────
+# ── Purchase Orders ─────────────────────────────────────────────────
+
+class PurchaseOrder(db.Model):
+    __tablename__ = "purchase_orders"
+
+    id = db.Column(db.Integer, primary_key=True)
+    po_number = db.Column(db.String(50), nullable=True, index=True)
+    supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"), nullable=True)
+    payment_terms_id = db.Column(db.Integer, db.ForeignKey("payment_terms_supplier.id"), nullable=True)
+    status = db.Column(db.String(30), default="Ordered")
+    notes = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
+    created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+
+    supplier = db.relationship("Supplier", foreign_keys=[supplier_id])
+    payment_term = db.relationship("PaymentTermSupplier", foreign_keys=[payment_terms_id])
+    creator = db.relationship("User", foreign_keys=[created_by])
+    items = db.relationship("PurchaseOrderItem", back_populates="purchase_order", cascade="all, delete-orphan")
+
+
+class PurchaseOrderItem(db.Model):
+    __tablename__ = "purchase_order_items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    po_id = db.Column(db.Integer, db.ForeignKey("purchase_orders.id"), nullable=False)
+    item_no = db.Column(db.Integer, nullable=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
+    qty = db.Column(db.Float, nullable=True)
+    uom = db.Column(db.String(30), nullable=True)
+    unit_price = db.Column(db.Float, nullable=True)
+    currency = db.Column(db.String(10), nullable=True)
+    total_amount = db.Column(db.Float, nullable=True)
+    etd = db.Column(db.Date, nullable=True)
+    eta = db.Column(db.Date, nullable=True)
+    lead_time = db.Column(db.Integer, nullable=True)
+    port_of_destination_id = db.Column(db.Integer, db.ForeignKey("ports_of_destination.id"), nullable=True)
+    permit_id = db.Column(db.Integer, db.ForeignKey("permits.id"), nullable=True)
+    sap_code = db.Column(db.String(50), nullable=True)
+    status = db.Column(db.String(30), default="Ordered")
+    first_payment_status = db.Column(db.String(30), default="Pending")
+    second_payment_status = db.Column(db.String(30), default="Pending")
+    notes = db.Column(db.Text, nullable=True)
+
+    purchase_order = db.relationship("PurchaseOrder", back_populates="items")
+    product = db.relationship("Product", foreign_keys=[product_id])
+    port_of_destination = db.relationship("PortOfDestination", foreign_keys=[port_of_destination_id])
+    permit = db.relationship("Permit", foreign_keys=[permit_id])
+
+
+# ── Shipment File (Header) ─────────────────────────────────────────
 
 class ShipmentFile(db.Model):
     __tablename__ = "shipment_files"
 
     id = db.Column(db.Integer, primary_key=True)
     sf_number = db.Column(db.String(20), nullable=True, index=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    entry_date = db.Column(db.Date, nullable=True)
-    status = db.Column(db.String(30), default="Open")
-    # Status: Open / In Transit / At Port / Clearing / Cleared / Delivered / Closed / Cancelled
 
-    # ── PO & Supplier Details ───────────────────────────────────────
-    po_ref = db.Column(db.String(50), nullable=True)
-    po_item_no = db.Column(db.String(10), nullable=True)  # PO line item number
+    # ── PO Link ─────────────────────────────────────────────────────
+    po_id = db.Column(db.Integer, db.ForeignKey("purchase_orders.id"), nullable=True)
+    po_item_no = db.Column(db.Integer, nullable=True)
+
+    # ── Supplier & Product ──────────────────────────────────────────
     supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"), nullable=True)
-    supplier_name = db.Column(db.String(200), nullable=True)  # Denormalized for legacy
+    supplier_name = db.Column(db.String(200), nullable=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)  # Denormalized for legacy
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    packing = db.Column(db.String(100), nullable=True)
-    unit_price = db.Column(db.Float, nullable=True)
-    currency = db.Column(db.String(10), nullable=True)
-    total_value = db.Column(db.Float, nullable=True)
-    payment_terms = db.Column(db.String(100), nullable=True)
-    incoterm = db.Column(db.String(20), nullable=True)
-    origin_country = db.Column(db.String(100), nullable=True)
+    product_name = db.Column(db.String(200), nullable=True)
 
     # ── Shipping Details ────────────────────────────────────────────
-    container_no = db.Column(db.String(50), nullable=True)
-    container_size = db.Column(db.String(20), nullable=True)
-    seal_no = db.Column(db.String(50), nullable=True)
-    shipping_line_id = db.Column(db.Integer, db.ForeignKey("shipping_lines.id"), nullable=True)
-    shipping_line_name = db.Column(db.String(200), nullable=True)
-    vessel_name = db.Column(db.String(200), nullable=True)
-    voyage_no = db.Column(db.String(50), nullable=True)
     bol_no = db.Column(db.String(50), nullable=True)
     bol_date = db.Column(db.Date, nullable=True)
-    port_of_loading = db.Column(db.String(100), nullable=True)
-    port_of_destination_id = db.Column(db.Integer, db.ForeignKey("ports_of_destination.id"), nullable=True)
-    port_of_destination_name = db.Column(db.String(100), nullable=True)
+    shipping_line_id = db.Column(db.Integer, db.ForeignKey("shipping_lines.id"), nullable=True)
     etd = db.Column(db.Date, nullable=True)
     eta = db.Column(db.Date, nullable=True)
     actual_arrival = db.Column(db.Date, nullable=True)
-    free_time_days = db.Column(db.Integer, nullable=True)
-    free_time_expiry = db.Column(db.Date, nullable=True)
 
-    # ── Clearance Details ───────────────────────────────────────────
+    # ── Port ────────────────────────────────────────────────────────
+    port_of_destination_id = db.Column(db.Integer, db.ForeignKey("ports_of_destination.id"), nullable=True)
+    port_of_destination_name = db.Column(db.String(100), nullable=True)
+
+    # ── Status ──────────────────────────────────────────────────────
+    status = db.Column(db.String(30), default="Incoming")
+    # Status: Incoming / Ordered / Cleared / Canceled
+
+    # ── Customer & Broker ───────────────────────────────────────────
+    intended_customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
+    customer_po_id = db.Column(db.Integer, db.ForeignKey("customer_pos.id"), nullable=True)
     broker_id = db.Column(db.Integer, db.ForeignKey("brokers.id"), nullable=True)
-    broker_name = db.Column(db.String(200), nullable=True)
     permit_id = db.Column(db.Integer, db.ForeignKey("permits.id"), nullable=True)
-    permit_no = db.Column(db.String(50), nullable=True)
-    docs_to_broker_date = db.Column(db.Date, nullable=True)
-    bayan_no = db.Column(db.String(50), nullable=True)
-    bayan_date = db.Column(db.Date, nullable=True)
-    clearance_date = db.Column(db.Date, nullable=True)
-    clearance_status = db.Column(db.String(30), nullable=True)
-    duty_amount = db.Column(db.Float, nullable=True)
-    vat_amount = db.Column(db.Float, nullable=True)
-    customs_other_charges = db.Column(db.Float, nullable=True)
 
-    # ── Stock & Delivery ────────────────────────────────────────────
-    storage_location_id = db.Column(db.Integer, db.ForeignKey("storage_locations.id"), nullable=True)
-    storage_location_name = db.Column(db.String(200), nullable=True)
-    grn_no = db.Column(db.String(50), nullable=True)
-    gr_date = db.Column(db.Date, nullable=True)
-    gr_qty = db.Column(db.Float, nullable=True)
-    delivery_customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
-    delivery_customer_name = db.Column(db.String(200), nullable=True)
-    delivery_plant = db.Column(db.String(200), nullable=True)
-    delivery_address = db.Column(db.Text, nullable=True)
-    delivery_contact = db.Column(db.String(200), nullable=True)
-    transporter_id = db.Column(db.Integer, db.ForeignKey("transporters.id"), nullable=True)
-    transporter_name = db.Column(db.String(200), nullable=True)
-    dn_no = db.Column(db.String(50), nullable=True)
-    dn_date = db.Column(db.Date, nullable=True)
-    delivery_date = db.Column(db.Date, nullable=True)
-    pod_received = db.Column(db.Boolean, default=False)  # Proof of delivery
+    # ── Supplier Invoice ────────────────────────────────────────────
+    supplier_inv_no = db.Column(db.String(50), nullable=True)
+    supplier_inv_date = db.Column(db.Date, nullable=True)
+    unit_price = db.Column(db.Float, nullable=True)
+    currency = db.Column(db.String(10), nullable=True)
+    total_inv_amount = db.Column(db.Float, nullable=True)
 
-    # ── Container Return ────────────────────────────────────────────
-    arrival_to_port_date = db.Column(db.Date, nullable=True)
-    empty_pickup_date = db.Column(db.Date, nullable=True)
-    return_terminal_id = db.Column(db.Integer, db.ForeignKey("return_terminals.id"), nullable=True)
-    return_terminal_name = db.Column(db.String(200), nullable=True)
-    eir_no = db.Column(db.String(50), nullable=True)
-    container_return_date = db.Column(db.Date, nullable=True)
-    container_return_done = db.Column(db.Boolean, default=False)
-
-    # ── Invoicing ───────────────────────────────────────────────────
-    supplier_invoice_no = db.Column(db.String(50), nullable=True)
-    supplier_invoice_date = db.Column(db.Date, nullable=True)
-    supplier_invoice_amount = db.Column(db.Float, nullable=True)
-    customer_invoice_no = db.Column(db.String(50), nullable=True)
-    customer_invoice_date = db.Column(db.Date, nullable=True)
-    customer_invoice_amount = db.Column(db.Float, nullable=True)
-    detention_invoice = db.Column(db.String(50), nullable=True)
-    detention_amount = db.Column(db.Float, nullable=True)
-    commission_invoice = db.Column(db.String(50), nullable=True)
-    commission_amount = db.Column(db.Float, nullable=True)
-    service_invoice = db.Column(db.String(50), nullable=True)
-    service_amount = db.Column(db.Float, nullable=True)
-    freight_invoice = db.Column(db.String(50), nullable=True)
-    freight_amount = db.Column(db.Float, nullable=True)
-    invoices_submitted = db.Column(db.Boolean, default=False)
-
-    # ── Notes ───────────────────────────────────────────────────────
+    # ── Other Details ───────────────────────────────────────────────
+    packing = db.Column(db.String(100), nullable=True)
+    remarks = db.Column(db.Text, nullable=True)
+    entry_date = db.Column(db.Date, nullable=True)
+    legacy_id = db.Column(db.Integer, nullable=True)
     notes = db.Column(db.Text, nullable=True)
 
     # ── Timestamps ──────────────────────────────────────────────────
@@ -310,23 +356,61 @@ class ShipmentFile(db.Model):
     created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
 
     # ── Relationships ───────────────────────────────────────────────
+    purchase_order = db.relationship("PurchaseOrder", foreign_keys=[po_id])
     supplier = db.relationship("Supplier", foreign_keys=[supplier_id])
     product = db.relationship("Product", foreign_keys=[product_id])
     shipping_line = db.relationship("ShippingLine", foreign_keys=[shipping_line_id])
     port_of_destination = db.relationship("PortOfDestination", foreign_keys=[port_of_destination_id])
+    intended_customer = db.relationship("Customer", foreign_keys=[intended_customer_id])
+    customer_po = db.relationship("CustomerPO", foreign_keys=[customer_po_id])
     broker = db.relationship("Broker", foreign_keys=[broker_id])
     permit = db.relationship("Permit", foreign_keys=[permit_id])
-    storage_location = db.relationship("StorageLocation", foreign_keys=[storage_location_id])
-    delivery_customer = db.relationship("Customer", foreign_keys=[delivery_customer_id])
-    transporter = db.relationship("Transporter", foreign_keys=[transporter_id])
-    return_terminal = db.relationship("ReturnTerminal", foreign_keys=[return_terminal_id])
     creator = db.relationship("User", foreign_keys=[created_by])
 
     payment_tracking = db.relationship("ShipmentPaymentTracking", back_populates="shipment", uselist=False)
     broker_covers = db.relationship("BrokerCover", back_populates="shipment")
+    containers = db.relationship("ShipmentContainer", back_populates="shipment", cascade="all, delete-orphan")
 
 
-# ── Customer PO ─────────────────────────────────────────────────────
+# ── Shipment Container ─────────────────────────────────────────────
+
+class ShipmentContainer(db.Model):
+    __tablename__ = "shipment_containers"
+
+    id = db.Column(db.Integer, primary_key=True)
+    shipment_id = db.Column(db.Integer, db.ForeignKey("shipment_files.id"), nullable=False)
+    container_no = db.Column(db.String(50), nullable=True)
+    qty = db.Column(db.Float, nullable=True)
+    uom = db.Column(db.String(30), nullable=True)
+    seal_no = db.Column(db.String(50), nullable=True)
+    packing = db.Column(db.String(100), nullable=True)
+
+    # ── Clearance ───────────────────────────────────────────────────
+    clearance_status = db.Column(db.String(30), default="Incoming")
+    clearance_date = db.Column(db.Date, nullable=True)
+
+    # ── Storage & GR ────────────────────────────────────────────────
+    storage_location_id = db.Column(db.Integer, db.ForeignKey("storage_locations.id"), nullable=True)
+    storage_location_name = db.Column(db.String(200), nullable=True)
+    gr_no = db.Column(db.String(50), nullable=True)
+    gr_date = db.Column(db.Date, nullable=True)
+
+    # ── Docs ────────────────────────────────────────────────────────
+    supplier_inv_no = db.Column(db.String(50), nullable=True)
+    bol_no = db.Column(db.String(50), nullable=True)
+
+    remarks = db.Column(db.Text, nullable=True)
+    legacy_id = db.Column(db.Integer, nullable=True)
+    created_at = db.Column(db.DateTime, default=utcnow)
+
+    # ── Relationships ───────────────────────────────────────────────
+    shipment = db.relationship("ShipmentFile", back_populates="containers")
+    storage_location = db.relationship("StorageLocation", foreign_keys=[storage_location_id])
+    delivery_items = db.relationship("DeliveryNoteItem", back_populates="shipment_container")
+    container_return = db.relationship("ContainerReturn", back_populates="shipment_container", uselist=False)
+
+
+# ── Customer PO (Header) ───────────────────────────────────────────
 
 class CustomerPO(db.Model):
     __tablename__ = "customer_pos"
@@ -335,18 +419,10 @@ class CustomerPO(db.Model):
     po_no = db.Column(db.String(50), nullable=True)
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
     customer_name = db.Column(db.String(200), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    unit_price = db.Column(db.Float, nullable=True)
-    currency = db.Column(db.String(10), nullable=True)
-    total_value = db.Column(db.Float, nullable=True)
-    payment_terms = db.Column(db.String(100), nullable=True)
-    incoterm = db.Column(db.String(20), nullable=True)
-    delivery_location = db.Column(db.String(200), nullable=True)
     po_date = db.Column(db.Date, nullable=True)
-    delivery_date = db.Column(db.Date, nullable=True)
+    po_issued_to = db.Column(db.String(50), nullable=True)  # "MPC", "Grace", "Other"
+    delivery_terms_id = db.Column(db.Integer, db.ForeignKey("delivery_terms.id"), nullable=True)
+    payment_terms_id = db.Column(db.Integer, db.ForeignKey("payment_terms_customer.id"), nullable=True)
     is_closed = db.Column(db.Boolean, default=False)
     notes = db.Column(db.Text, nullable=True)
     legacy_id = db.Column(db.Integer, nullable=True)
@@ -354,10 +430,163 @@ class CustomerPO(db.Model):
     updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
 
     customer = db.relationship("Customer", foreign_keys=[customer_id])
+    delivery_term = db.relationship("DeliveryTerm", foreign_keys=[delivery_terms_id])
+    payment_term = db.relationship("PaymentTermCustomer", foreign_keys=[payment_terms_id])
+    items = db.relationship("CustomerPOItem", back_populates="customer_po", cascade="all, delete-orphan")
+
+
+# ── Customer PO Item ────────────────────────────────────────────────
+
+class CustomerPOItem(db.Model):
+    __tablename__ = "customer_po_items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    customer_po_id = db.Column(db.Integer, db.ForeignKey("customer_pos.id"), nullable=False)
+    item_no = db.Column(db.Integer, nullable=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
+    product_name = db.Column(db.String(200), nullable=True)
+    affiliate_id = db.Column(db.Integer, db.ForeignKey("customer_addresses.id"), nullable=True)
+    qty = db.Column(db.Float, nullable=True)
+    uom = db.Column(db.String(30), nullable=True)
+    unit_price = db.Column(db.Float, nullable=True)
+    currency = db.Column(db.String(10), nullable=True)
+    vat_percent = db.Column(db.Float, default=0)
+    vat_value = db.Column(db.Float, default=0)
+    total_value = db.Column(db.Float, nullable=True)
+    total_value_inc_vat = db.Column(db.Float, nullable=True)
+    packing = db.Column(db.String(100), nullable=True)
+    delivery_date = db.Column(db.Date, nullable=True)
+    sap_code = db.Column(db.String(50), nullable=True)
+    so_number = db.Column(db.String(50), nullable=True)
+    contract_no = db.Column(db.String(50), nullable=True)
+    remarks = db.Column(db.Text, nullable=True)
+
+    customer_po = db.relationship("CustomerPO", back_populates="items")
     product = db.relationship("Product", foreign_keys=[product_id])
+    affiliate = db.relationship("CustomerAddress", foreign_keys=[affiliate_id])
 
 
-# ── Shipment Payment Tracking ───────────────────────────────────────
+# ── Delivery Note ──────────────────────────────────────────────────
+
+class DeliveryNote(db.Model):
+    __tablename__ = "delivery_notes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    dn_number = db.Column(db.String(20), nullable=True, index=True)
+    delivery_date = db.Column(db.Date, nullable=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
+    customer_name = db.Column(db.String(200), nullable=True)
+    affiliate_id = db.Column(db.Integer, db.ForeignKey("customer_addresses.id"), nullable=True)
+    transporter_id = db.Column(db.Integer, db.ForeignKey("transporters.id"), nullable=True)
+    customer_po_id = db.Column(db.Integer, db.ForeignKey("customer_pos.id"), nullable=True)
+    po_item_no = db.Column(db.Integer, nullable=True)
+    so_number = db.Column(db.String(50), nullable=True)
+    total_qty = db.Column(db.Float, nullable=True)
+    gp_docs_required = db.Column(db.Boolean, default=False)
+    packing = db.Column(db.String(100), nullable=True)
+    remarks = db.Column(db.Text, nullable=True)
+    status = db.Column(db.String(30), default="Delivered")
+    # Status: Draft / Delivered / Invoiced / Reversed
+    created_at = db.Column(db.DateTime, default=utcnow)
+    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
+    created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+
+    customer = db.relationship("Customer", foreign_keys=[customer_id])
+    affiliate = db.relationship("CustomerAddress", foreign_keys=[affiliate_id])
+    transporter = db.relationship("Transporter", foreign_keys=[transporter_id])
+    customer_po = db.relationship("CustomerPO", foreign_keys=[customer_po_id])
+    creator = db.relationship("User", foreign_keys=[created_by])
+    items = db.relationship("DeliveryNoteItem", back_populates="delivery_note", cascade="all, delete-orphan")
+
+
+# ── Delivery Note Item ─────────────────────────────────────────────
+
+class DeliveryNoteItem(db.Model):
+    __tablename__ = "delivery_note_items"
+
+    id = db.Column(db.Integer, primary_key=True)
+    delivery_note_id = db.Column(db.Integer, db.ForeignKey("delivery_notes.id"), nullable=False)
+    shipment_container_id = db.Column(db.Integer, db.ForeignKey("shipment_containers.id"), nullable=True)
+    sf_number = db.Column(db.String(20), nullable=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
+    product_name = db.Column(db.String(200), nullable=True)
+    container_no = db.Column(db.String(50), nullable=True)
+    qty = db.Column(db.Float, nullable=True)
+    uom = db.Column(db.String(30), nullable=True)
+    storage_location_id = db.Column(db.Integer, db.ForeignKey("storage_locations.id"), nullable=True)
+    packing = db.Column(db.String(100), nullable=True)
+    remarks = db.Column(db.Text, nullable=True)
+
+    delivery_note = db.relationship("DeliveryNote", back_populates="items")
+    shipment_container = db.relationship("ShipmentContainer", back_populates="delivery_items")
+    product = db.relationship("Product", foreign_keys=[product_id])
+    storage_location = db.relationship("StorageLocation", foreign_keys=[storage_location_id])
+
+
+# ── Container Return ───────────────────────────────────────────────
+
+class ContainerReturn(db.Model):
+    __tablename__ = "container_returns"
+
+    id = db.Column(db.Integer, primary_key=True)
+    shipment_container_id = db.Column(db.Integer, db.ForeignKey("shipment_containers.id"), unique=True, nullable=False)
+    container_no = db.Column(db.String(50), nullable=True)
+    sf_number = db.Column(db.String(20), nullable=True)
+    arrival_to_port_date = db.Column(db.Date, nullable=True)
+    empty_pickup_date = db.Column(db.Date, nullable=True)
+    empty_pickup_notified = db.Column(db.Boolean, default=False)
+    return_terminal_id = db.Column(db.Integer, db.ForeignKey("return_terminals.id"), nullable=True)
+    eir_no = db.Column(db.String(50), nullable=True)
+    container_return_date = db.Column(db.Date, nullable=True)
+    return_complete = db.Column(db.Boolean, default=False)
+    is_iso_tank = db.Column(db.Boolean, default=False)
+    rental_fee_amount = db.Column(db.Float, nullable=True)
+    rental_fee_claimed = db.Column(db.Boolean, default=False)
+    notes = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=utcnow)
+
+    shipment_container = db.relationship("ShipmentContainer", back_populates="container_return")
+    return_terminal = db.relationship("ReturnTerminal", foreign_keys=[return_terminal_id])
+
+
+# ── Commission Tracking ────────────────────────────────────────────
+
+class CommissionTracking(db.Model):
+    __tablename__ = "commission_tracking"
+
+    id = db.Column(db.Integer, primary_key=True)
+    delivery_note_id = db.Column(db.Integer, db.ForeignKey("delivery_notes.id"), nullable=True)
+    shipment_container_id = db.Column(db.Integer, db.ForeignKey("shipment_containers.id"), nullable=True)
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
+    qty_delivered = db.Column(db.Float, nullable=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
+    supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"), nullable=True)
+
+    # ── Commission ──────────────────────────────────────────────────
+    commission_calc_received = db.Column(db.Boolean, default=False)
+    commission_calc_date = db.Column(db.Date, nullable=True)
+    commission_amount = db.Column(db.Float, nullable=True)
+    commission_invoice_no = db.Column(db.String(50), nullable=True)
+    commission_invoice_submitted = db.Column(db.Boolean, default=False)
+    commission_invoice_date = db.Column(db.Date, nullable=True)
+
+    # ── Handling Fee ────────────────────────────────────────────────
+    handling_fee_amount = db.Column(db.Float, nullable=True)
+    handling_invoice_no = db.Column(db.String(50), nullable=True)
+    handling_invoice_submitted = db.Column(db.Boolean, default=False)
+    handling_invoice_date = db.Column(db.Date, nullable=True)
+
+    notes = db.Column(db.Text, nullable=True)
+    created_at = db.Column(db.DateTime, default=utcnow)
+
+    delivery_note = db.relationship("DeliveryNote", foreign_keys=[delivery_note_id])
+    shipment_container = db.relationship("ShipmentContainer", foreign_keys=[shipment_container_id])
+    product = db.relationship("Product", foreign_keys=[product_id])
+    customer = db.relationship("Customer", foreign_keys=[customer_id])
+    supplier = db.relationship("Supplier", foreign_keys=[supplier_id])
+
+
+# ── Shipment Payment Tracking ──────────────────────────────────────
 
 class ShipmentPaymentTracking(db.Model):
     __tablename__ = "shipment_payment_tracking"
@@ -395,31 +624,51 @@ class ShipmentPaymentTracking(db.Model):
     shipment = db.relationship("ShipmentFile", back_populates="payment_tracking")
 
 
-# ── Broker Cover ────────────────────────────────────────────────────
+# ── Broker Cover ───────────────────────────────────────────────────
 
 class BrokerCover(db.Model):
     __tablename__ = "broker_covers"
 
     id = db.Column(db.Integer, primary_key=True)
     shipment_id = db.Column(db.Integer, db.ForeignKey("shipment_files.id"), nullable=False)
+    broker_id = db.Column(db.Integer, db.ForeignKey("brokers.id"), nullable=True)
     cover_date = db.Column(db.Date, nullable=True)
     doc_count = db.Column(db.Integer, nullable=True)
+    fcl_count = db.Column(db.Integer, nullable=True)
+
+    # ── Document Originals & Copies ─────────────────────────────────
+    bol_originals = db.Column(db.Integer, default=0)
     bol_copies = db.Column(db.Integer, nullable=True)
+    invoice_originals = db.Column(db.Integer, default=0)
     invoice_copies = db.Column(db.Integer, nullable=True)
+    coo_originals = db.Column(db.Integer, default=0)
+    coo_copies = db.Column(db.Integer, default=0)
+    packing_list_originals = db.Column(db.Integer, default=0)
     packing_list_copies = db.Column(db.Integer, nullable=True)
+    insurance_originals = db.Column(db.Integer, default=0)
+    insurance_copies = db.Column(db.Integer, default=0)
     coa_copies = db.Column(db.Integer, nullable=True)
     other_docs = db.Column(db.Text, nullable=True)
+
+    # ── Customer PO Details ─────────────────────────────────────────
+    show_customer_po_details = db.Column(db.Boolean, default=False)
+
+    # ── Courier ─────────────────────────────────────────────────────
     courier_name = db.Column(db.String(100), nullable=True)
     courier_tracking = db.Column(db.String(100), nullable=True)
     courier_date = db.Column(db.Date, nullable=True)
+    send_via_dhl = db.Column(db.Boolean, default=False)
+    dhl_tracking = db.Column(db.String(100), nullable=True)
+
     notes = db.Column(db.Text, nullable=True)
     legacy_id = db.Column(db.Integer, nullable=True)
     created_at = db.Column(db.DateTime, default=utcnow)
 
     shipment = db.relationship("ShipmentFile", back_populates="broker_covers")
+    broker = db.relationship("Broker", foreign_keys=[broker_id])
 
 
-# ── Customer Contract (Schema Only) ────────────────────────────────
+# ── Customer Contract ──────────────────────────────────────────────
 
 class CustomerContract(db.Model):
     __tablename__ = "customer_contracts"
@@ -444,7 +693,7 @@ class CustomerContract(db.Model):
     product = db.relationship("Product", foreign_keys=[product_id])
 
 
-# ── Audit Log ───────────────────────────────────────────────────────
+# ── Audit Log ──────────────────────────────────────────────────────
 
 class AuditLog(db.Model):
     __tablename__ = "audit_log"

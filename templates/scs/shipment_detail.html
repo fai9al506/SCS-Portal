@@ -11,29 +11,27 @@
         </div>
         <h1 class="page-title">SF {{ sf.sf_number or '' }}</h1>
         <p class="page-subtitle">
-            <span class="badge badge-{{ sf.status|lower|replace(' ', '') }}">{{ sf.status }}</span>
+            <span class="badge badge-{{ sf.status|lower }}">{{ sf.status }}</span>
             {% if sf.supplier_name %} &mdash; {{ sf.supplier_name }}{% endif %}
+            {% if sf.product_name %} &mdash; {{ sf.product_name }}{% endif %}
         </p>
     </div>
     <div class="header-actions">
         <a href="{{ url_for('scs.shipments') }}" class="btn btn-ghost btn-sm">&larr; Back to List</a>
+        <a href="{{ url_for('scs.shipment_edit', sid=sf.id) }}" class="btn btn-primary btn-sm">Edit SF</a>
     </div>
 </div>
 
 <!-- Tabs -->
 <div class="tabs" id="detailTabs">
-    <button class="tab active" data-tab="basic">Basic Info</button>
-    <button class="tab" data-tab="shipping">Shipping</button>
-    <button class="tab" data-tab="clearance">Clearance</button>
-    <button class="tab" data-tab="delivery">Stock & Delivery</button>
-    <button class="tab" data-tab="container">Container Return</button>
-    <button class="tab" data-tab="invoicing">Invoicing</button>
+    <button class="tab active" data-tab="overview">Overview</button>
+    <button class="tab" data-tab="containers">Containers ({{ sf.containers|length }})</button>
+    {% if sf.broker_covers %}<button class="tab" data-tab="broker">Broker Cover</button>{% endif %}
     {% if sf.payment_tracking %}<button class="tab" data-tab="payment">Payment</button>{% endif %}
-    {% if sf.broker_covers %}<button class="tab" data-tab="broker">Broker Covers</button>{% endif %}
 </div>
 
-<!-- Basic Info -->
-<div class="tab-content active" id="tab-basic">
+<!-- Overview Tab -->
+<div class="tab-content active" id="tab-overview">
     <div class="detail-grid">
         <div class="card">
             <div class="card-header">PO & Product</div>
@@ -41,186 +39,223 @@
                 <div class="detail-list">
                     <div class="detail-item"><span class="detail-label">SF Number</span><span class="detail-value">{{ sf.sf_number or '—' }}</span></div>
                     <div class="detail-item"><span class="detail-label">Entry Date</span><span class="detail-value">{{ sf.entry_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">PO Reference</span><span class="detail-value">{{ sf.po_ref or '—' }}</span></div>
+                    <div class="detail-item">
+                        <span class="detail-label">Purchase Order</span>
+                        <span class="detail-value">
+                            {% if sf.purchase_order %}
+                            <a href="{{ url_for('po.po_detail', po_id=sf.po_id) }}" class="link">{{ sf.purchase_order.po_number or 'PO #' ~ sf.po_id }}</a>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </span>
+                    </div>
                     <div class="detail-item"><span class="detail-label">PO Item No</span><span class="detail-value">{{ sf.po_item_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Supplier</span><span class="detail-value">{{ sf.supplier_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Product</span><span class="detail-value">{{ sf.product_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Quantity</span><span class="detail-value">{% if sf.qty %}{{ sf.qty|currency }} {{ sf.uom or '' }}{% else %}—{% endif %}</span></div>
+                    <div class="detail-item"><span class="detail-label">Supplier</span><span class="detail-value">{{ sf.supplier.name if sf.supplier else (sf.supplier_name or '—') }}</span></div>
+                    <div class="detail-item"><span class="detail-label">Product</span><span class="detail-value">{{ sf.product.name if sf.product else (sf.product_name or '—') }}</span></div>
                     <div class="detail-item"><span class="detail-label">Packing</span><span class="detail-value">{{ sf.packing or '—' }}</span></div>
                 </div>
             </div>
         </div>
         <div class="card">
-            <div class="card-header">Pricing</div>
+            <div class="card-header">Shipping Details</div>
             <div class="card-body">
                 <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Unit Price</span><span class="detail-value">{% if sf.unit_price %}{{ sf.unit_price|currency }} {{ sf.currency or '' }}{% else %}—{% endif %}</span></div>
-                    <div class="detail-item"><span class="detail-label">Total Value</span><span class="detail-value">{% if sf.total_value %}{{ sf.total_value|currency }} {{ sf.currency or '' }}{% else %}—{% endif %}</span></div>
-                    <div class="detail-item"><span class="detail-label">Payment Terms</span><span class="detail-value">{{ sf.payment_terms or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Incoterm</span><span class="detail-value">{{ sf.incoterm or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Origin Country</span><span class="detail-value">{{ sf.origin_country or '—' }}</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Shipping -->
-<div class="tab-content" id="tab-shipping">
-    <div class="detail-grid">
-        <div class="card">
-            <div class="card-header">Vessel & Route</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Shipping Line</span><span class="detail-value">{{ sf.shipping_line_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Vessel Name</span><span class="detail-value">{{ sf.vessel_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Voyage No</span><span class="detail-value">{{ sf.voyage_no or '—' }}</span></div>
                     <div class="detail-item"><span class="detail-label">B/L No</span><span class="detail-value">{{ sf.bol_no or '—' }}</span></div>
                     <div class="detail-item"><span class="detail-label">B/L Date</span><span class="detail-value">{{ sf.bol_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Port of Loading</span><span class="detail-value">{{ sf.port_of_loading or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Port of Destination</span><span class="detail-value">{{ sf.port_of_destination_name or '—' }}</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">Container & Dates</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Container No</span><span class="detail-value">{{ sf.container_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Container Size</span><span class="detail-value">{{ sf.container_size or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Seal No</span><span class="detail-value">{{ sf.seal_no or '—' }}</span></div>
+                    <div class="detail-item"><span class="detail-label">Shipping Line</span><span class="detail-value">{{ sf.shipping_line.name if sf.shipping_line else '—' }}</span></div>
                     <div class="detail-item"><span class="detail-label">ETD</span><span class="detail-value">{{ sf.etd|date_fmt }}</span></div>
                     <div class="detail-item"><span class="detail-label">ETA</span><span class="detail-value">{{ sf.eta|date_fmt }}</span></div>
                     <div class="detail-item"><span class="detail-label">Actual Arrival</span><span class="detail-value">{{ sf.actual_arrival|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Free Time (days)</span><span class="detail-value">{{ sf.free_time_days if sf.free_time_days is not none else '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Free Time Expiry</span><span class="detail-value">{{ sf.free_time_expiry|date_fmt }}</span></div>
+                    <div class="detail-item">
+                        <span class="detail-label">DTA</span>
+                        <span class="detail-value">
+                            {% if dta is not none %}
+                            <span class="dta-badge {% if dta < 0 %}dta-overdue{% elif dta < 7 %}dta-urgent{% elif dta < 14 %}dta-warning{% else %}dta-ok{% endif %}">
+                                {{ dta }} days
+                            </span>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="detail-item"><span class="detail-label">Port of Destination</span><span class="detail-value">{{ sf.port_of_destination.name if sf.port_of_destination else (sf.port_of_destination_name or '—') }}</span></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Clearance -->
-<div class="tab-content" id="tab-clearance">
-    <div class="detail-grid">
-        <div class="card">
-            <div class="card-header">Customs Clearance</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Broker</span><span class="detail-value">{{ sf.broker_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Permit No</span><span class="detail-value">{{ sf.permit_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Docs to Broker</span><span class="detail-value">{{ sf.docs_to_broker_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Bayan No</span><span class="detail-value">{{ sf.bayan_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Bayan Date</span><span class="detail-value">{{ sf.bayan_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Clearance Date</span><span class="detail-value">{{ sf.clearance_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Clearance Status</span><span class="detail-value">{{ sf.clearance_status or '—' }}</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">Clearance Costs</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Duty Amount</span><span class="detail-value">{{ sf.duty_amount|currency }}</span></div>
-                    <div class="detail-item"><span class="detail-label">VAT Amount</span><span class="detail-value">{{ sf.vat_amount|currency }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Other Charges</span><span class="detail-value">{{ sf.customs_other_charges|currency }}</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Stock & Delivery -->
-<div class="tab-content" id="tab-delivery">
-    <div class="detail-grid">
-        <div class="card">
-            <div class="card-header">Goods Receipt</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Storage Location</span><span class="detail-value">{{ sf.storage_location_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">GRN No</span><span class="detail-value">{{ sf.grn_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">GR Date</span><span class="detail-value">{{ sf.gr_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">GR Qty</span><span class="detail-value">{% if sf.gr_qty %}{{ sf.gr_qty|currency }}{% else %}—{% endif %}</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">Delivery</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Customer</span><span class="detail-value">{{ sf.delivery_customer_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Plant</span><span class="detail-value">{{ sf.delivery_plant or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Address</span><span class="detail-value">{{ sf.delivery_address or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Contact</span><span class="detail-value">{{ sf.delivery_contact or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Transporter</span><span class="detail-value">{{ sf.transporter_name or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">DN No</span><span class="detail-value">{{ sf.dn_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">DN Date</span><span class="detail-value">{{ sf.dn_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Delivery Date</span><span class="detail-value">{{ sf.delivery_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">POD Received</span><span class="detail-value">{% if sf.pod_received %}Yes{% else %}No{% endif %}</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Container Return -->
-<div class="tab-content" id="tab-container">
-    <div class="card" style="max-width: 600px;">
-        <div class="card-header">Container Return</div>
-        <div class="card-body">
-            <div class="detail-list">
-                <div class="detail-item"><span class="detail-label">Arrival to Port</span><span class="detail-value">{{ sf.arrival_to_port_date|date_fmt }}</span></div>
-                <div class="detail-item"><span class="detail-label">Empty Pickup Date</span><span class="detail-value">{{ sf.empty_pickup_date|date_fmt }}</span></div>
-                <div class="detail-item"><span class="detail-label">Return Terminal</span><span class="detail-value">{{ sf.return_terminal_name or '—' }}</span></div>
-                <div class="detail-item"><span class="detail-label">EIR No</span><span class="detail-value">{{ sf.eir_no or '—' }}</span></div>
-                <div class="detail-item"><span class="detail-label">Return Date</span><span class="detail-value">{{ sf.container_return_date|date_fmt }}</span></div>
-                <div class="detail-item"><span class="detail-label">Return Done</span><span class="detail-value">{% if sf.container_return_done %}Yes{% else %}No{% endif %}</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Invoicing -->
-<div class="tab-content" id="tab-invoicing">
-    <div class="detail-grid">
-        <div class="card">
-            <div class="card-header">Supplier Invoice</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Invoice No</span><span class="detail-value">{{ sf.supplier_invoice_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Invoice Date</span><span class="detail-value">{{ sf.supplier_invoice_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Amount</span><span class="detail-value">{{ sf.supplier_invoice_amount|currency }}</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-header">Customer Invoice</div>
-            <div class="card-body">
-                <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Invoice No</span><span class="detail-value">{{ sf.customer_invoice_no or '—' }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Invoice Date</span><span class="detail-value">{{ sf.customer_invoice_date|date_fmt }}</span></div>
-                    <div class="detail-item"><span class="detail-label">Amount</span><span class="detail-value">{{ sf.customer_invoice_amount|currency }}</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="detail-grid" style="margin-top: 1rem;">
         <div class="card">
-            <div class="card-header">Other Invoices</div>
+            <div class="card-header">Commercial Details</div>
             <div class="card-body">
                 <div class="detail-list">
-                    <div class="detail-item"><span class="detail-label">Detention Inv</span><span class="detail-value">{{ sf.detention_invoice or '—' }}{% if sf.detention_amount %} ({{ sf.detention_amount|currency }}){% endif %}</span></div>
-                    <div class="detail-item"><span class="detail-label">Commission Inv</span><span class="detail-value">{{ sf.commission_invoice or '—' }}{% if sf.commission_amount %} ({{ sf.commission_amount|currency }}){% endif %}</span></div>
-                    <div class="detail-item"><span class="detail-label">Service Inv</span><span class="detail-value">{{ sf.service_invoice or '—' }}{% if sf.service_amount %} ({{ sf.service_amount|currency }}){% endif %}</span></div>
-                    <div class="detail-item"><span class="detail-label">Freight Inv</span><span class="detail-value">{{ sf.freight_invoice or '—' }}{% if sf.freight_amount %} ({{ sf.freight_amount|currency }}){% endif %}</span></div>
-                    <div class="detail-item"><span class="detail-label">Invoices Submitted</span><span class="detail-value">{% if sf.invoices_submitted %}Yes{% else %}No{% endif %}</span></div>
+                    <div class="detail-item"><span class="detail-label">Supplier Inv No</span><span class="detail-value">{{ sf.supplier_inv_no or '—' }}</span></div>
+                    <div class="detail-item"><span class="detail-label">Supplier Inv Date</span><span class="detail-value">{{ sf.supplier_inv_date|date_fmt }}</span></div>
+                    <div class="detail-item"><span class="detail-label">Unit Price</span><span class="detail-value">{% if sf.unit_price %}{{ sf.unit_price|currency }} {{ sf.currency or '' }}{% else %}—{% endif %}</span></div>
+                    <div class="detail-item"><span class="detail-label">Total Inv Amount</span><span class="detail-value">{% if sf.total_inv_amount %}{{ sf.total_inv_amount|currency }} {{ sf.currency or '' }}{% else %}—{% endif %}</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">Customer & Broker</div>
+            <div class="card-body">
+                <div class="detail-list">
+                    <div class="detail-item"><span class="detail-label">Intended Customer</span><span class="detail-value">{{ sf.intended_customer.name if sf.intended_customer else '—' }}</span></div>
+                    <div class="detail-item"><span class="detail-label">Broker</span><span class="detail-value">{{ sf.broker.name if sf.broker else '—' }}</span></div>
+                    <div class="detail-item"><span class="detail-label">Permit</span><span class="detail-value">{{ sf.permit.permit_no if sf.permit else '—' }}</span></div>
                 </div>
             </div>
         </div>
     </div>
+
+    {% if sf.remarks or sf.notes %}
+    <div class="card" style="margin-top: 1rem;">
+        <div class="card-header">Notes</div>
+        <div class="card-body">
+            {% if sf.remarks %}<p style="white-space: pre-wrap;">{{ sf.remarks }}</p>{% endif %}
+            {% if sf.notes %}<p style="white-space: pre-wrap; margin-top: 0.5rem;">{{ sf.notes }}</p>{% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Quick Status Update -->
+    <div class="card" style="margin-top: 1rem;">
+        <div class="card-header">Quick Actions</div>
+        <div class="card-body">
+            <form method="post" action="{{ url_for('scs.shipment_update_status', sid=sf.id) }}" style="display:flex; align-items:center; gap:0.75rem;">
+                <label style="font-size: 0.9rem; font-weight: 500; color: var(--text-muted); white-space: nowrap;">Update Status:</label>
+                <select name="status" class="form-item-select" style="max-width: 200px; padding: 0.45rem 0.75rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.9rem;">
+                    {% for st in ['Ordered', 'Incoming', 'Cleared', 'Canceled'] %}
+                    <option value="{{ st }}" {% if sf.status == st %}selected{% endif %}>{{ st }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary btn-sm">Update</button>
+            </form>
+        </div>
+    </div>
 </div>
 
-<!-- Payment Tracking -->
+<!-- Containers Tab -->
+<div class="tab-content" id="tab-containers">
+    <div class="card">
+        <div class="card-header">
+            Containers ({{ sf.containers|length }})
+            {% set total_qty = sf.containers|map(attribute='qty')|select('number')|sum %}
+            {% if total_qty %}
+            <span style="font-weight: 400; color: var(--text-muted); margin-left: 0.5rem;">Total: {{ total_qty|currency }}</span>
+            {% endif %}
+        </div>
+        <div class="card-body" style="padding: 0;">
+            {% if sf.containers %}
+            <form method="post" action="{{ url_for('scs.shipment_clearance', sid=sf.id) }}">
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Container No</th>
+                                <th>Qty</th>
+                                <th>UOM</th>
+                                <th>Packing</th>
+                                <th>Seal No</th>
+                                <th>Clearance Status</th>
+                                <th>Clearance Date</th>
+                                <th>Storage Location</th>
+                                <th>GR No</th>
+                                <th>GR Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for c in sf.containers %}
+                            <tr>
+                                <td>
+                                    {{ loop.index }}
+                                    <input type="hidden" name="container_id[]" value="{{ c.id }}">
+                                </td>
+                                <td class="text-bold">{{ c.container_no or '—' }}</td>
+                                <td>{{ c.qty|currency if c.qty else '—' }}</td>
+                                <td>{{ c.uom or '—' }}</td>
+                                <td>{{ c.packing or '—' }}</td>
+                                <td>{{ c.seal_no or '—' }}</td>
+                                <td>
+                                    <select name="clearance_status[]" class="form-item-select" style="min-width: 110px; padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                                        {% for cs in ['Incoming', 'Clearing', 'Cleared'] %}
+                                        <option value="{{ cs }}" {% if c.clearance_status == cs %}selected{% endif %}>{{ cs }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><input type="date" name="clearance_date[]" value="{{ c.clearance_date.isoformat() if c.clearance_date else '' }}" class="form-item-input" style="padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); min-width: 130px;"></td>
+                                <td>
+                                    <select name="storage_location_id[]" class="form-item-select" style="min-width: 140px; padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                                        <option value="">—</option>
+                                        {% for sl in storage_locations %}
+                                        <option value="{{ sl.id }}" {% if c.storage_location_id == sl.id %}selected{% endif %}>{{ sl.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td><input type="text" name="gr_no[]" value="{{ c.gr_no or '' }}" placeholder="GR#" class="form-item-input" style="padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); width: 100px;"></td>
+                                <td><input type="date" name="gr_date[]" value="{{ c.gr_date.isoformat() if c.gr_date else '' }}" class="form-item-input" style="padding: 0.35rem 0.5rem; font-size: 0.85rem; border: 1px solid var(--border); border-radius: var(--radius); min-width: 130px;"></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div style="padding: 1rem; text-align: right;">
+                    <button type="submit" class="btn btn-primary btn-sm">Save Clearance</button>
+                </div>
+            </form>
+            {% else %}
+            <div class="empty-state">
+                <h3>No containers</h3>
+                <p>This shipment file has no containers yet. <a href="{{ url_for('scs.shipment_edit', sid=sf.id) }}" class="link">Edit SF</a> to add containers.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Broker Cover Tab -->
+{% if sf.broker_covers %}
+<div class="tab-content" id="tab-broker">
+    <div class="card">
+        <div class="card-header">Broker Cover Letters ({{ sf.broker_covers|length }})</div>
+        <div class="card-body" style="padding: 0;">
+            <div class="table-wrapper">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Broker</th>
+                            <th>B/L</th>
+                            <th>Invoice</th>
+                            <th>P/L</th>
+                            <th>COA</th>
+                            <th>Courier</th>
+                            <th>Tracking</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for bc in sf.broker_covers %}
+                        <tr>
+                            <td>{{ bc.cover_date|date_fmt }}</td>
+                            <td>{{ bc.broker.name if bc.broker else '—' }}</td>
+                            <td>{{ bc.bol_copies if bc.bol_copies else '—' }}</td>
+                            <td>{{ bc.invoice_copies if bc.invoice_copies else '—' }}</td>
+                            <td>{{ bc.packing_list_copies if bc.packing_list_copies else '—' }}</td>
+                            <td>{{ bc.coa_copies if bc.coa_copies else '—' }}</td>
+                            <td>{{ bc.courier_name or '—' }}</td>
+                            <td>{{ bc.courier_tracking or '—' }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Payment Tracking Tab -->
 {% if sf.payment_tracking %}
 <div class="tab-content" id="tab-payment">
     {% set pt = sf.payment_tracking %}
@@ -253,53 +288,6 @@
 </div>
 {% endif %}
 
-<!-- Broker Covers -->
-{% if sf.broker_covers %}
-<div class="tab-content" id="tab-broker">
-    <div class="card">
-        <div class="card-header">Broker Cover Letters ({{ sf.broker_covers|length }})</div>
-        <div class="card-body" style="padding: 0;">
-            <div class="table-wrapper">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>B/L</th>
-                            <th>Invoice</th>
-                            <th>P/L</th>
-                            <th>COA</th>
-                            <th>Courier</th>
-                            <th>Tracking</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for bc in sf.broker_covers %}
-                        <tr>
-                            <td>{{ bc.cover_date|date_fmt }}</td>
-                            <td>{{ bc.bol_copies if bc.bol_copies else '—' }}</td>
-                            <td>{{ bc.invoice_copies if bc.invoice_copies else '—' }}</td>
-                            <td>{{ bc.packing_list_copies if bc.packing_list_copies else '—' }}</td>
-                            <td>{{ bc.coa_copies if bc.coa_copies else '—' }}</td>
-                            <td>{{ bc.courier_name or '—' }}</td>
-                            <td>{{ bc.courier_tracking or '—' }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
-
-{% if sf.notes %}
-<div class="card" style="margin-top: 1.5rem;">
-    <div class="card-header">Notes</div>
-    <div class="card-body">
-        <p style="white-space: pre-wrap;">{{ sf.notes }}</p>
-    </div>
-</div>
-{% endif %}
 {% endblock %}
 
 {% block scripts %}

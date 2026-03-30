@@ -5,47 +5,56 @@
 <div class="page-header">
     <div>
         <h1 class="page-title">Payment Tracking</h1>
-        <p class="page-subtitle">Track supplier payment status for shipments</p>
+        <p class="page-subtitle">Track supplier payment status across purchase orders</p>
     </div>
     <div class="header-actions">
         <form method="get" style="display:flex; gap:0.5rem;">
-            <input type="text" name="q" value="{{ search }}" placeholder="Search SF#, supplier, LC#…" class="input-search" style="min-width:250px;">
+            {% if pay_filter %}<input type="hidden" name="pay_status" value="{{ pay_filter }}">{% endif %}
+            <input type="text" name="q" value="{{ search }}" placeholder="Search PO#, supplier, product…" class="input-search" style="min-width:250px;">
             <button type="submit" class="btn btn-ghost btn-sm">Search</button>
-            {% if search %}
+            {% if search or pay_filter %}
             <a href="{{ url_for('scs.payments') }}" class="btn btn-ghost btn-sm">Clear</a>
             {% endif %}
         </form>
     </div>
 </div>
 
+<div class="filter-pills">
+    <a href="{{ url_for('scs.payments', q=search) }}" class="pill {% if not pay_filter %}active{% endif %}">All</a>
+    <a href="{{ url_for('scs.payments', q=search, pay_status='required') }}" class="pill {% if pay_filter == 'required' %}active{% endif %}">Required</a>
+    <a href="{{ url_for('scs.payments', q=search, pay_status='done') }}" class="pill {% if pay_filter == 'done' %}active{% endif %}">Done</a>
+</div>
+
 <div class="card">
     <div class="card-body" style="padding: 0;">
-        {% if payments %}
+        {% if items %}
         <div class="table-wrapper">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>SF #</th>
+                        <th>PO No.</th>
                         <th>Supplier</th>
-                        <th>LC No</th>
-                        <th>LC Amount</th>
-                        <th>LC Expiry</th>
-                        <th>Advance</th>
-                        <th>Balance</th>
-                        <th>Status</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Unit Price</th>
+                        <th>Currency</th>
+                        <th>Payment Terms</th>
+                        <th>1st Payment</th>
+                        <th>2nd Payment</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for pt in payments %}
+                    {% for item in items %}
                     <tr>
-                        <td><a href="{{ url_for('scs.shipment_detail', sid=pt.shipment_id) }}" class="link">{{ pt.shipment.sf_number or '—' }}</a></td>
-                        <td>{{ pt.shipment.supplier_name or '—' }}</td>
-                        <td>{{ pt.lc_no or '—' }}</td>
-                        <td>{{ pt.lc_amount|currency }}</td>
-                        <td>{{ pt.lc_expiry|date_fmt }}</td>
-                        <td>{{ pt.advance_payment_amount|currency }}</td>
-                        <td>{{ pt.balance_payment_amount|currency }}</td>
-                        <td><span class="badge badge-{{ (pt.payment_status or 'pending')|lower }}">{{ pt.payment_status or 'Pending' }}</span></td>
+                        <td><a href="{{ url_for('po.po_detail', po_id=item.purchase_order.id) }}" class="link">{{ item.purchase_order.po_number or '—' }}</a></td>
+                        <td>{{ item.purchase_order.supplier.name if item.purchase_order.supplier else '—' }}</td>
+                        <td>{{ item.product.name if item.product else '—' }}</td>
+                        <td>{{ item.qty|currency if item.qty else '—' }}</td>
+                        <td>{{ item.unit_price|currency if item.unit_price else '—' }}</td>
+                        <td>{{ item.currency or '—' }}</td>
+                        <td>{{ item.purchase_order.payment_term.name if item.purchase_order.payment_term else '—' }}</td>
+                        <td><span class="badge badge-pay-{{ (item.first_payment_status or 'pending')|lower }}">{{ item.first_payment_status or 'Pending' }}</span></td>
+                        <td><span class="badge badge-pay-{{ (item.second_payment_status or 'pending')|lower }}">{{ item.second_payment_status or 'Pending' }}</span></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -55,18 +64,18 @@
         {% if pagination.pages > 1 %}
         <div class="pagination">
             {% if pagination.has_prev %}
-            <a href="{{ url_for('scs.payments', page=pagination.prev_num, q=search) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
+            <a href="{{ url_for('scs.payments', page=pagination.prev_num, q=search, pay_status=pay_filter) }}" class="btn btn-ghost btn-sm">&laquo; Prev</a>
             {% endif %}
             <span class="pagination-info">Page {{ pagination.page }} of {{ pagination.pages }} ({{ pagination.total }} records)</span>
             {% if pagination.has_next %}
-            <a href="{{ url_for('scs.payments', page=pagination.next_num, q=search) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
+            <a href="{{ url_for('scs.payments', page=pagination.next_num, q=search, pay_status=pay_filter) }}" class="btn btn-ghost btn-sm">Next &raquo;</a>
             {% endif %}
         </div>
         {% endif %}
         {% else %}
         <div class="empty-state">
             <h3>No payment records found</h3>
-            <p>{% if search %}Try adjusting your search.{% else %}No payment tracking records yet.{% endif %}</p>
+            <p>{% if search or pay_filter %}Try adjusting your search or filters.{% else %}No purchase order items with payment data yet.{% endif %}</p>
         </div>
         {% endif %}
     </div>

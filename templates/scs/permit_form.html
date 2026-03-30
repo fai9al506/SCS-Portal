@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Edit Permit' if permit else 'New Permit' }} — SCS Portal{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div>
+        <div class="breadcrumb">
+            <a href="{{ url_for('scs.permits') }}">Permits</a>
+            <span>/</span>
+            <span>{{ 'Edit ' + (permit.permit_no or '') if permit else 'New Permit' }}</span>
+        </div>
+        <h1 class="page-title">{{ 'Edit Permit' if permit else 'New Permit' }}</h1>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('scs.permits') }}" class="btn btn-ghost btn-sm">&larr; Back to Permits</a>
+    </div>
+</div>
+
+<form method="post">
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header">Permit Details</div>
+        <div class="card-body">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="permit_no">Permit Number</label>
+                    <input type="text" id="permit_no" name="permit_no" value="{{ permit.permit_no or '' if permit else '' }}" placeholder="e.g. IMP-2026-001">
+                </div>
+                <div class="form-group">
+                    <label for="product_id">Product</label>
+                    <select id="product_id" name="product_id">
+                        <option value="">— Select Product —</option>
+                        {% for p in products %}
+                        <option value="{{ p.id }}" {% if permit and permit.product_id == p.id %}selected{% endif %}>{{ p.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hs_code">HS Code</label>
+                    <input type="text" id="hs_code" name="hs_code" value="{{ permit.hs_code or '' if permit else '' }}" placeholder="e.g. 2710.19.29">
+                </div>
+                <div class="form-group">
+                    <label for="name_in_customs">Name in Customs</label>
+                    <input type="text" id="name_in_customs" name="name_in_customs" value="{{ permit.name_in_customs or '' if permit else '' }}" placeholder="Product name as in customs declaration">
+                </div>
+                <div class="form-group">
+                    <label for="permit_requirement_id">Permit Requirement</label>
+                    <select id="permit_requirement_id" name="permit_requirement_id">
+                        <option value="">— Select Requirement —</option>
+                        {% for pr in permit_requirements %}
+                        <option value="{{ pr.id }}" {% if permit and permit.permit_requirement_id == pr.id %}selected{% endif %}>{{ pr.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="duty_percent">Duty %</label>
+                    <input type="number" id="duty_percent" name="duty_percent" step="any" value="{{ permit.duty_percent or '' if permit else '' }}" placeholder="e.g. 5.0">
+                </div>
+                <div class="form-group">
+                    <label for="qty">Quantity</label>
+                    <input type="number" id="qty" name="qty" step="any" value="{{ permit.qty or '' if permit else '' }}" placeholder="Total permitted quantity">
+                </div>
+                <div class="form-group">
+                    <label for="expiry_date">Expiry Date</label>
+                    <input type="date" id="expiry_date" name="expiry_date" value="{{ permit.expiry_date.isoformat() if permit and permit.expiry_date else '' }}">
+                </div>
+                <div class="form-group form-group-wide">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="2" placeholder="Optional notes…">{{ permit.notes or '' if permit else '' }}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <a href="{{ url_for('scs.permits') }}" class="btn btn-ghost">Cancel</a>
+        <button type="submit" class="btn btn-primary">{{ 'Update Permit' if permit else 'Create Permit' }}</button>
+    </div>
+</form>
+{% endblock %}

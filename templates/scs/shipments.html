@@ -16,13 +16,14 @@
             <a href="{{ url_for('scs.shipments') }}" class="btn btn-ghost btn-sm">Clear</a>
             {% endif %}
         </form>
+        <a href="{{ url_for('scs.shipment_new') }}" class="btn btn-primary btn-sm">+ New Shipment File</a>
     </div>
 </div>
 
 <!-- Status filter pills -->
 <div class="filter-pills">
     <a href="{{ url_for('scs.shipments', q=search) }}" class="pill {% if not status_filter %}active{% endif %}">All ({{ status_counts.values()|sum }})</a>
-    {% for st in ['Open', 'In Transit', 'At Port', 'Clearing', 'Cleared', 'Delivered', 'Closed', 'Cancelled'] %}
+    {% for st in ['Incoming', 'Ordered', 'Cleared', 'Canceled'] %}
     {% if status_counts.get(st, 0) > 0 %}
     <a href="{{ url_for('scs.shipments', q=search, status=st) }}" class="pill {% if status_filter == st %}active{% endif %}">{{ st }} ({{ status_counts.get(st, 0) }})</a>
     {% endif %}
@@ -31,36 +32,60 @@
 
 <div class="card">
     <div class="card-body" style="padding: 0;">
-        {% if shipments %}
+        {% if sf_data %}
         <div class="table-wrapper">
             <table class="table">
                 <thead>
                     <tr>
                         <th>SF #</th>
-                        <th>PO Ref</th>
+                        <th>PO #</th>
                         <th>Supplier</th>
                         <th>Product</th>
-                        <th>Qty</th>
-                        <th>Container</th>
-                        <th>Status</th>
+                        <th>Containers</th>
+                        <th>Total Qty</th>
+                        <th>BOL</th>
                         <th>ETD</th>
                         <th>ETA</th>
-                        <th>Entry</th>
+                        <th>DTA</th>
+                        <th>POD</th>
+                        <th>Status</th>
+                        <th>Customer</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for sf in shipments %}
+                    {% for d in sf_data %}
                     <tr>
-                        <td><a href="{{ url_for('scs.shipment_detail', sid=sf.id) }}" class="link">{{ sf.sf_number or '—' }}</a></td>
-                        <td>{{ sf.po_ref or '—' }}</td>
-                        <td>{{ sf.supplier_name or '—' }}</td>
-                        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ sf.product_name or '' }}">{{ sf.product_name or '—' }}</td>
-                        <td>{% if sf.qty %}{{ sf.qty|currency }} {{ sf.uom or '' }}{% else %}—{% endif %}</td>
-                        <td>{{ sf.container_no or '—' }}</td>
-                        <td><span class="badge badge-{{ sf.status|lower|replace(' ', '') }}">{{ sf.status }}</span></td>
-                        <td>{{ sf.etd|date_fmt }}</td>
-                        <td>{{ sf.eta|date_fmt }}</td>
-                        <td>{{ sf.entry_date|date_fmt }}</td>
+                        <td><a href="{{ url_for('scs.shipment_detail', sid=d.sf.id) }}" class="link">{{ d.sf.sf_number or '—' }}</a></td>
+                        <td>
+                            {% if d.po_number %}
+                            <a href="{{ url_for('po.po_detail', po_id=d.sf.po_id) }}" class="link">{{ d.po_number }}</a>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </td>
+                        <td>{{ d.sf.supplier_name or '—' }}</td>
+                        <td style="max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="{{ d.sf.product_name or '' }}">{{ d.sf.product_name or '—' }}</td>
+                        <td>{{ d.container_count }}</td>
+                        <td>{% if d.total_qty %}{{ d.total_qty|currency }}{% else %}—{% endif %}</td>
+                        <td>{{ d.sf.bol_no or '—' }}</td>
+                        <td>{{ d.sf.etd|date_fmt }}</td>
+                        <td>{{ d.sf.eta|date_fmt }}</td>
+                        <td>
+                            {% if d.dta is not none %}
+                            <span class="dta-badge {% if d.dta < 0 %}dta-overdue{% elif d.dta < 7 %}dta-urgent{% elif d.dta < 14 %}dta-warning{% else %}dta-ok{% endif %}">
+                                {{ d.dta }}d
+                            </span>
+                            {% else %}
+                            —
+                            {% endif %}
+                        </td>
+                        <td>{{ d.sf.port_of_destination_name or '—' }}</td>
+                        <td><span class="badge badge-{{ d.sf.status|lower }}">{{ d.sf.status }}</span></td>
+                        <td>{{ d.sf.intended_customer.name if d.sf.intended_customer else '—' }}</td>
+                        <td>
+                            <a href="{{ url_for('scs.shipment_edit', sid=d.sf.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -83,6 +108,7 @@
         <div class="empty-state">
             <h3>No shipments found</h3>
             <p>{% if search or status_filter %}Try adjusting your search or filters.{% else %}No shipment files have been created yet.{% endif %}</p>
+            <a href="{{ url_for('scs.shipment_new') }}" class="btn btn-primary">Create First Shipment File</a>
         </div>
         {% endif %}
     </div>

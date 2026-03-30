@@ -13,6 +13,7 @@
             <button type="submit" class="btn btn-ghost btn-sm">Search</button>
             {% if search %}<a href="{{ url_for('manage.products') }}" class="btn btn-ghost btn-sm">Clear</a>{% endif %}
         </form>
+        <a href="{{ url_for('manage.product_new') }}" class="btn btn-primary btn-sm">New Product</a>
     </div>
 </div>
 
@@ -27,6 +28,7 @@
                         <th>SAP Code</th>
                         <th>Category</th>
                         <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +38,14 @@
                         <td>{{ p.sap_code or '—' }}</td>
                         <td>{{ p.category.name if p.category else '—' }}</td>
                         <td><span class="badge {% if p.is_active %}badge-active{% else %}badge-inactive{% endif %}">{% if p.is_active %}Active{% else %}Inactive{% endif %}</span></td>
+                        <td style="white-space: nowrap;">
+                            <a href="{{ url_for('manage.product_edit', id=p.id) }}" class="btn btn-ghost btn-sm">Edit</a>
+                            {% if p.is_active %}
+                            <form method="POST" action="{{ url_for('manage.product_delete', id=p.id) }}" style="display:inline;" onsubmit="return confirm('Deactivate this product?')">
+                                <button type="submit" class="btn btn-danger btn-sm">Deactivate</button>
+                            </form>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

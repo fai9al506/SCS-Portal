@@ -1,0 +1,5242 @@
+{
+  "products": [
+    {
+      "name": "",
+      "group": null,
+      "sap_code": null
+    },
+    {
+      "name": "25 Kg Australian Buttery Spread KSA",
+      "group": "3",
+      "sap_code": "25 KG AUSTRALIAN B"
+    },
+    {
+      "name": "ACETIC ACID",
+      "group": "7",
+      "sap_code": "ACETIC ACID"
+    },
+    {
+      "name": "Acid Cation ER",
+      "group": "1",
+      "sap_code": null
+    },
+    {
+      "name": "Activated Alumina",
+      "group": "1",
+      "sap_code": "ACTIVATED ALUMINA"
+    },
+    {
+      "name": "Ammo",
+      "group": null,
+      "sap_code": null
+    },
+    {
+      "name": "Ammonium Bicarbonate",
+      "group": "3",
+      "sap_code": "AMMONIUM BICARBON"
+    },
+    {
+      "name": "Ammonium Chloride",
+      "group": "5",
+      "sap_code": "AMMONIUM CHLORIDE"
+    },
+    {
+      "name": "Ammonium Sulphate",
+      "group": "7",
+      "sap_code": "AMMONIUM SULPHATE"
+    },
+    {
+      "name": "Antimony Triacetate",
+      "group": "4",
+      "sap_code": "ANTIMONY ACETATE"
+    },
+    {
+      "name": "Antimony Trioxide",
+      "group": "1",
+      "sap_code": "Antimony Trioxide"
+    },
+    {
+      "name": "Ascorbic Acid",
+      "group": "3",
+      "sap_code": "ASCORBIC ACID"
+    },
+    {
+      "name": "Black PE Masterbatch",
+      "group": "4",
+      "sap_code": "BLACK PE MASTERBAT"
+    },
+    {
+      "name": "BLUE 2745",
+      "group": "4",
+      "sap_code": "BLUE 2745"
+    },
+    {
+      "name": "BLUE 2749",
+      "group": "4",
+      "sap_code": "BLUE 2749"
+    },
+    {
+      "name": "Boric Acid",
+      "group": "6",
+      "sap_code": "BORIC ACID"
+    },
+    {
+      "name": "Calcium Ammonium Nitrate",
+      "group": "3",
+      "sap_code": "CALCIUM AMMONIUM N"
+    },
+    {
+      "name": "Calcium Chloride",
+      "group": "3",
+      "sap_code": "CALCIUM CHLORIDE"
+    },
+    {
+      "name": "Calcium Nitrate",
+      "group": "3",
+      "sap_code": "CALCIUM NITRATE"
+    },
+    {
+      "name": "Caustic Soda Flakes",
+      "group": "3",
+      "sap_code": "CAUSTIC SODA FLAKE"
+    },
+    {
+      "name": "Caustic Soda Solution",
+      "group": "3",
+      "sap_code": "CAUSTIC SODA LIQUI"
+    },
+    {
+      "name": "Ceramic Balls",
+      "group": "1",
+      "sap_code": null
+    },
+    {
+      "name": "Ceramic balls 1/4\"",
+      "group": "1",
+      "sap_code": "Ceramic balls 1/4\""
+    },
+    {
+      "name": "Ceramic balls 1/8\"",
+      "group": "1",
+      "sap_code": "Ceramic balls 1/8\""
+    },
+    {
+      "name": "Ceramic balls 3/4\"",
+      "group": "1",
+      "sap_code": "Ceramic balls 3/4\""
+    },
+    {
+      "name": "Citric Acid",
+      "group": "3",
+      "sap_code": "CITRIC ACID ANHYDR"
+    },
+    {
+      "name": "CMC",
+      "group": "3",
+      "sap_code": "CARBOXYMETHYL CELL"
+    },
+    {
+      "name": "Coconut Diethanol Amide (CDEA)",
+      "group": "3",
+      "sap_code": "CDEA"
+    },
+    {
+      "name": "Color Masterbatch",
+      "group": "4",
+      "sap_code": "COLOR MASTERBATCH"
+    },
+    {
+      "name": "Copper Sulphate",
+      "group": "3",
+      "sap_code": "COPPER SULFATE"
+    },
+    {
+      "name": "CRUDE SALT",
+      "group": "2",
+      "sap_code": "CRUDE SALT"
+    },
+    {
+      "name": "Dextrose Monohydrate",
+      "group": "3",
+      "sap_code": "DEXTROSE MONOHYDRA"
+    },
+    {
+      "name": "Di Potassium Phosphate",
+      "group": "3",
+      "sap_code": "DI POTASSIUM PHOSPHATE"
+    },
+    {
+      "name": "Diammonium hydrogenphosphate (DAP)",
+      "group": "7",
+      "sap_code": "DIAMMONIUM HYDROGE"
+    },
+    {
+      "name": "DIAMMONIUM PHOSPHATE (DAP)",
+      "group": "7",
+      "sap_code": "DIAMMONIUM PHOSPHA"
+    },
+    {
+      "name": "Dicalcium Phosphate (DCP)",
+      "group": "3",
+      "sap_code": "DICALCIUM PHOSPHAT"
+    },
+    {
+      "name": "Diethylene Glycol Monomethyl Ether",
+      "group": "5",
+      "sap_code": "DIETHYLENE GLYCOL"
+    },
+    {
+      "name": "Dipottasium Phosphate (DPP)",
+      "group": "3",
+      "sap_code": "DI POTASSIUM PHOSP"
+    },
+    {
+      "name": "DOP",
+      "group": "3",
+      "sap_code": "DOP"
+    },
+    {
+      "name": "EDTA",
+      "group": "3",
+      "sap_code": "EDTA"
+    },
+    {
+      "name": "EDTA-2NA",
+      "group": "3",
+      "sap_code": "EDTA-2NA"
+    },
+    {
+      "name": "ETHANOL",
+      "group": "6",
+      "sap_code": "ETHANOL"
+    },
+    {
+      "name": "ETHANOX 4737R",
+      "group": "5",
+      "sap_code": "ETHANOX 4737R"
+    },
+    {
+      "name": "ETHYL CHLORIDE",
+      "group": "5",
+      "sap_code": "ETHYL CHLORIDE"
+    },
+    {
+      "name": "FCC Catalyst",
+      "group": "1",
+      "sap_code": null
+    },
+    {
+      "name": "Filler Masterbatch (BAT7505)",
+      "group": "7",
+      "sap_code": "Filler Masterbatch (BAT7505)"
+    },
+    {
+      "name": "Filler Masterbatch (Grade 180)",
+      "group": "4",
+      "sap_code": "FILLER MASTERBATCH"
+    },
+    {
+      "name": "Filler Masterbatch (Grade 190)",
+      "group": "4",
+      "sap_code": "FILLER MASTERBATCH"
+    },
+    {
+      "name": "Filler Masturbatch",
+      "group": "4",
+      "sap_code": "FILLER MASTERBATCH"
+    },
+    {
+      "name": "FINALUX G605",
+      "group": "4",
+      "sap_code": "FINALUX G605"
+    },
+    {
+      "name": "Formic acid",
+      "group": "3",
+      "sap_code": "FORMIC ACID"
+    },
+    {
+      "name": "Fructose",
+      "group": "3",
+      "sap_code": "FRUCTOSE 98%-102%"
+    },
+    {
+      "name": "Glycerin",
+      "group": "3",
+      "sap_code": "Glycerin USP 99.5%"
+    },
+    {
+      "name": "GRADE BAT7505",
+      "group": "4",
+      "sap_code": "GRADE BAT7505"
+    },
+    {
+      "name": "Green 2730",
+      "group": "7",
+      "sap_code": "GREEN 2730"
+    },
+    {
+      "name": "Guar Gum",
+      "group": "3",
+      "sap_code": "GUAR GUM"
+    },
+    {
+      "name": "Halloumi Cheese 250g",
+      "group": "3",
+      "sap_code": "HALLOUMI CHEESE"
+    },
+    {
+      "name": "Himalayan Pink Fine Salt",
+      "group": "3",
+      "sap_code": "HIMALAYAN PINK FIN"
+    },
+    {
+      "name": "Hydrated Lime",
+      "group": "3",
+      "sap_code": "HYDRATED LIME"
+    },
+    {
+      "name": "Hydrated Lime Powder",
+      "group": "3",
+      "sap_code": "HYDRATED LIME"
+    },
+    {
+      "name": "Hydrogen Peroxide",
+      "group": "6",
+      "sap_code": "pending"
+    },
+    {
+      "name": "Hydrotreating Catalyst",
+      "group": null,
+      "sap_code": null
+    },
+    {
+      "name": "IQF Shredded Mozzarella with Starch",
+      "group": "3",
+      "sap_code": "LEPRINO  IQF SHRED"
+    },
+    {
+      "name": "ISO Octane",
+      "group": "4",
+      "sap_code": "ISOOCTANE"
+    },
+    {
+      "name": "Iso Propanol Alcohol",
+      "group": "3",
+      "sap_code": "ISO PROPANOL"
+    },
+    {
+      "name": "LIMESTONE",
+      "group": "3",
+      "sap_code": "LIMESTONE"
+    },
+    {
+      "name": "Magnesium Nitrate",
+      "group": "7",
+      "sap_code": "MAGNESIUM NITRATE"
+    },
+    {
+      "name": "Magnesium Oxide",
+      "group": "3",
+      "sap_code": "MAGNESIUM OXIDE"
+    },
+    {
+      "name": "Magnesium Sulphate Anhydrous",
+      "group": "7",
+      "sap_code": "MAGNESIUM ANHYDROU"
+    },
+    {
+      "name": "Magnesium Sulphate Hepta Hydrate",
+      "group": "7",
+      "sap_code": "MAGNESIUM SULPHATE"
+    },
+    {
+      "name": "Malic Acid\r\nDL-Malic Acid Food Grade-Fine Granular",
+      "group": "3",
+      "sap_code": "DL-MALIC ACID FOOD \r\nDL-Malic Acid Food Grade-Fine Granular\r\nDL-Malic Acid Food Grade-Fine Granular"
+    },
+    {
+      "name": "Manganese Sulphate Monohydrate",
+      "group": "3",
+      "sap_code": "MSM"
+    },
+    {
+      "name": "MB-1000904-E",
+      "group": "4",
+      "sap_code": "MB-1000904-E"
+    },
+    {
+      "name": "MB-10090",
+      "group": "4",
+      "sap_code": "MB-10090"
+    },
+    {
+      "name": "MB-102420",
+      "group": "4",
+      "sap_code": "MB-102420"
+    },
+    {
+      "name": "MB-103700",
+      "group": "4",
+      "sap_code": "MB-103700"
+    },
+    {
+      "name": "MB-1101020-E",
+      "group": "4",
+      "sap_code": "MB-1101020-E"
+    },
+    {
+      "name": "MB-1101117-E",
+      "group": "4",
+      "sap_code": "MB-1101117-E"
+    },
+    {
+      "name": "MB-112272",
+      "group": "4",
+      "sap_code": "MB-112272"
+    },
+    {
+      "name": "MB-11987-N",
+      "group": "4",
+      "sap_code": "MB-11987-N"
+    },
+    {
+      "name": "MB-1605269-E",
+      "group": "4",
+      "sap_code": "MB-1605269-E"
+    },
+    {
+      "name": "MB-1900120-E",
+      "group": "4",
+      "sap_code": "MB-1900120-E"
+    },
+    {
+      "name": "MB-190515-NA",
+      "group": "4",
+      "sap_code": "MB-190515-NA"
+    },
+    {
+      "name": "MB-190826-HP",
+      "group": "4",
+      "sap_code": "MB-190826-HP"
+    },
+    {
+      "name": "MB-192531",
+      "group": "4",
+      "sap_code": "MB-192531"
+    },
+    {
+      "name": "MB-19836-N",
+      "group": "4",
+      "sap_code": "MB-19836-N"
+    },
+    {
+      "name": "MB-4000061E",
+      "group": "4",
+      "sap_code": "MB-4000061E"
+    },
+    {
+      "name": "MB-712072-EPT",
+      "group": "4",
+      "sap_code": "MB-712072-EPT"
+    },
+    {
+      "name": "MB-7600584-E",
+      "group": "4",
+      "sap_code": "MB-7600584-E"
+    },
+    {
+      "name": "MCP",
+      "group": "3",
+      "sap_code": "MCP FEED GRADE"
+    },
+    {
+      "name": "MEA",
+      "group": "1",
+      "sap_code": "MPE-MEA"
+    },
+    {
+      "name": "Methyl acrylate",
+      "group": "1",
+      "sap_code": "METHYL ACRYLATE"
+    },
+    {
+      "name": "Methylene Chloride",
+      "group": "3",
+      "sap_code": "METHYLENE CHLORIDE"
+    },
+    {
+      "name": "Mono Ammonium Phosphate (MAP)",
+      "group": "3",
+      "sap_code": "MONO AMMONIUM PHOS"
+    },
+    {
+      "name": "Mono Potassium Phosphate (MKP)",
+      "group": "3",
+      "sap_code": "MONO POTASSIUM PHO"
+    },
+    {
+      "name": "MPG",
+      "group": "3",
+      "sap_code": "MONO PROPYLENE GLY"
+    },
+    {
+      "name": "n-Heptane",
+      "group": "6",
+      "sap_code": "N-HEPTANE"
+    },
+    {
+      "name": "NITRIC ACID",
+      "group": "6",
+      "sap_code": "NITRIC ACID 68%"
+    },
+    {
+      "name": "NITRIC ACID 68%",
+      "group": null,
+      "sap_code": null
+    },
+    {
+      "name": "Palmitic Acid",
+      "group": "3",
+      "sap_code": "PALMITIC ACID"
+    },
+    {
+      "name": "Phosphoric Acid 85%",
+      "group": "7",
+      "sap_code": "PHOSPHORIC ACID 85"
+    },
+    {
+      "name": "Polyacrylamide 265",
+      "group": "4",
+      "sap_code": null
+    },
+    {
+      "name": "Polyacrylamide 349",
+      "group": "4",
+      "sap_code": null
+    },
+    {
+      "name": "Polyacrylamide 380",
+      "group": "4",
+      "sap_code": null
+    },
+    {
+      "name": "POLYACRYLAMIDE-A",
+      "group": "4",
+      "sap_code": "POLYACRYLAMIDE-A"
+    },
+    {
+      "name": "POLYACRYLAMIDE-C",
+      "group": "4",
+      "sap_code": "POLYACRYLAMIDE-C"
+    },
+    {
+      "name": "Polyaluminum Chloride",
+      "group": "3",
+      "sap_code": "POLYALUMINUM CHLOR"
+    },
+    {
+      "name": "Potassium Humate",
+      "group": "7",
+      "sap_code": "POTASSIUM HUMATE"
+    },
+    {
+      "name": "Potassium Hydroxide 48%",
+      "group": "6",
+      "sap_code": "POTASSIUM HYDROXID"
+    },
+    {
+      "name": "Potassium Hydroxide 90%",
+      "group": "7",
+      "sap_code": "POTASSIUM HYDROXID"
+    },
+    {
+      "name": "Potassium Iodide",
+      "group": "3",
+      "sap_code": "POTASSIUM IODIDE"
+    },
+    {
+      "name": "Potassium Nitrate",
+      "group": "3",
+      "sap_code": "POTASSIUM NITRATE"
+    },
+    {
+      "name": "Potassium Silicate",
+      "group": "3",
+      "sap_code": "POTASSIUM SILICATE"
+    },
+    {
+      "name": "Potassium Sorbate",
+      "group": "3",
+      "sap_code": "POTASSIUM SORBATE"
+    },
+    {
+      "name": "POTASSIUM SULPHATE",
+      "group": "3",
+      "sap_code": "POTASSIUM SULPHATE"
+    },
+    {
+      "name": "Precipitated Silica",
+      "group": "3",
+      "sap_code": "PRECIPITATED SILIC"
+    },
+    {
+      "name": "PVC IMPACT MODIFIER CPE 135A",
+      "group": "4",
+      "sap_code": "PVC IMPACT MODIFIE"
+    },
+    {
+      "name": "P-Xylene",
+      "group": "6",
+      "sap_code": "P-XYLENE"
+    },
+    {
+      "name": "RED 507K",
+      "group": "4",
+      "sap_code": "RED 507K"
+    },
+    {
+      "name": "RED 635",
+      "group": "6",
+      "sap_code": "RED 635"
+    },
+    {
+      "name": "Soda Ash Dense",
+      "group": "3",
+      "sap_code": "SODA ASH DENSE"
+    },
+    {
+      "name": "Soda Ash Light",
+      "group": "3",
+      "sap_code": "SODA ASH LIGHT"
+    },
+    {
+      "name": "Sodium Acid Pyrophosphate (SAPP)",
+      "group": "3",
+      "sap_code": "SODIUM ACID PYROPH"
+    },
+    {
+      "name": "Sodium Benzoate",
+      "group": "3",
+      "sap_code": "SODIUM BENZOATE"
+    },
+    {
+      "name": "Sodium Bicarbonate",
+      "group": "3",
+      "sap_code": "SODIUM BICARBONATE"
+    },
+    {
+      "name": "Sodium Bicarbonate 10% Liquid",
+      "group": "3",
+      "sap_code": "SODIUM BICAR. 10%L"
+    },
+    {
+      "name": "Sodium Chloride",
+      "group": "3",
+      "sap_code": "SODIUM CHLORIDE"
+    },
+    {
+      "name": "Sodium Chlorite",
+      "group": "3",
+      "sap_code": "SODIUM CHLORITE"
+    },
+    {
+      "name": "SODIUM HYDROXIDE",
+      "group": "3",
+      "sap_code": "SODIUM HYDROXIDE"
+    },
+    {
+      "name": "Sodium Lauryl Ether Sulphate (SLES)",
+      "group": "3",
+      "sap_code": "SODIUM LAURYL ETHE"
+    },
+    {
+      "name": "Sodium Metabisulphite",
+      "group": "3",
+      "sap_code": "SODIUM METABISULPH"
+    },
+    {
+      "name": "SODIUM NITRITE",
+      "group": "3",
+      "sap_code": "SODIUM NITRITE"
+    },
+    {
+      "name": "Sodium sulphate Anhydrous",
+      "group": "3",
+      "sap_code": "SODIUM SULPHATE AN"
+    },
+    {
+      "name": "SODIUM SULPHITE",
+      "group": "3",
+      "sap_code": "SODIUM SULPHITE"
+    },
+    {
+      "name": "SODIUM THIOSULFATE",
+      "group": "3",
+      "sap_code": "SODIUM THIOSULFATE"
+    },
+    {
+      "name": "Sodium Tripolyphosphosphate (STPP)",
+      "group": "3",
+      "sap_code": "STPP"
+    },
+    {
+      "name": "Stearic Acid",
+      "group": "4",
+      "sap_code": "STEARIC ACID"
+    },
+    {
+      "name": "Sucralose",
+      "group": "3",
+      "sap_code": "SUCRALOSE"
+    },
+    {
+      "name": "Sulfuric Acid",
+      "group": "3",
+      "sap_code": "SULFURIC ACID"
+    },
+    {
+      "name": "Sylopol 955W",
+      "group": "1",
+      "sap_code": "SYLOPOL 955W"
+    },
+    {
+      "name": "Sylopol 957WY5",
+      "group": "1",
+      "sap_code": "SYLOPOL 957WY5"
+    },
+    {
+      "name": "TALC",
+      "group": "3",
+      "sap_code": "TALC"
+    },
+    {
+      "name": "Tetrachloroethylene",
+      "group": "6",
+      "sap_code": "TETRACHLOROETHYLEN"
+    },
+    {
+      "name": "TITANIUM DIOXIDE",
+      "group": "3",
+      "sap_code": "TITANIUM DIOXIDE"
+    },
+    {
+      "name": "TK-10",
+      "group": "1",
+      "sap_code": "TK-10"
+    },
+    {
+      "name": "TK-261",
+      "group": "1",
+      "sap_code": "TK-261"
+    },
+    {
+      "name": "TK-453",
+      "group": "1",
+      "sap_code": "TK-453"
+    },
+    {
+      "name": "TK-578",
+      "group": "1",
+      "sap_code": "TK-578"
+    },
+    {
+      "name": "TK-709",
+      "group": "1",
+      "sap_code": "TK-709"
+    },
+    {
+      "name": "TK-711",
+      "group": "1",
+      "sap_code": "TK-711"
+    },
+    {
+      "name": "TK-743",
+      "group": "1",
+      "sap_code": "TK-743"
+    },
+    {
+      "name": "TK-831",
+      "group": "1",
+      "sap_code": "TK-831"
+    },
+    {
+      "name": "TK-930",
+      "group": "1",
+      "sap_code": "TK-930"
+    },
+    {
+      "name": "TRI SODIUM CITRATE",
+      "group": "3",
+      "sap_code": "TRI SODIUM CITRATE"
+    },
+    {
+      "name": "Trisodium phosphate",
+      "group": "3",
+      "sap_code": "TRISODIUM PHOSPHAT"
+    },
+    {
+      "name": "WHITE OIL 15",
+      "group": "3",
+      "sap_code": "WHITE OIL 15"
+    },
+    {
+      "name": "White PE Masterbatch",
+      "group": "4",
+      "sap_code": "WHITE PE MASTERBAT"
+    },
+    {
+      "name": "Xanthan Gum",
+      "group": "3",
+      "sap_code": "Xanthan Gum"
+    },
+    {
+      "name": "Xanthan Gum Oil Grade",
+      "group": "2",
+      "sap_code": "XANTHAN GUM 80MESH"
+    },
+    {
+      "name": "YELLOW  1322K",
+      "group": "4",
+      "sap_code": "YELLOW  1322K"
+    },
+    {
+      "name": "Zinc Stearate",
+      "group": "3",
+      "sap_code": "ZINC STEARATE"
+    },
+    {
+      "name": "Zinc Sulfate Monohydrate",
+      "group": "7",
+      "sap_code": "ZINC SULFATE MONOH"
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "",
+      "sap_no": null
+    },
+    {
+      "name": " Polyrheo Inc",
+      "sap_no": "55519"
+    },
+    {
+      "name": "Abdul Rahman Al Sagar Trading Est.",
+      "sap_no": "23681"
+    },
+    {
+      "name": "Abdullatif H. Abuljadayel & Sons Co.",
+      "sap_no": "25269"
+    },
+    {
+      "name": "ABUNDANT SUPERB HOLDINGS LIMITED",
+      "sap_no": "57069"
+    },
+    {
+      "name": "Advanced Chemistry Industrial Company",
+      "sap_no": "24466"
+    },
+    {
+      "name": "Al Ghariba Dawliah Trading EST.",
+      "sap_no": null
+    },
+    {
+      "name": "Al-Babtain Plastic & Insulation MFG. CO. LTD",
+      "sap_no": null
+    },
+    {
+      "name": "AMPACET",
+      "sap_no": null
+    },
+    {
+      "name": "ANTIEN INDUSTRIES JOINT STOCK COMPANY",
+      "sap_no": "56244"
+    },
+    {
+      "name": "APCO",
+      "sap_no": null
+    },
+    {
+      "name": "ASTRA Mining",
+      "sap_no": null
+    },
+    {
+      "name": "Bait Al Riyadah Trading Est",
+      "sap_no": null
+    },
+    {
+      "name": "CHANGSHENG CHEMICAL CO.LIMITED.",
+      "sap_no": "57042"
+    },
+    {
+      "name": "CHEMENGI GUMS AND INDUSTRIES",
+      "sap_no": null
+    },
+    {
+      "name": "Chemfield International Co. Ltd",
+      "sap_no": "56152"
+    },
+    {
+      "name": "ChemFine International Co.Ltd.",
+      "sap_no": "56512"
+    },
+    {
+      "name": "Chemical Solutions Company",
+      "sap_no": "24860"
+    },
+    {
+      "name": "CHENGDU ROCCA CO LTD",
+      "sap_no": "57032"
+    },
+    {
+      "name": "Chengdu Taiyu Industrial Gases Co.Ltd",
+      "sap_no": "57282"
+    },
+    {
+      "name": "Chhavi microfine products Limited",
+      "sap_no": "56867"
+    },
+    {
+      "name": "Chongqing Chuandong Chemical Group Co.Ltd.",
+      "sap_no": "57362"
+    },
+    {
+      "name": "CHROME ORE KHYMIA KIMYASAL URUNLER \r\n                                ITHALAT IHRACAT SANAYI VE TICARET \r\n                                LIMITED SIRKETI TURKEY",
+      "sap_no": "57309"
+    },
+    {
+      "name": "CROWN ALLIANCE DEVELOPMENT CO.LIMITED",
+      "sap_no": "57319"
+    },
+    {
+      "name": "Crown Champion International PTE",
+      "sap_no": null
+    },
+    {
+      "name": "CSC RESOURCE (CHINA) LIMITED",
+      "sap_no": "57071"
+    },
+    {
+      "name": "DAI A INDUSTRY JSC",
+      "sap_no": "56945"
+    },
+    {
+      "name": "DART Express",
+      "sap_no": null
+    },
+    {
+      "name": "Desert Al Jazeera Trading Company",
+      "sap_no": "24742"
+    },
+    {
+      "name": "Dongying Liangxin Petrochemical Technology Development Limited",
+      "sap_no": "56936"
+    },
+    {
+      "name": "ECHEMI",
+      "sap_no": null
+    },
+    {
+      "name": "Egyptian Company For Plastic Industry",
+      "sap_no": null
+    },
+    {
+      "name": "EIAAS Copper industrial company",
+      "sap_no": "25086"
+    },
+    {
+      "name": "ELI-X",
+      "sap_no": null
+    },
+    {
+      "name": "Emdadat Chemicals",
+      "sap_no": "24529"
+    },
+    {
+      "name": "Ensign",
+      "sap_no": null
+    },
+    {
+      "name": "Fayrefield Foods A/S",
+      "sap_no": "57384"
+    },
+    {
+      "name": "Foodchem International Co.",
+      "sap_no": "55002"
+    },
+    {
+      "name": "Fooding",
+      "sap_no": null
+    },
+    {
+      "name": "Foscote Enterprises",
+      "sap_no": null
+    },
+    {
+      "name": "Foscote Group",
+      "sap_no": null
+    },
+    {
+      "name": "Fouz Chemicals Co",
+      "sap_no": null
+    },
+    {
+      "name": "Fufeng",
+      "sap_no": null
+    },
+    {
+      "name": "GETE CHEMICALS",
+      "sap_no": "25114"
+    },
+    {
+      "name": "GLOBAL FEED",
+      "sap_no": null
+    },
+    {
+      "name": "Global Feed Industry LTD",
+      "sap_no": null
+    },
+    {
+      "name": "GLOBAL FOOD & DAIRY INGREDIENTS (FZC)",
+      "sap_no": "57349"
+    },
+    {
+      "name": "GLOBAL SCOPE TRADING EST.",
+      "sap_no": "24897"
+    },
+    {
+      "name": "GRACE GmbH",
+      "sap_no": null
+    },
+    {
+      "name": "Green Plant for Fertilizers and Chemicals Industries",
+      "sap_no": "56819"
+    },
+    {
+      "name": "GREENFIELDS IRELAND LIMITED",
+      "sap_no": "57385"
+    },
+    {
+      "name": "Haldor Topsoe",
+      "sap_no": null
+    },
+    {
+      "name": "Haresh Petrochem Singapore PTE",
+      "sap_no": null
+    },
+    {
+      "name": "HASAD AL-DHAHAB FACTORY FOR LIQUID FERTILIZERS CO.(LTD)",
+      "sap_no": "24831"
+    },
+    {
+      "name": "Henan Chemsino Industry Co. Ltd",
+      "sap_no": null
+    },
+    {
+      "name": "HENAN LEMAX INTERNATIONAL TRADE CO.LTD",
+      "sap_no": "57238"
+    },
+    {
+      "name": "Himalayan Pink Fine Salt",
+      "sap_no": "56242"
+    },
+    {
+      "name": "Hunan Zhongnan Antimony & Tungsten",
+      "sap_no": "56532"
+    },
+    {
+      "name": "IMS",
+      "sap_no": null
+    },
+    {
+      "name": "INEOS Solvents SA",
+      "sap_no": "55097"
+    },
+    {
+      "name": "IOI PAN-CENTURY OLEOCHEMICALS SDN. BHD.",
+      "sap_no": "55404"
+    },
+    {
+      "name": "JIANGBEI ADDITIVE CO., LTD.",
+      "sap_no": "55527"
+    },
+    {
+      "name": "JIANGBEI ADDITIVE CO.LTD.",
+      "sap_no": "55527"
+    },
+    {
+      "name": "JINBEI CHEMICAL (SHANDONG) CO.LTD",
+      "sap_no": "57336"
+    },
+    {
+      "name": "JITEx",
+      "sap_no": null
+    },
+    {
+      "name": "JS GROUP (HUNAN) LIMITED",
+      "sap_no": "57087"
+    },
+    {
+      "name": "KH CHEMICALS ME FZE",
+      "sap_no": null
+    },
+    {
+      "name": "Khair Inorganic Chemical Industries",
+      "sap_no": "25167"
+    },
+    {
+      "name": "KLK",
+      "sap_no": null
+    },
+    {
+      "name": "LEADERCHEM",
+      "sap_no": null
+    },
+    {
+      "name": "Liaoning Yufeng Chemical Co. Ltd",
+      "sap_no": null
+    },
+    {
+      "name": "LuerChem LLC",
+      "sap_no": null
+    },
+    {
+      "name": "M UNION CHEMICALS TRADING (F.Z.E)",
+      "sap_no": "57276"
+    },
+    {
+      "name": "M. Salt",
+      "sap_no": "56242"
+    },
+    {
+      "name": "M.L.A. Industries Pvt. Ltd",
+      "sap_no": "55902"
+    },
+    {
+      "name": "MEDIF HOLDINGS LIMITED",
+      "sap_no": "57383"
+    },
+    {
+      "name": "METCHEM KİMYA SANAYİ VE TİCARET LİMİTED ŞİRKETİ",
+      "sap_no": "57090"
+    },
+    {
+      "name": "Methanol Chemicals Company (Chemanol)",
+      "sap_no": "24758"
+    },
+    {
+      "name": "National Building and Marketing",
+      "sap_no": null
+    },
+    {
+      "name": "Nofa United Company",
+      "sap_no": "22912"
+    },
+    {
+      "name": "Prakash Chemicals International Private Limited",
+      "sap_no": "57142"
+    },
+    {
+      "name": "PRARAMBH INTERNATIONAL LLC",
+      "sap_no": "57194"
+    },
+    {
+      "name": "Professional Chemicals (Prochemie)",
+      "sap_no": null
+    },
+    {
+      "name": "Pure Chem Co.Ltd",
+      "sap_no": null
+    },
+    {
+      "name": "QINGDAO HONGKUANG INTERNATIONAL TRADING CO.,LTD",
+      "sap_no": "56824"
+    },
+    {
+      "name": "QIZHONG CHEMICAL CO.LTD",
+      "sap_no": "57221"
+    },
+    {
+      "name": "Radix Desert Arabia  Trading Co.",
+      "sap_no": "24809"
+    },
+    {
+      "name": "Rajas Gulf Trading Company",
+      "sap_no": "25125"
+    },
+    {
+      "name": "Rawabi Marei Trading Est.",
+      "sap_no": "24609"
+    },
+    {
+      "name": "RAWABI MARKETING INTERNATIONAL",
+      "sap_no": "10613"
+    },
+    {
+      "name": "Rawabi Oil and Gas",
+      "sap_no": "24743"
+    },
+    {
+      "name": "Rowwad Injah for Tradin Est.",
+      "sap_no": "24811"
+    },
+    {
+      "name": "Royal International Company Limited.",
+      "sap_no": "24615"
+    },
+    {
+      "name": "RST COMPANY LIMITED",
+      "sap_no": "56943"
+    },
+    {
+      "name": "SACHLO",
+      "sap_no": null
+    },
+    {
+      "name": "Safana Ideal Trading company",
+      "sap_no": "23682"
+    },
+    {
+      "name": "SAHAA Ingredients Company",
+      "sap_no": "25276"
+    },
+    {
+      "name": "Saudi Automatic Salt Refinery",
+      "sap_no": "21590"
+    },
+    {
+      "name": "Saudi Lime Industries Co.",
+      "sap_no": "20253"
+    },
+    {
+      "name": "SEVEN STAR LEMON TECHNOLOGY CO.,LTD",
+      "sap_no": "56942"
+    },
+    {
+      "name": "Shaanxi Dideu Medichem Co.Ltd",
+      "sap_no": "57233"
+    },
+    {
+      "name": "Shadady",
+      "sap_no": null
+    },
+    {
+      "name": "SHANDONG FUFENG FERMENTATION CO.LTD",
+      "sap_no": "57202"
+    },
+    {
+      "name": "Shandong Kunda Biotechnology Co., Ltd",
+      "sap_no": "56270"
+    },
+    {
+      "name": "Shanghai Jeyu Biotec Co.Ltd.",
+      "sap_no": "57354"
+    },
+    {
+      "name": "Shenyang Huifeng & Petrochemical Co.",
+      "sap_no": null
+    },
+    {
+      "name": "Shenyang Huifeng Petrochemical  Co.,Ltd",
+      "sap_no": null
+    },
+    {
+      "name": "SHIFANG CHUANTENG CHEMICAL INDUSTRY CO.\r\nSHIFANG CHUANTENG CHEMICAL INDUSTRY CO. LTD",
+      "sap_no": "56922"
+    },
+    {
+      "name": "Sichuan Xinchuangxin Chemical Co. Ltd",
+      "sap_no": null
+    },
+    {
+      "name": "Sinochem Nanjing Corporation",
+      "sap_no": "57205"
+    },
+    {
+      "name": "Sinoright International Trade Co Ltd",
+      "sap_no": null
+    },
+    {
+      "name": "Smileda Co.,ltd",
+      "sap_no": "56801"
+    },
+    {
+      "name": "Star Grace Chemical(Dalian) Co.,Ltd.",
+      "sap_no": "57235"
+    },
+    {
+      "name": "SULFOZYME AGRO (INDIA) PVT LTD.",
+      "sap_no": "23206"
+    },
+    {
+      "name": "TAM Al Arabia for Trading Establishment",
+      "sap_no": "24579"
+    },
+    {
+      "name": "Tetraphos Chemicals Est.",
+      "sap_no": "24833"
+    },
+    {
+      "name": "Thirumalai Chemicals Ltd",
+      "sap_no": "57070"
+    },
+    {
+      "name": "TIANJIN CROWN CHAMPION INDUSTRIAL CO.LTD",
+      "sap_no": "56962"
+    },
+    {
+      "name": "Tianjin Xingyu Fertilizer Industry Co.Ltd. China",
+      "sap_no": "56893"
+    },
+    {
+      "name": "Timur Network Sdn Bhd",
+      "sap_no": "56944"
+    },
+    {
+      "name": "TIRA GULF TRADING EST",
+      "sap_no": "25127"
+    },
+    {
+      "name": "Topsoe",
+      "sap_no": "56640"
+    },
+    {
+      "name": "Trans Industrial Trading Company",
+      "sap_no": null
+    },
+    {
+      "name": "TTCA",
+      "sap_no": null
+    },
+    {
+      "name": "US Masterbatch",
+      "sap_no": null
+    },
+    {
+      "name": "US MASTERBATCH JOINT STOCK COMPANY",
+      "sap_no": null
+    },
+    {
+      "name": "VIJAY",
+      "sap_no": null
+    },
+    {
+      "name": "WHITE LAND FOOD TRADING L.L.C.",
+      "sap_no": "57386"
+    },
+    {
+      "name": "XIN JI DA",
+      "sap_no": null
+    },
+    {
+      "name": "XIN JI DA PTE LTD",
+      "sap_no": null
+    },
+    {
+      "name": "YANGZHOU EVERBRIGHT CHEMICAL CO.LTD.",
+      "sap_no": "56952"
+    },
+    {
+      "name": "Yaochang Import & Export Limited",
+      "sap_no": null
+    },
+    {
+      "name": "Young's Corporation",
+      "sap_no": "57003"
+    },
+    {
+      "name": "YUNFU CHEMICAL (DALIAN) CO.LTD",
+      "sap_no": "56988"
+    },
+    {
+      "name": "Zhulin Activated Carbon CO., Ltd",
+      "sap_no": "57015"
+    },
+    {
+      "name": "Zibo Yinghe Chemical Co. Ltd",
+      "sap_no": null
+    }
+  ],
+  "customers": [
+    {
+      "name": "",
+      "sap_id": null
+    },
+    {
+      "name": "Abaq AlJazeera Factory",
+      "sap_id": "1023445"
+    },
+    {
+      "name": "Abdul Rahman Al Sagar Trading Est.",
+      "sap_id": "1020328"
+    },
+    {
+      "name": "Abdulrahman Almoqbel To Mobilize Detergent",
+      "sap_id": "1022299"
+    },
+    {
+      "name": "Abraj AlRisala Plastic Factory",
+      "sap_id": "1022209"
+    },
+    {
+      "name": "ADVANCED CHEMISTRY INDUSTRIAL COMPANY",
+      "sap_id": "1022561"
+    },
+    {
+      "name": "Advanced Petrochemical Co.",
+      "sap_id": "1014104"
+    },
+    {
+      "name": "AES ARABIA LTD",
+      "sap_id": "1023444"
+    },
+    {
+      "name": "AFLAQ",
+      "sap_id": "1021365"
+    },
+    {
+      "name": "Ahmad Abed Factory for Food Powder and Yeast",
+      "sap_id": "1021530"
+    },
+    {
+      "name": "AL AHL FOODS TRADING COMPANY",
+      "sap_id": "1022610"
+    },
+    {
+      "name": "Al Akhawain Plastic Industries Co.",
+      "sap_id": "1022097"
+    },
+    {
+      "name": "AL GHAITH OILFIELD SUPPLIES & SERVICES CO.LTD.",
+      "sap_id": "1020533"
+    },
+    {
+      "name": "Al Jaber Softdrinks",
+      "sap_id": "1019689"
+    },
+    {
+      "name": "Al Jaser for Plastic Industries Company",
+      "sap_id": "1021180"
+    },
+    {
+      "name": "Al Maha Plastic Factory Co. LTD",
+      "sap_id": "1022345"
+    },
+    {
+      "name": "Al Mahalliah Trading & Agriculture Co LTD",
+      "sap_id": "1023426"
+    },
+    {
+      "name": "Al Manar Chemical Liquids Factory Company",
+      "sap_id": "1025595"
+    },
+    {
+      "name": "Al Misk For  Industrial Company",
+      "sap_id": "1023906"
+    },
+    {
+      "name": "Al Rai Food Industries",
+      "sap_id": "1017453"
+    },
+    {
+      "name": "Al Rashed Food Company Ltd.",
+      "sap_id": "1019708"
+    },
+    {
+      "name": "Al Rashid Boxes & Plastic Factory Co. Ltd.",
+      "sap_id": "1021422"
+    },
+    {
+      "name": "Al Rawafid Plastic Factory",
+      "sap_id": "1022136"
+    },
+    {
+      "name": "Al Safi Danone Co. Ltd.",
+      "sap_id": "1000711"
+    },
+    {
+      "name": "Al Saidi Chemical Industries Company",
+      "sap_id": "1022584"
+    },
+    {
+      "name": "AL WADI POULTRY CO",
+      "sap_id": "1023572"
+    },
+    {
+      "name": "AL WALEEDA EST.",
+      "sap_id": "1019814"
+    },
+    {
+      "name": "Al-Ahal Food Trading Company",
+      "sap_id": "1023965"
+    },
+    {
+      "name": "Al-Ahli Leather Factory Company Ltd",
+      "sap_id": "1020505"
+    },
+    {
+      "name": "Al-Attar Foam Factory",
+      "sap_id": "1022587"
+    },
+    {
+      "name": "Albabtain Biscuit Manufacturing & Foodst",
+      "sap_id": "1019098"
+    },
+    {
+      "name": "ALDHAHI GET CONSULTANTS CO. LTD",
+      "sap_id": "1023726"
+    },
+    {
+      "name": "Alesayi Beverage Co. LTD",
+      "sap_id": "1021149"
+    },
+    {
+      "name": "AlGharib Al-Duwaliya Trad. Est.",
+      "sap_id": "1020943"
+    },
+    {
+      "name": "Al-Hadina Trading Investment Co. Ltd (ATICO)",
+      "sap_id": "1020385"
+    },
+    {
+      "name": "Al-Jabar Laundry Company Limited",
+      "sap_id": "1025632"
+    },
+    {
+      "name": "Al-Jawdah Porcelain and Ceramic Co",
+      "sap_id": "1022514"
+    },
+    {
+      "name": "Al-Jazira Food Processing (Gandour)",
+      "sap_id": "1020048"
+    },
+    {
+      "name": "All-Tawun Chemical Co.",
+      "sap_id": "1020211"
+    },
+    {
+      "name": "Almarai Company",
+      "sap_id": "1020186"
+    },
+    {
+      "name": "ALMARI",
+      "sap_id": null
+    },
+    {
+      "name": "Almari Company",
+      "sap_id": "1020186"
+    },
+    {
+      "name": "Al-Mina Plastic Product Factory Co.",
+      "sap_id": "1021448"
+    },
+    {
+      "name": "Al-Noor Khadamati Est.",
+      "sap_id": "1021626"
+    },
+    {
+      "name": "AL-OTHMAN AGR|.PROD. & PROC. CO.",
+      "sap_id": "1021844"
+    },
+    {
+      "name": "AL-RABIE SAUDI FOODS CO.LTD",
+      "sap_id": "1018633"
+    },
+    {
+      "name": "Al-Rowad Chemicals Factory",
+      "sap_id": "1023106"
+    },
+    {
+      "name": "Alruya Fertilizers Mfg. Co. Ltd",
+      "sap_id": "1022400"
+    },
+    {
+      "name": "AlSAD Al-Dhahab Factory for liquid Fertilizer",
+      "sap_id": "1022204"
+    },
+    {
+      "name": "Al-Safi Dairy Co.",
+      "sap_id": "1400001000"
+    },
+    {
+      "name": "Al-Sanabel Al Dahabiah Company",
+      "sap_id": "1024122"
+    },
+    {
+      "name": "Alwadi poultry co",
+      "sap_id": "1023572"
+    },
+    {
+      "name": "ALWAN SAUDI COMPANY LTD.",
+      "sap_id": "1021143"
+    },
+    {
+      "name": "Al-Watania Plastics",
+      "sap_id": "1020554"
+    },
+    {
+      "name": "Amal Al Khalij for tradinng",
+      "sap_id": "1022746"
+    },
+    {
+      "name": "Angie Jubail Operation and Maintenance Company",
+      "sap_id": "1023981"
+    },
+    {
+      "name": "AquaChemie Trading Company",
+      "sap_id": "1023998"
+    },
+    {
+      "name": "Aquat Food Industries Ltd.",
+      "sap_id": "1020366"
+    },
+    {
+      "name": "AQUATREAT",
+      "sap_id": "1025784"
+    },
+    {
+      "name": "ARABIAN BEMCO CONTR. SANG",
+      "sap_id": "1010923"
+    },
+    {
+      "name": "Arabian Company for Chemical Products (APCO)",
+      "sap_id": "1021731"
+    },
+    {
+      "name": "Arabian Cooperative Company",
+      "sap_id": "1019078"
+    },
+    {
+      "name": "Arabian Plastic Compounds Co. LTD",
+      "sap_id": "1012403"
+    },
+    {
+      "name": "Arabian Product Factory for Medical Disinfectants",
+      "sap_id": "1022313"
+    },
+    {
+      "name": "Aramco",
+      "sap_id": "1001334"
+    },
+    {
+      "name": "AREEJ FAMOUS IND CO",
+      "sap_id": "1022601"
+    },
+    {
+      "name": "Areej Famous Trd co",
+      "sap_id": "1022011"
+    },
+    {
+      "name": "Arrow Juice Factory for Bottling and Production Co",
+      "sap_id": "1021078"
+    },
+    {
+      "name": "ASL Al-Keif Food Industry",
+      "sap_id": "1023820"
+    },
+    {
+      "name": "Astra Industrial Complex Co. Ltd",
+      "sap_id": "1020522"
+    },
+    {
+      "name": "Astra Polymer Computing Co. Ltd",
+      "sap_id": "1020457"
+    },
+    {
+      "name": "Atobake Ingredients Limited Co",
+      "sap_id": "1022647"
+    },
+    {
+      "name": "Atom Middle East Trading Est",
+      "sap_id": "1021756"
+    },
+    {
+      "name": "Aujan Beverage Co.",
+      "sap_id": "1018503"
+    },
+    {
+      "name": "Aujan Industries L.L.C (UAE)",
+      "sap_id": "2005205"
+    },
+    {
+      "name": "Aujan Industries LLC",
+      "sap_id": "2006486"
+    },
+    {
+      "name": "Aujan Industries LLC (Egypt)",
+      "sap_id": "2005213"
+    },
+    {
+      "name": "Badria Plastic Factory",
+      "sap_id": "1021336"
+    },
+    {
+      "name": "Bait ul Riadah Trading Est",
+      "sap_id": "1021821"
+    },
+    {
+      "name": "Barrick Arabian Plastic Factory Company",
+      "sap_id": "1023637"
+    },
+    {
+      "name": "Basateen ASIR Trading",
+      "sap_id": "1025834"
+    },
+    {
+      "name": "Batterjee Pharmaceutical Factory",
+      "sap_id": "1021210"
+    },
+    {
+      "name": "Bayouni Petrochemical Co. Ltd",
+      "sap_id": "1018734"
+    },
+    {
+      "name": "Binzagr Co.",
+      "sap_id": "1020384"
+    },
+    {
+      "name": "Branch Of Doosan Enerbility Co.Ltd",
+      "sap_id": "1023819"
+    },
+    {
+      "name": "BuySell Online Marketing Company",
+      "sap_id": "1021818"
+    },
+    {
+      "name": "Chemical Marketing & Distribution Co. Ltd",
+      "sap_id": "1020112"
+    },
+    {
+      "name": "Chemicals Solutions Est. (CHEMSOL)",
+      "sap_id": "1020056"
+    },
+    {
+      "name": "City Link Trade & Transport Co. Ltd.",
+      "sap_id": "1018748"
+    },
+    {
+      "name": "CROWN TOWERS CHEMICAL COMPANY",
+      "sap_id": "1022560"
+    },
+    {
+      "name": "Dawliya Factory Co. Ltd",
+      "sap_id": "1019254"
+    },
+    {
+      "name": "Decane Trading corporation",
+      "sap_id": "1023386"
+    },
+    {
+      "name": "Delta Company for Chemical Industries",
+      "sap_id": "1021099"
+    },
+    {
+      "name": "Delta Plastic factory",
+      "sap_id": "1022923"
+    },
+    {
+      "name": "Desert Al Jazeera Trading Company",
+      "sap_id": "1022694"
+    },
+    {
+      "name": "DESERT ROCK TRADING EST",
+      "sap_id": "1020166"
+    },
+    {
+      "name": "Dorrat Al-Sham Factory",
+      "sap_id": "1022613"
+    },
+    {
+      "name": "Emdadat Chemicals Company",
+      "sap_id": "1021546"
+    },
+    {
+      "name": "Emdadat Chemicals Est.",
+      "sap_id": "1021546"
+    },
+    {
+      "name": "Engie Yanbu for Operation and Maintenance Company",
+      "sap_id": "1023729"
+    },
+    {
+      "name": "Fahad Salman Alhalafy Est",
+      "sap_id": "1022227"
+    },
+    {
+      "name": "Farabi Petrochemicals Company",
+      "sap_id": "1021528"
+    },
+    {
+      "name": "FARAH M SARFARAZ AL-JOHAN",
+      "sap_id": "1021983"
+    },
+    {
+      "name": "Farco Sweets Factory",
+      "sap_id": "1019755"
+    },
+    {
+      "name": "First National Operation & Maintenance Co. Ltd",
+      "sap_id": "1020741"
+    },
+    {
+      "name": "First Sources Trading Company",
+      "sap_id": "1023776"
+    },
+    {
+      "name": "FOODS FLOWER COMPANY",
+      "sap_id": "1020167"
+    },
+    {
+      "name": "Fouz Chemicals Co.",
+      "sap_id": "1020026"
+    },
+    {
+      "name": "Fragrant Abaq factory",
+      "sap_id": "1024101"
+    },
+    {
+      "name": "Fresh Food Products Company",
+      "sap_id": "1023745"
+    },
+    {
+      "name": "Fulla Trading Company",
+      "sap_id": "1025443"
+    },
+    {
+      "name": "Future Pipe Industries",
+      "sap_id": "1022518"
+    },
+    {
+      "name": "GETE CHEMICALS",
+      "sap_id": "25114"
+    },
+    {
+      "name": "Golden chemistry for chemicals Est",
+      "sap_id": "1022157"
+    },
+    {
+      "name": "Green Dunes Company Limited",
+      "sap_id": "1023511"
+    },
+    {
+      "name": "Green Farm Agricultural Est.",
+      "sap_id": "1023538"
+    },
+    {
+      "name": "Gulf Catering Food Factory",
+      "sap_id": "1020208"
+    },
+    {
+      "name": "Gulf Color Industry Factory",
+      "sap_id": "1020940"
+    },
+    {
+      "name": "Gulf Desert Chemical",
+      "sap_id": "1020381"
+    },
+    {
+      "name": "GULF DEVELOPMENT COMPANY FOR INVESTMENT",
+      "sap_id": "1022715"
+    },
+    {
+      "name": "Gulf Hygiene Co. Ltd.",
+      "sap_id": "1020245"
+    },
+    {
+      "name": "GULF LIFE SCIENCE FOR CHEMICALS CO",
+      "sap_id": "1021931"
+    },
+    {
+      "name": "Gulf Paint Factory",
+      "sap_id": "1020286"
+    },
+    {
+      "name": "Gulf Palace Furtilizer Company",
+      "sap_id": "1023510"
+    },
+    {
+      "name": "gulf plastic industrial company",
+      "sap_id": "1022208"
+    },
+    {
+      "name": "Gulf polystyrene Sheets Factory Company",
+      "sap_id": "1025394"
+    },
+    {
+      "name": "Gulf Stars first Plastic Company",
+      "sap_id": "1024091"
+    },
+    {
+      "name": "Gulf Union Food Factory",
+      "sap_id": "1018163"
+    },
+    {
+      "name": "Hail Agricultural Dev. Co.",
+      "sap_id": "1021048"
+    },
+    {
+      "name": "Halwani Bros",
+      "sap_id": "1022428"
+    },
+    {
+      "name": "Hassani Trading Co.",
+      "sap_id": "2005753"
+    },
+    {
+      "name": "Healthy and Tasty Co.",
+      "sap_id": "1024250"
+    },
+    {
+      "name": "Highgate Plastic Factory",
+      "sap_id": "1021156"
+    },
+    {
+      "name": "House car care Est",
+      "sap_id": "1022713"
+    },
+    {
+      "name": "Ibn Al Baytar",
+      "sap_id": "1000901"
+    },
+    {
+      "name": "Ibn Rushd",
+      "sap_id": "1000796"
+    },
+    {
+      "name": "Ibn Sina",
+      "sap_id": "1000848"
+    },
+    {
+      "name": "Ibn Zahr",
+      "sap_id": "1000851"
+    },
+    {
+      "name": "Industrial Resin Factory",
+      "sap_id": "1020773"
+    },
+    {
+      "name": "Integrated Agriculture Company",
+      "sap_id": "1021488"
+    },
+    {
+      "name": "INTEGRATED NATURE MEDICAL FACTORY",
+      "sap_id": "1023613"
+    },
+    {
+      "name": "International Refreshments Comp. LTD.",
+      "sap_id": "1019733"
+    },
+    {
+      "name": "International Water Distribution Co. Ltd",
+      "sap_id": "1019791"
+    },
+    {
+      "name": "International Water Distribution Co. Ltd. (TAWZEA)",
+      "sap_id": "1020173"
+    },
+    {
+      "name": "Intersource ingredients limited",
+      "sap_id": null
+    },
+    {
+      "name": "Jazzirah Environment Co",
+      "sap_id": "1021212"
+    },
+    {
+      "name": "Jazzirah Environment Co(RIYADH)",
+      "sap_id": "1021212"
+    },
+    {
+      "name": "Jazzirah Environment Co.",
+      "sap_id": "1021212"
+    },
+    {
+      "name": "Jedaya Feed Company",
+      "sap_id": "1024074"
+    },
+    {
+      "name": "Jeddah Chemistry Factory for Industry",
+      "sap_id": "1022089"
+    },
+    {
+      "name": "Jood Al Mazoon Plastic Factory",
+      "sap_id": "1021977"
+    },
+    {
+      "name": "Jubail United Petrochemical Company",
+      "sap_id": "1011283"
+    },
+    {
+      "name": "KEMYA",
+      "sap_id": null
+    },
+    {
+      "name": "Khairat Al Hijaz Manufacturing Co.",
+      "sap_id": "1021799"
+    },
+    {
+      "name": "King Abdullah University Of Science & Technology",
+      "sap_id": "1021590"
+    },
+    {
+      "name": "Lotus Flower Trading Est.",
+      "sap_id": "1019395"
+    },
+    {
+      "name": "M. AL-AZZAZ CHEMICALS STORE",
+      "sap_id": "1020172"
+    },
+    {
+      "name": "Mahmood Saeed Beverage Industry  Co. Ltd.",
+      "sap_id": "1019289"
+    },
+    {
+      "name": "Mahmoud Saeed Snacks Co. Ltd",
+      "sap_id": "1024437"
+    },
+    {
+      "name": "Mahr Al Riyadh Trading Est",
+      "sap_id": "1023922"
+    },
+    {
+      "name": "MAK International plastic company",
+      "sap_id": "1023527"
+    },
+    {
+      "name": "Makaab Al Sharq Trading company",
+      "sap_id": "1025434"
+    },
+    {
+      "name": "Mama Sauce Factory for Food",
+      "sap_id": "1019832"
+    },
+    {
+      "name": "Manal Corner Plastic Factory",
+      "sap_id": "1022292"
+    },
+    {
+      "name": "MARASID ALSHARQ TRADING EST",
+      "sap_id": "1019848"
+    },
+    {
+      "name": "Me'Maar Kindom Trading Est.",
+      "sap_id": "1020644"
+    },
+    {
+      "name": "Mesfer F Al Fuhaydi Factory",
+      "sap_id": "1021437"
+    },
+    {
+      "name": "Mesfer F. Al-Fuhaydi Factory",
+      "sap_id": "1021437"
+    },
+    {
+      "name": "MIDDLE EAST CHEMICALS COMPANY LTD",
+      "sap_id": "1020244"
+    },
+    {
+      "name": "Mobi Industry Company",
+      "sap_id": "1022088"
+    },
+    {
+      "name": "Modern Foods Industries",
+      "sap_id": "1020270"
+    },
+    {
+      "name": "Modern innovation trading company",
+      "sap_id": "1022573"
+    },
+    {
+      "name": "Modern National Chemicals Factory",
+      "sap_id": "1021750"
+    },
+    {
+      "name": "Muhammed Ibrahim Suleman Farm",
+      "sap_id": "1023951"
+    },
+    {
+      "name": "Munir Abdullah Al-Munif Factory company for Plastic Pipes and Accessories",
+      "sap_id": "1022766"
+    },
+    {
+      "name": "Najawi Trading Est.",
+      "sap_id": "1020192"
+    },
+    {
+      "name": "Najran Plastics",
+      "sap_id": "1022003"
+    },
+    {
+      "name": "National Biscuits & Confectionery Co. Ltd.",
+      "sap_id": "1020541"
+    },
+    {
+      "name": "National Care Company",
+      "sap_id": "1022169"
+    },
+    {
+      "name": "National Factory for Foodstuff Production",
+      "sap_id": "1018309"
+    },
+    {
+      "name": "NATIONAL FOOD FACTORY",
+      "sap_id": null
+    },
+    {
+      "name": "National Food Industries Co. Ltd.",
+      "sap_id": "1018948"
+    },
+    {
+      "name": "National Fruit Juice Co. Ltd",
+      "sap_id": "1019002"
+    },
+    {
+      "name": "National Technic Co.",
+      "sap_id": "1021353"
+    },
+    {
+      "name": "neska limited company",
+      "sap_id": "1021966"
+    },
+    {
+      "name": "NESMA AL MUHEET TRADING",
+      "sap_id": "1023907"
+    },
+    {
+      "name": "New Asia Trading Company",
+      "sap_id": "1022571"
+    },
+    {
+      "name": "NOFA UNITED COMPANY",
+      "sap_id": "1020725"
+    },
+    {
+      "name": "NOMAC",
+      "sap_id": "1020741"
+    },
+    {
+      "name": "NOMAC Red Sea Operation and Maintenance Company",
+      "sap_id": "1024300"
+    },
+    {
+      "name": "Noor Al Shifa Plastics Factory",
+      "sap_id": "1022229"
+    },
+    {
+      "name": "Nuberg Engineering Limited Branch",
+      "sap_id": "1022399"
+    },
+    {
+      "name": "OCEAN STAR FACTORY",
+      "sap_id": "1021981"
+    },
+    {
+      "name": "One Link Plastic Company",
+      "sap_id": "1022058"
+    },
+    {
+      "name": "P. Kemya",
+      "sap_id": null
+    },
+    {
+      "name": "Petro Kemya",
+      "sap_id": "1000804"
+    },
+    {
+      "name": "Petro Rabigh",
+      "sap_id": "1014487"
+    },
+    {
+      "name": "Pladis Arabia Food Manufacturing Company",
+      "sap_id": "1021847"
+    },
+    {
+      "name": "Pladis Arabia International Manufacturing Company",
+      "sap_id": "1021938"
+    },
+    {
+      "name": "Plating House Co. For Industry",
+      "sap_id": "1022080"
+    },
+    {
+      "name": "Prince Factory of Juices",
+      "sap_id": "1021144"
+    },
+    {
+      "name": "Professional Chemicals & Ind. Equipments Co. Ltd",
+      "sap_id": "1019088"
+    },
+    {
+      "name": "Rabigh Power Company",
+      "sap_id": "1024292"
+    },
+    {
+      "name": "Rabigh Water Production Services",
+      "sap_id": "1022719"
+    },
+    {
+      "name": "Radiant Chemicals",
+      "sap_id": "1022319"
+    },
+    {
+      "name": "Radix Desert Arabia Trading Company",
+      "sap_id": "1023548"
+    },
+    {
+      "name": "Raed Al Nahda Paints Factory",
+      "sap_id": "1022183"
+    },
+    {
+      "name": "Raffia Factory for Packaging material",
+      "sap_id": "1022219"
+    },
+    {
+      "name": "Rajas Gulf Trading company",
+      "sap_id": "1023921"
+    },
+    {
+      "name": "Rawabi Murabba Hassan Naji Trading Est.",
+      "sap_id": "1023859"
+    },
+    {
+      "name": "Retaj AlNajd factory for plastic product",
+      "sap_id": "1022022"
+    },
+    {
+      "name": "Riyadh Cables Co.",
+      "sap_id": "1021030"
+    },
+    {
+      "name": "Riyadh Columns Plastic Factory",
+      "sap_id": "1022146"
+    },
+    {
+      "name": "Riyadh Food Industries Co.",
+      "sap_id": "1021433"
+    },
+    {
+      "name": "Royal International Company Limited",
+      "sap_id": "1023170"
+    },
+    {
+      "name": "Sabic R&T",
+      "sap_id": "1000801"
+    },
+    {
+      "name": "Saeed Ali Al Qahtani General Contracting Est.",
+      "sap_id": "1022046"
+    },
+    {
+      "name": "Safana Ideal Trading Est",
+      "sap_id": "1021721"
+    },
+    {
+      "name": "Saleh & Abdulaziz Abahhsain Co. Ltd.",
+      "sap_id": "1020180"
+    },
+    {
+      "name": "Salem Balhamer Plastic Factory Co. Ltd",
+      "sap_id": "1020851"
+    },
+    {
+      "name": "Samaki Factory for plastic product",
+      "sap_id": "1022829"
+    },
+    {
+      "name": "SAMREF",
+      "sap_id": "1000802"
+    },
+    {
+      "name": "sanabil",
+      "sap_id": null
+    },
+    {
+      "name": "SATORP",
+      "sap_id": "1014748"
+    },
+    {
+      "name": "Saudi Al-Ibhar Food Industries Co",
+      "sap_id": "1022826"
+    },
+    {
+      "name": "Saudi Aramco",
+      "sap_id": "1001334"
+    },
+    {
+      "name": "SAUDI ARAMCO MOBIL REFINERY CO.,LTD.(SAMREF)",
+      "sap_id": "1000802"
+    },
+    {
+      "name": "SAUDI ARAMCO TOTAL REFINING AND PETROCHEMICAL CO.",
+      "sap_id": "1014748"
+    },
+    {
+      "name": "Saudi Basic industries Corporation",
+      "sap_id": null
+    },
+    {
+      "name": "Saudi Building Materials Factory Company",
+      "sap_id": "1023842"
+    },
+    {
+      "name": "Saudi Ceramic Company",
+      "sap_id": "1023737"
+    },
+    {
+      "name": "Saudi Detergent powder Factory",
+      "sap_id": "1022169"
+    },
+    {
+      "name": "Saudi Dox for Pharmaceutical Industries Company",
+      "sap_id": "1022143"
+    },
+    {
+      "name": "Saudi Factory for Chlorine and Alkalies. (SACHLO)",
+      "sap_id": "1020244"
+    },
+    {
+      "name": "Saudi Fad Factory Company",
+      "sap_id": "1022856"
+    },
+    {
+      "name": "Saudi Kayan",
+      "sap_id": "1014883"
+    },
+    {
+      "name": "SAUDI MASTERBAKER LTD.",
+      "sap_id": "1020199"
+    },
+    {
+      "name": "Saudi Modern Foods Factory",
+      "sap_id": "1022291"
+    },
+    {
+      "name": "Saudi Multichem Trading Company",
+      "sap_id": "1021783"
+    },
+    {
+      "name": "Saudi Pharmaceutical industries",
+      "sap_id": "1020263"
+    },
+    {
+      "name": "Saudi Polymers Company",
+      "sap_id": "1017023"
+    },
+    {
+      "name": "SAUDI YANBU PETROCHEMICAL CO. (YANPET)",
+      "sap_id": "1002831"
+    },
+    {
+      "name": "sedres Trading & Martime Services Co Ltd",
+      "sap_id": "1021876"
+    },
+    {
+      "name": "Sharq (1&2)",
+      "sap_id": "1000803"
+    },
+    {
+      "name": "Sharq Exp. (3&4)",
+      "sap_id": "1000803"
+    },
+    {
+      "name": "Shuaa Al Kaune",
+      "sap_id": "1020072"
+    },
+    {
+      "name": "Smart Energy Sources Cont .Co Ltd",
+      "sap_id": "1022779"
+    },
+    {
+      "name": "Smart Energy Sources Cont.Co Ltd",
+      "sap_id": "1022779"
+    },
+    {
+      "name": "SOMOW ALNOKHBA Est.",
+      "sap_id": "1021184"
+    },
+    {
+      "name": "Sorrer Global Ltd.Co.",
+      "sap_id": "1022324"
+    },
+    {
+      "name": "SULFOZYME AGRO (INDIA) PVT LTD.",
+      "sap_id": "23206"
+    },
+    {
+      "name": "Super Life Beverages",
+      "sap_id": null
+    },
+    {
+      "name": "Super Life Beverages.",
+      "sap_id": "1022604"
+    },
+    {
+      "name": "SURRATI TRADING INDUSTRIAL CHEMICAL EST.",
+      "sap_id": "1020359"
+    },
+    {
+      "name": "Taif Al Riyadh",
+      "sap_id": "1021355"
+    },
+    {
+      "name": "Taj Al-Safra Trading Est",
+      "sap_id": "1019885"
+    },
+    {
+      "name": "Tayhour Processing Co.",
+      "sap_id": "1020738"
+    },
+    {
+      "name": "Tetraphos Chemicals Est",
+      "sap_id": "1024443"
+    },
+    {
+      "name": "The East Harbour Trading Est.",
+      "sap_id": "1020748"
+    },
+    {
+      "name": "The Factory of Methanol Chemicals Company",
+      "sap_id": "1018488"
+    },
+    {
+      "name": "The National Agricultural Development Company",
+      "sap_id": "1000713"
+    },
+    {
+      "name": "The Specialists Commercial Affairs",
+      "sap_id": "1020727"
+    },
+    {
+      "name": "Tira Gulf Trading Est",
+      "sap_id": "1023893"
+    },
+    {
+      "name": "Tradewell Chemicals lubricants Minerals",
+      "sap_id": "1020368"
+    },
+    {
+      "name": "TRADEWELL COMPANY",
+      "sap_id": "1020368"
+    },
+    {
+      "name": "Ultra International Chemical Compan",
+      "sap_id": "2006196"
+    },
+    {
+      "name": "United Contracting Chemicals Company",
+      "sap_id": "1022765"
+    },
+    {
+      "name": "United Food Industries Corp. (Khaldeyah)",
+      "sap_id": "1021188"
+    },
+    {
+      "name": "United Food Industries Corp. Ltd. Co. (Deemah)",
+      "sap_id": "1020287"
+    },
+    {
+      "name": "United Mining Industries",
+      "sap_id": "1020379"
+    },
+    {
+      "name": "United National Dairy Co.",
+      "sap_id": "2004142"
+    },
+    {
+      "name": "Wardat Al Mashreq Food Factory",
+      "sap_id": "1019901"
+    },
+    {
+      "name": "Water Desalination Expansion Company",
+      "sap_id": "1021835"
+    },
+    {
+      "name": "WESTERN BAKERIES",
+      "sap_id": "1020724"
+    },
+    {
+      "name": "World of houses for maintenance of equipment",
+      "sap_id": "1023860"
+    },
+    {
+      "name": "Yabreen Factory for biscuits and food manufacturing auxiliary materials",
+      "sap_id": "1023782"
+    },
+    {
+      "name": "Yanabea Al-Zahoor Trd. Est.",
+      "sap_id": "1021733"
+    },
+    {
+      "name": "Yanama Trading Company",
+      "sap_id": "1021545"
+    },
+    {
+      "name": "Yanbu Aramco Sinopec Refining Company (YASREF) Ltd",
+      "sap_id": "1020234"
+    },
+    {
+      "name": "YANPET",
+      "sap_id": null
+    },
+    {
+      "name": "YANSAB",
+      "sap_id": null
+    },
+    {
+      "name": "Yasref",
+      "sap_id": "1020234"
+    },
+    {
+      "name": "YEMEN Co. for Industry and Commerce Ltd.",
+      "sap_id": "2005518"
+    },
+    {
+      "name": "Zohoor Al-Shoroq",
+      "sap_id": "1020628"
+    }
+  ],
+  "customer_addresses": [
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": "1022613",
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": null,
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Abaq AlJazeera Factory",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Abdul Rahman Al Sagar Trading Est.",
+      "plant": "Abdul Rahman Al Sagar/Al Wared",
+      "address1": "2nd Industrial Area - Phase V",
+      "address2": null,
+      "contact_name": "Sonny Jonnas Quintao",
+      "contact_tel": null,
+      "contact_mob": "+966 535083691 / 548748205"
+    },
+    {
+      "customer": "Abdul Rahman Al Sagar Trading Est.",
+      "plant": "Abdul Rahman Al Sagar Trading Est.",
+      "address1": "Industrial Area",
+      "address2": null,
+      "contact_name": "Babar Ali",
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Abdulrahman Almoqbel To Mobilize Detergent",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "ADVANCED CHEMISTRY INDUSTRIAL COMPANY",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Advanced Petrochemical Co.",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "AFLAQ",
+      "plant": "AFLAQ",
+      "address1": "Ash shifa Industrial Area, Ar risalah St.",
+      "address2": null,
+      "contact_name": "Mr. Adeel",
+      "contact_tel": null,
+      "contact_mob": "0560309092"
+    },
+    {
+      "customer": "AL AHL FOODS TRADING COMPANY",
+      "plant": "Riyadh",
+      "address1": "riyadh",
+      "address2": "ALSHIFA AREA",
+      "contact_name": "SALEEM",
+      "contact_tel": null,
+      "contact_mob": "+966 50 745 7390"
+    },
+    {
+      "customer": "Al Safi Danone Co. Ltd.",
+      "plant": "Al Safi Danone (Citric Acid)",
+      "address1": "Al Kharj",
+      "address2": null,
+      "contact_name": "SYED SOHRAB",
+      "contact_tel": null,
+      "contact_mob": "055 620 1403"
+    },
+    {
+      "customer": "Al Safi Danone Co. Ltd.",
+      "plant": "Al Safi Danone (DPP)",
+      "address1": "Al Kharj",
+      "address2": null,
+      "contact_name": "Mr. Nasser",
+      "contact_tel": null,
+      "contact_mob": "056 158 3595"
+    },
+    {
+      "customer": "Al Saidi Chemical Industries Company",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": "amir m rodriguez",
+      "contact_tel": null,
+      "contact_mob": "0531312325"
+    },
+    {
+      "customer": "AL WADI POULTRY CO",
+      "plant": "ALKHARJ",
+      "address1": "AL WADI POULTRY CO.",
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": "0547672920"
+    },
+    {
+      "customer": "Al-Attar Foam Factory",
+      "plant": null,
+      "address1": "Hit District, al kharj road, riyadh",
+      "address2": null,
+      "contact_name": "Mr. Mudassar",
+      "contact_tel": null,
+      "contact_mob": "00966504631790"
+    },
+    {
+      "customer": "Alesayi Beverage Co. LTD",
+      "plant": "Alesayi Beverage Co. LTD",
+      "address1": "K11- Old Makkah Road, P.O Box 3878, Jeddah",
+      "address2": null,
+      "contact_name": "Mr. Abdul Fateh",
+      "contact_tel": "+966 1 6210010",
+      "contact_mob": "0555038984"
+    },
+    {
+      "customer": "AlGharib Al-Duwaliya Trad. Est.",
+      "plant": "AlGharib Al-Duwaliya Trad. Est.",
+      "address1": null,
+      "address2": null,
+      "contact_name": "Raed Alsalem",
+      "contact_tel": null,
+      "contact_mob": "050 383 2029"
+    },
+    {
+      "customer": "Almarai Company",
+      "plant": "Alkharj",
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Almari Company",
+      "plant": "Almari Company (MPG)",
+      "address1": "FARMING CENTRAL WAREHOUSE HARADH ROAD ALKHARJ",
+      "address2": null,
+      "contact_name": "Dishantha Gamage",
+      "contact_tel": "966 15 499500 Ext:3881",
+      "contact_mob": "966 53 418  4793"
+    },
+    {
+      "customer": "Almari Company",
+      "plant": "Almari Company",
+      "address1": "Flake Maize Plant, Almarai Feed Factory",
+      "address2": null,
+      "contact_name": "warehouse Incharge, AL KHARJ",
+      "contact_tel": "015479300 Ext. (#014) 3491",
+      "contact_mob": null
+    },
+    {
+      "customer": "AL-RABIE SAUDI FOODS CO.LTD",
+      "plant": "AL-RABIE SAUDI FOODS CO.LTD",
+      "address1": null,
+      "address2": null,
+      "contact_name": "Mr. Abdullah Ahmed Al-Aamri/Mr. Bhat",
+      "contact_tel": "011 4981234 Ext:235/415/410",
+      "contact_mob": "0506435270 / 0507420490"
+    },
+    {
+      "customer": "Al-Safi Dairy Co.",
+      "plant": "Al-Safi Dairy Co.",
+      "address1": "Al Kharj",
+      "address2": null,
+      "contact_name": "Mr. RADHA",
+      "contact_tel": null,
+      "contact_mob": "0551125481"
+    },
+    {
+      "customer": "Al-Watania Plastics",
+      "plant": "Al-Watania Plastics",
+      "address1": "Street No.262, Phase 3, New Sanaya",
+      "address2": null,
+      "contact_name": "Ghazi Al Shahqud",
+      "contact_tel": "265-0036 Ext. 219",
+      "contact_mob": "0551518330"
+    },
+    {
+      "customer": "Amal Al Khalij for tradinng",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Aquat Food Industries Ltd.",
+      "plant": "Aquat Food Industries Ltd.",
+      "address1": "Aquat Plant 2116 No. 62, Jeddah",
+      "address2": null,
+      "contact_name": "Mohammed R. Salmeen",
+      "contact_tel": "+966-2-6080870 / 6080862",
+      "contact_mob": "00966 560034420"
+    },
+    {
+      "customer": "Aquat Food Industries Ltd.",
+      "plant": "Aquat Food Industries Ltd. (Makkah)",
+      "address1": "Makkah Industrial Area",
+      "address2": null,
+      "contact_name": "Ms. Mawada",
+      "contact_tel": "0545473567",
+      "contact_mob": "0545473567"
+    },
+    {
+      "customer": "Aramco",
+      "plant": "Aramco",
+      "address1": null,
+      "address2": null,
+      "contact_name": "Mathhar Al beladi",
+      "contact_tel": "13- 5779-159",
+      "contact_mob": "054 730 2945"
+    },
+    {
+      "customer": "AREEJ FAMOUS IND CO",
+      "plant": "1022601",
+      "address1": "Riyadh Sulai",
+      "address2": null,
+      "contact_name": "Naveed",
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Astra Industrial Complex Co. Ltd",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Atobake Ingredients Limited Co",
+      "plant": "1022647",
+      "address1": "Riyadh",
+      "address2": "P.O. Box: 4050; Riyadh 11511, Saudi Arabia",
+      "contact_name": "Shakeel",
+      "contact_tel": null,
+      "contact_mob": "+966 590002696"
+    },
+    {
+      "customer": "Aujan Beverage Co.",
+      "plant": "Aujan Beverage Co.",
+      "address1": "Dammam 2nd Industrial City",
+      "address2": null,
+      "contact_name": "Rana M. Javed",
+      "contact_tel": "013 812 7777 Ext. 1265",
+      "contact_mob": "050 216 2034"
+    },
+    {
+      "customer": "Binzagr Co.",
+      "plant": "Binzagr Co.",
+      "address1": "INDUSTRIAL CITY - PHASE 2 JEDDAH",
+      "address2": null,
+      "contact_name": "MR. OSAMA / MR. BAIG",
+      "contact_tel": "012 220 2534",
+      "contact_mob": "012 220 2534"
+    },
+    {
+      "customer": "CROWN TOWERS CHEMICAL COMPANY",
+      "plant": null,
+      "address1": "riyadh",
+      "address2": null,
+      "contact_name": "MOMEN ADLY",
+      "contact_tel": "+966 55 603 7836",
+      "contact_mob": null
+    },
+    {
+      "customer": "Dawliya Factory Co. Ltd",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Dawliya Factory Co. Ltd",
+      "plant": "Dawliya Factory Co. Ltd",
+      "address1": "Riyadh 3rd Industrial Area",
+      "address2": null,
+      "contact_name": "Warehouse Keeper",
+      "contact_tel": "011 265 2422",
+      "contact_mob": null
+    },
+    {
+      "customer": "Desert Al Jazeera Trading Company",
+      "plant": "1022694",
+      "address1": "riyadh",
+      "address2": null,
+      "contact_name": "Mr. Ali",
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Emdadat Chemicals Company",
+      "plant": "Khobar",
+      "address1": "Kingdom of Saudi Arabia, Al-Khobar",
+      "address2": null,
+      "contact_name": "Eng. Ch. Hossam Hassan",
+      "contact_tel": "966510274930",
+      "contact_mob": "966510274930"
+    },
+    {
+      "customer": "Farabi Petrochemicals Company",
+      "plant": "Farabi Petrochemicals Company",
+      "address1": "Jubail Industrial City, 31961",
+      "address2": null,
+      "contact_name": "Mr. Ahmed Al-Ghamdi / Mr. Mohammad Khan",
+      "contact_tel": "13-356 5169 / 13-356 5092",
+      "contact_mob": "0508656641"
+    },
+    {
+      "customer": "FARAH M SARFARAZ AL-JOHAN",
+      "plant": "DAMMAM",
+      "address1": null,
+      "address2": null,
+      "contact_name": "ABUL GHAFOOR",
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "GULF DEVELOPMENT COMPANY FOR INVESTMENT",
+      "plant": "riyadh",
+      "address1": null,
+      "address2": null,
+      "contact_name": "varun",
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Gulf Union Food Factory",
+      "plant": null,
+      "address1": "Industrial Area 3",
+      "address2": "Riyadh",
+      "contact_name": "RINGO",
+      "contact_tel": null,
+      "contact_mob": "+966 55 152 5022"
+    },
+    {
+      "customer": "House car care Est",
+      "plant": "1022713",
+      "address1": "dammam",
+      "address2": "damm",
+      "contact_name": "m",
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Ibn Rushd",
+      "plant": "Ibn Rushd",
+      "address1": "Yanbu, 41912",
+      "address2": "YANSAB, Ibn-Rushd",
+      "contact_name": "Kalvin Gamilla",
+      "contact_tel": "+966 (14) 3218432",
+      "contact_mob": null
+    },
+    {
+      "customer": "Integrated Agriculture Company",
+      "plant": "Integrated Agriculture Company",
+      "address1": "Prince Mohamed Bin Fahad Road, Dammam",
+      "address2": null,
+      "contact_name": "Mr. Hossam Mohamed",
+      "contact_tel": "13 8021 627 / 13 8021 712",
+      "contact_mob": null
+    },
+    {
+      "customer": "International Biscuits Company",
+      "plant": "International Biscuits Company",
+      "address1": "Riyadh",
+      "address2": null,
+      "contact_name": "Mr. Sufiyan",
+      "contact_tel": "0546779198",
+      "contact_mob": "0546779198"
+    },
+    {
+      "customer": "KEMYA",
+      "plant": "KEMYA-Sylopol 955w",
+      "address1": "Madinat Al Jubail Al Sinaiyah",
+      "address2": null,
+      "contact_name": "Shayeb-Al, Mudhaher A.",
+      "contact_tel": "(13) 352 1030 / (13) 357 6007 / (13) 3576285 / (13) 3576284",
+      "contact_mob": "0598557333"
+    },
+    {
+      "customer": "Mama Sauce Factory for Food",
+      "plant": "Mama Sauce Factory for Food",
+      "address1": "Riyadh Industrial Area 2",
+      "address2": null,
+      "contact_name": "Mohammed Iqbal",
+      "contact_tel": null,
+      "contact_mob": "053 648 3758"
+    },
+    {
+      "customer": "Me'Maar Kindom Trading Est.",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "MIDDLE EAST CHEMICALS COMPANY LTD",
+      "plant": null,
+      "address1": "riyadh",
+      "address2": null,
+      "contact_name": "Zaid",
+      "contact_tel": "+966 55 029632",
+      "contact_mob": null
+    },
+    {
+      "customer": "Modern innovation trading company",
+      "plant": "Modern innovation trading company",
+      "address1": "riydh",
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Modern innovation trading company",
+      "plant": "4000",
+      "address1": "Riyadh",
+      "address2": null,
+      "contact_name": "Mr. Junaid Khan",
+      "contact_tel": null,
+      "contact_mob": "0582055823"
+    },
+    {
+      "customer": "Munir Abdullah Al-Munif Factory company for Plastic Pipes and Accessories",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Najran Plastics",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "National Biscuits & Confectionery Co. Ltd.",
+      "plant": "National Biscuits & Confectionery Co. Ltd.",
+      "address1": "DAS NBCC Factory - Phase 4 Ind. Jeddah",
+      "address2": null,
+      "contact_name": "Kalainilavan Radhakrishnan",
+      "contact_tel": "012 636 0606",
+      "contact_mob": null
+    },
+    {
+      "customer": "National Technic Co.",
+      "plant": "National Technic Co.",
+      "address1": "New Industrial City, Riyadh",
+      "address2": null,
+      "contact_name": "Alaa Neweshy",
+      "contact_tel": "11 265 2002",
+      "contact_mob": "058 327 7521"
+    },
+    {
+      "customer": "New Asia Trading Company",
+      "plant": "1022571",
+      "address1": "Riyadh",
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": "054 553 0037"
+    },
+    {
+      "customer": "NOMAC",
+      "plant": "NOMAC-Shuqaiq 2",
+      "address1": "SHUQAIQ WATER AND ELECTRICITY COMPANY",
+      "address2": null,
+      "contact_name": "Saleh Balhareth",
+      "contact_tel": null,
+      "contact_mob": "966 535959939"
+    },
+    {
+      "customer": "NOMAC",
+      "plant": "NOMAC",
+      "address1": "Jeddah",
+      "address2": null,
+      "contact_name": "Mr. Lunel",
+      "contact_tel": "0506-873-405",
+      "contact_mob": "0506-873-405"
+    },
+    {
+      "customer": "NOMAC",
+      "plant": "NOMAC-EDTA",
+      "address1": "Qurayyah; 70 km south of Dammam",
+      "address2": null,
+      "contact_name": "Basheer Khan / Atika",
+      "contact_tel": null,
+      "contact_mob": "0507244695 / 0546635746"
+    },
+    {
+      "customer": "NOMAC",
+      "plant": "NOMAC-Shuqaiq",
+      "address1": "JEDDAH, Shuqaiq IWPP Phase- II",
+      "address2": null,
+      "contact_name": "Mr. Anant Patel",
+      "contact_tel": null,
+      "contact_mob": "0544596784"
+    },
+    {
+      "customer": "NOMAC",
+      "plant": "NOMAC-Shuaibah",
+      "address1": "P.O. Box 8266, Jeddah 21482,",
+      "address2": null,
+      "contact_name": "Mr. Saleh Belarth / Sajid Hussain",
+      "contact_tel": null,
+      "contact_mob": "0535959939 / 0569106331"
+    },
+    {
+      "customer": "P. Kemya",
+      "plant": "P. KEMYA-Sylopol",
+      "address1": "Madinat Al Jubail Al Sinaiyah, Gate # 3",
+      "address2": null,
+      "contact_name": "Mr. Faisal H Al-Shammari",
+      "contact_tel": "(Control Room# 357-7396/7395, 358 7000 Ext: 1480, 357-7319/7174)",
+      "contact_mob": "(13) 3577020"
+    },
+    {
+      "customer": "Rabigh Refining and Petrochemicals",
+      "plant": "Petro Rabigh - FCC Catalyst",
+      "address1": "Monomer / HOFCC plant",
+      "address2": null,
+      "contact_name": "Wael Al Shaalani / Essam Fallatah",
+      "contact_tel": "+966-12-4259495 / 4259532",
+      "contact_mob": "+966 503642823 / 515178842"
+    },
+    {
+      "customer": "Rabigh Refining and Petrochemicals",
+      "plant": "Petro Rabigh-N-Heptane - MMA plant",
+      "address1": "MMA plant PIB-46, Phase 2",
+      "address2": null,
+      "contact_name": "MMA SSV - Mahesh Deodhar",
+      "contact_tel": "012-4257466, 4257464",
+      "contact_mob": "0530581882"
+    },
+    {
+      "customer": "Rabigh Refining and Petrochemicals",
+      "plant": "Petro Rabigh-N-Heptane - POX plant",
+      "address1": "Monomer / POX plant PIB-21",
+      "address2": null,
+      "contact_name": "Jannah Mohammed",
+      "contact_tel": "012-4258216 / 012-4259521",
+      "contact_mob": "0555642213"
+    },
+    {
+      "customer": "Rabigh Refining and Petrochemicals",
+      "plant": "Petro Rabigh-Sodium Bicarbonate",
+      "address1": "Central Warehouse No. 3 at Plus Tech Park",
+      "address2": null,
+      "contact_name": "Warehouse Incharge",
+      "contact_tel": "012 425 9455",
+      "contact_mob": "054 322 6020 & 050 717 9716"
+    },
+    {
+      "customer": "Rabigh Refining and Petrochemicals",
+      "plant": "FCC Catalyst",
+      "address1": "Monomer / HOFCC plant",
+      "address2": null,
+      "contact_name": "Wael Al Shaalani / Essam Fallatah",
+      "contact_tel": "+966-12-4259495 / 4259532",
+      "contact_mob": "+966 503642823 / 515178842"
+    },
+    {
+      "customer": "Riyadh Cables Co.",
+      "plant": "Riyadh Cables Co.",
+      "address1": "3rd INDUSTRIAL AREA - RIYADH",
+      "address2": null,
+      "contact_name": "MOHAMMED AZAD",
+      "contact_tel": "265 0850 Ext. 370",
+      "contact_mob": null
+    },
+    {
+      "customer": "Riyadh Food Industries Co.",
+      "plant": "Riyadh Food Industries Co.",
+      "address1": "Industrial Area 2, Riyadh",
+      "address2": null,
+      "contact_name": "Mr. Faiz",
+      "contact_tel": null,
+      "contact_mob": "0538951282"
+    },
+    {
+      "customer": "SAMREF",
+      "plant": "SAMREF Warehouse",
+      "address1": "King Saud، P.O.Box: 30078",
+      "address2": "Yanbu Al Bahr 41912",
+      "contact_name": "Samir M. Nogaimesh",
+      "contact_tel": "014-3964052/4508",
+      "contact_mob": null
+    },
+    {
+      "customer": "SATORP",
+      "plant": "SATORP Warehouse",
+      "address1": "Jubail Industrial City 2",
+      "address2": null,
+      "contact_name": "Abdulaziz Subaie & Ahmed Sahil",
+      "contact_tel": "013-356-9437",
+      "contact_mob": "0547122067 & 0591240769"
+    },
+    {
+      "customer": "Saudi Al-Ibhar Food Industries Co",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Saudi Al-Ibhar Food Industries Co",
+      "plant": null,
+      "address1": "Ibhar Plant 3117\r\n3117\r\nNo.67,",
+      "address2": "P.O.Box: 54892, Jeddah 21524",
+      "contact_name": null,
+      "contact_tel": "126080870",
+      "contact_mob": null
+    },
+    {
+      "customer": "Saudi Al-Ibhar Food Industries Co",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Saudi Al-Ibhar Food Industries Co",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Saudi Fad Factory Company",
+      "plant": "Riyadh",
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "SAUDI MASTERBAKER LTD.",
+      "plant": "SAUDI MASTERBAKER LTD.-Jeddah",
+      "address1": "JEDDAH INDUSTRIAL AREA PHASE 2",
+      "address2": null,
+      "contact_name": "MR. SODAIRE",
+      "contact_tel": "053 540 2468",
+      "contact_mob": "053 540 2468"
+    },
+    {
+      "customer": "SAUDI MASTERBAKER LTD.",
+      "plant": "SAUDI MASTERBAKER LTD.-Dammam",
+      "address1": "Dammam 2nd Industrial Area",
+      "address2": null,
+      "contact_name": "Mr. Zeeshan",
+      "contact_tel": "0599125868",
+      "contact_mob": "0599125868"
+    },
+    {
+      "customer": "SAUDI MASTERBAKER LTD.",
+      "plant": "SAUDI MASTERBAKER LTD.-Riyadh",
+      "address1": "Riyadh 2nd Industrial City, Street# 198,",
+      "address2": null,
+      "contact_name": "Syed Shakeel",
+      "contact_tel": null,
+      "contact_mob": "0553513032"
+    },
+    {
+      "customer": "Sharq (1&2)",
+      "plant": "Sharq (1&2)-Sylopol",
+      "address1": "Madinat Al Jubail Al Sinaiyah",
+      "address2": null,
+      "contact_name": "Mr. Mohammed Al-Shanbah  / Mr. Reinhart P. Puerto",
+      "contact_tel": "013-357 5335/ 357 5000 Ext. 5545",
+      "contact_mob": null
+    },
+    {
+      "customer": "Sharq Exp. (3&4)",
+      "plant": "Sharq Exp. (3&4)-Sylopol",
+      "address1": "Madinat Al Jubail Al Sinaiyah",
+      "address2": null,
+      "contact_name": "Mr. Salem Y Taher",
+      "contact_tel": "013-359 6034 / 013-357 5130",
+      "contact_mob": "050 591 2129"
+    },
+    {
+      "customer": "Super Life Beverages.",
+      "plant": "1022604",
+      "address1": "Riyadh",
+      "address2": null,
+      "contact_name": "Adel Bukhari",
+      "contact_tel": "0560597074`",
+      "contact_mob": "abukhari@senergycoffee.com"
+    },
+    {
+      "customer": "United Contracting Chemicals Company",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "United Contracting Chemicals Company",
+      "plant": "YANPET-SYLOPOL 957 WY 5",
+      "address1": "YANBU INDUSTRIAL AREA (Gate# 2)",
+      "address2": null,
+      "contact_name": "Mr. Abdullah Al Juhania / Mr. Nader Al Bedani",
+      "contact_tel": "014-321 4295 / 014-321 4256",
+      "contact_mob": null
+    },
+    {
+      "customer": "Wardat Al Mashreq Food Factory",
+      "plant": null,
+      "address1": null,
+      "address2": null,
+      "contact_name": null,
+      "contact_tel": null,
+      "contact_mob": null
+    },
+    {
+      "customer": "Wardat Al Mashreq Food Factory",
+      "plant": "Wardat Al Mashreq Food Factory",
+      "address1": "Exit 15, New Al Kharj Road, Riyadh",
+      "address2": null,
+      "contact_name": "Mr. Farman",
+      "contact_tel": "011 24220337 / 011 2651133",
+      "contact_mob": "055 355 1366"
+    },
+    {
+      "customer": "YANPET",
+      "plant": "YANPET-SYLOPOL 955W",
+      "address1": "YANBU INDUSTRIAL AREA (Gate# 2)",
+      "address2": null,
+      "contact_name": "Mr. Abdullah Al Juhania / Mr. Nader Al Bedani",
+      "contact_tel": "014-321 4295 / 014-321 4256",
+      "contact_mob": null
+    },
+    {
+      "customer": "YANSAB",
+      "plant": "Yansab-Sylopol 955W",
+      "address1": "YANSAB Gate #1",
+      "address2": "YANSAB Gate #1",
+      "contact_name": "Mr. Ali / Mr. Ahmed",
+      "contact_tel": "(14)325-9036/(14)325-9025",
+      "contact_mob": "NA"
+    },
+    {
+      "customer": "Yasref",
+      "plant": "Yasref - DHT",
+      "address1": "Yanbu Aramco Sinopec Refining Company (Yasref)",
+      "address2": "Yanbu Industrial City, 41912",
+      "contact_name": "Sharaf A. Alsultan",
+      "contact_tel": "014-3981949",
+      "contact_mob": null
+    }
+  ],
+  "shipping_lines": [
+    "ASCL",
+    "CMA",
+    "COSCO",
+    "EMIRATES",
+    "Hapag-Lloyd",
+    "Hengcheng International Supply Chain Co., Ltd.",
+    "MAERSK",
+    "MSC",
+    "STOLT",
+    "YANG MING",
+    "ISG",
+    "HMM",
+    "",
+    "CSL",
+    "EVERGREEN",
+    "WAN HAI",
+    "UNIFEEDER",
+    "OOCL",
+    "CCL",
+    "DSV Ocean Transport A/S",
+    "Blue Water Lines Pte. Ltd.",
+    "KMTC",
+    "ONE",
+    "COMBI LINE",
+    "CROSSOVER",
+    "Trans Asia Line",
+    "PIL",
+    "ESL",
+    "VOLTA",
+    "RCL",
+    "TS LINE",
+    "ORIENT OVERSEAS",
+    "ZHL",
+    "ASYAD LINE",
+    "CMA CGM",
+    "THREE STAR SHIPPING",
+    "ARKAS",
+    "SSL",
+    "AKKON",
+    "QULI",
+    "SGL EXPRESS LINE",
+    "SeaLead",
+    "HUAN MING",
+    "LANCIA",
+    "OCEAN"
+  ],
+  "brokers": [
+    {
+      "name": "BLUE MAX",
+      "full_name": "BLUE MAX LOGISTICS COMPANY.",
+      "address1": "King Saud Street, Amamrah",
+      "address2": "PO Box 30697 – Dammam – K.S.A.",
+      "tel": "Tel: 013 809 5550 - Ext: 107",
+      "mob": "Mob: 055 604 9739",
+      "rep_name": "Baneesh",
+      "emails": "baneesh@bluemaxksa.com; nafeer@bluemaxksa.com; info@bluemaxksa.com; operations@bluemaxksa.com"
+    },
+    {
+      "name": "DHL (PRC)",
+      "full_name": "DHL",
+      "address1": "Salaama Center, Prince Sultan St.",
+      "address2": "B5, 3rd Floor, PO Box 15299, Jeddah",
+      "tel": "Tel: 012 616 5813 Ext. 2013",
+      "mob": null,
+      "rep_name": "DHL Team",
+      "emails": "Amr.Nowailaty@dhl.com; Mohammed.Doki@dhl.com"
+    },
+    {
+      "name": "JAS",
+      "full_name": "JAS",
+      "address1": "Western Province, King Fahad Street",
+      "address2": "Al-Najmah Building 3rd Floor, Jeddah",
+      "tel": "Tel: 012 226 8200 Ext 329",
+      "mob": "Mob: 54 868 0655",
+      "rep_name": "JAS Team",
+      "emails": "Amin.Nooruddin@jas.com; Wajahat.Ali@jas.com"
+    },
+    {
+      "name": "Namma Cargo",
+      "full_name": "Namma Cargo Services Co. Ltd.",
+      "address1": "Canary Bldg, 1st Floor, Offices 1, 2, 3",
+      "address2": "Dabbab Street, Near Riyadh Air Base",
+      "tel": "Tel: (11) 4654200 Ext 269",
+      "mob": "Toll free: 92000 9582",
+      "rep_name": "Praveen",
+      "emails": "praveen@nammacargo.com; krishnakumar@nammacargo.com"
+    },
+    {
+      "name": "Namma Cargo (SABIC)",
+      "full_name": "Namma Cargo Services Company Ltd.",
+      "address1": "ALFALAK Building, 3rd Floor",
+      "address2": "7484 Ahmed Ibn Hanbal St., Qurtoba",
+      "tel": "Tel: 13 3308897",
+      "mob": null,
+      "rep_name": "Ujith",
+      "emails": "ujith@nammacargo.com"
+    },
+    {
+      "name": "HOLOOL AL KUWA",
+      "full_name": "HOLOOL AL KUWA TRADING ESTABLISHMENT",
+      "address1": "Office# 18 2nd floor at janadriyah bldng",
+      "address2": "Tariq Bin Ziyad St, Al Rakah District",
+      "tel": null,
+      "mob": "0541535627",
+      "rep_name": "AHAMMED KHAYZ",
+      "emails": "info@pstsaudi.com"
+    },
+    {
+      "name": "DHL GLOBAL (Dammam)",
+      "full_name": "DHL GLOBAL FORWARDING SAUDI ARABIA",
+      "address1": "6853 KING KHALID BRANCH ROAD - IBN",
+      "address2": "SINA DIST. UNIT NO 90 AL-KHOBAR",
+      "tel": "0136611500",
+      "mob": null,
+      "rep_name": "Noura Talib",
+      "emails": "GSCIPSABICKSA@DHL.COM; Mohammed.Khawaja@dhl.com"
+    },
+    {
+      "name": "DHL Global Forwarding Jeddah",
+      "full_name": "DHL Global Forwarding Saudi Arabia",
+      "address1": "Prince Sultan Road,",
+      "address2": "AS Salameh district, 23525 Jeddah,",
+      "tel": null,
+      "mob": "0509691668",
+      "rep_name": "Ahmed Aljohani",
+      "emails": "Mohammed.Khawaja@dhl.com; GSCIPSABICKSA@DHL.COM"
+    },
+    {
+      "name": "DSV",
+      "full_name": "Global Transport and Logistics",
+      "address1": "Kanoo Tower, 3rd Floor",
+      "address2": "Jeddah 21484",
+      "tel": null,
+      "mob": "0551786585",
+      "rep_name": "Syed Faisal Ahmed,",
+      "emails": "ext.syed.faisal@dsv.com"
+    },
+    {
+      "name": "KWE",
+      "full_name": "KWE Global Logistics Partner",
+      "address1": "Jeddah",
+      "address2": null,
+      "tel": "+973 (0) 17 305 330",
+      "mob": "+973 (0) 35 640 327",
+      "rep_name": "Harun Mohamed",
+      "emails": "Harun.Mohamed@kwe.com"
+    }
+  ],
+  "transporters": [
+    {
+      "name": "Alfoursan Transport",
+      "emails": "alfoursantransport@gmail.com; shahzad.alfoursan@gmail.com"
+    },
+    {
+      "name": "AST Transportation Co.",
+      "emails": "sattam@alialsatam.com; sattam_alshammary@hotmail.com; alialsatamtransport@yahoo.com"
+    },
+    {
+      "name": "Customer Collection",
+      "emails": null
+    },
+    {
+      "name": "DARB Al-sahab Transportation Est.",
+      "emails": "darbalsahabtransport@gmail.com"
+    },
+    {
+      "name": "Global Fleet Logistics",
+      "emails": "Nadeem Bhatti <bhatti@qorib.com>"
+    },
+    {
+      "name": "JAS",
+      "emails": "Amin.Nooruddin@jas.com; khannani@SABIC.com"
+    },
+    {
+      "name": "M. STAR TRANSPORTATION",
+      "emails": "faizeesheik-mstar.jed@mtcrs.com; yard-m.star@mtcrs.com; l.abdulrahiman@mtcrs.com; l.abdulrahman-mstar@mtcrs.com; l.abdulrahman@mtcrs.com; mstar.jed@mtcrs.com; smazan@mtcrs.com; jahangir@mtcrs.com"
+    },
+    {
+      "name": "NEW FALCON EST FOR YARD & LOGISTICS SERVICES",
+      "emails": "faizee.sheik@newfalconlogistics.com"
+    },
+    {
+      "name": "Sultan M.Al-Qahtani & Sons Transport Co.",
+      "emails": null
+    }
+  ],
+  "storage_locations": [
+    {
+      "name": "JAS Jeddah",
+      "emails": "Amin.Nooruddin@jas.com; Wajahat.Ali@jas.com"
+    },
+    {
+      "name": "MPC Jubail",
+      "emails": "Jubailmpcwh@Alfaisaliah.com; rsharif@Alfaisaliah.com"
+    },
+    {
+      "name": "MPC Rabigh",
+      "emails": "rabighmpcwh@Alfaisaliah.com; rsharif@Alfaisaliah.com; jpurushthman@Alfaisaliah.com"
+    },
+    {
+      "name": "MPC Riyadh",
+      "emails": "riyadhmpcwh@Alfaisaliah.com"
+    },
+    {
+      "name": "Supplier WH",
+      "emails": null
+    }
+  ],
+  "return_terminals": [
+    "Kanoo",
+    "Sahreej",
+    "WEST GROUP",
+    "Almajdouie"
+  ],
+  "permits": [
+    {
+      "id": 1,
+      "permit_no": "44758",
+      "product_name": "Activated Alumina",
+      "hs_code": "3815190000",
+      "name_in_customs": null,
+      "permit_requirement": "N/A",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-01-01"
+    },
+    {
+      "id": 3,
+      "permit_no": "48561",
+      "product_name": "Ascorbic Acid",
+      "hs_code": "293627000000",
+      "name_in_customs": "Vitamin ( C ) and its derivatives",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-05-08"
+    },
+    {
+      "id": 6,
+      "permit_no": "44160",
+      "product_name": "Calcium Chloride",
+      "hs_code": "282720000000",
+      "name_in_customs": "Calcium chloride",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": "2023-07-01"
+    },
+    {
+      "id": 7,
+      "permit_no": "43166",
+      "product_name": "Copper Sulphate",
+      "hs_code": "283325000000",
+      "name_in_customs": "Of copper",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-04-01"
+    },
+    {
+      "id": 8,
+      "permit_no": "44081",
+      "product_name": "DCP",
+      "hs_code": "283525000000",
+      "name_in_customs": "Calcium hydrogenorthophosphate (\"dicalcium phosphate \")",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 9,
+      "permit_no": "43437",
+      "product_name": "EDTA",
+      "hs_code": "292249000000",
+      "name_in_customs": "Other",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-04-01"
+    },
+    {
+      "id": 10,
+      "permit_no": "Not required",
+      "product_name": "Filler Masturbatch",
+      "hs_code": "382499999999",
+      "name_in_customs": "-",
+      "permit_requirement": "N/A",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-12-31"
+    },
+    {
+      "id": 12,
+      "permit_no": "44111",
+      "product_name": "Mono Ammonium Phosphate (MAP)",
+      "hs_code": "310540000001",
+      "name_in_customs": "- Ammonium dihydrogenorthophosphate (monoammonium phosphate) and mixtures thereof with diammonium hydrogenorthophosphate (diammonium phosphate)",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": "2023-07-01"
+    },
+    {
+      "id": 13,
+      "permit_no": "44142",
+      "product_name": "Mono Potassium Phosphate (MKP)",
+      "hs_code": "283524000000",
+      "name_in_customs": "-- Of potassium",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-07-01"
+    },
+    {
+      "id": 15,
+      "permit_no": "44049",
+      "product_name": "n-Heptane",
+      "hs_code": "290110500000",
+      "name_in_customs": "n-Heptane",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": "2023-08-01"
+    },
+    {
+      "id": 16,
+      "permit_no": "42887",
+      "product_name": "Potassium Sorbate",
+      "hs_code": "291619009999",
+      "name_in_customs": "Other",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-03-01"
+    },
+    {
+      "id": 17,
+      "permit_no": "43376",
+      "product_name": "Precipitated Silica",
+      "hs_code": "281122000000",
+      "name_in_customs": "-- Silicon dioxide",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": "2023-04-01"
+    },
+    {
+      "id": 18,
+      "permit_no": "48535",
+      "product_name": "Soda Ash Dense",
+      "hs_code": "283620000000",
+      "name_in_customs": "- Disodium carbonate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": "2025-03-11"
+    },
+    {
+      "id": 19,
+      "permit_no": "44730",
+      "product_name": "Soda Ash Light",
+      "hs_code": "283620000000",
+      "name_in_customs": "Disodium carbonate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-12-27"
+    },
+    {
+      "id": 20,
+      "permit_no": "43478",
+      "product_name": "Sodium Acid Pyrophosphate (SAPP)",
+      "hs_code": "283539100000",
+      "name_in_customs": "Sodium prophosphate acid",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-04-01"
+    },
+    {
+      "id": 22,
+      "permit_no": "42887",
+      "product_name": "Sodium Bicarbonate",
+      "hs_code": "283630000000",
+      "name_in_customs": "Sodium hydrogencarbonate (sodium bicarbonats)",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2023-03-01"
+    },
+    {
+      "id": 23,
+      "permit_no": "44794",
+      "product_name": "Sodium Metabisulphite",
+      "hs_code": "283210000000",
+      "name_in_customs": "Sodium sulphites",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-01-07"
+    },
+    {
+      "id": 24,
+      "permit_no": "pending1",
+      "product_name": "Fructose",
+      "hs_code": "1702500000",
+      "name_in_customs": "- Chemically pure fructose",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 25,
+      "permit_no": "",
+      "product_name": null,
+      "hs_code": "\r\n283210000000",
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 27,
+      "permit_no": "Pending3",
+      "product_name": "Glycerin",
+      "hs_code": "2905450000",
+      "name_in_customs": "Glycerol",
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 28,
+      "permit_no": "",
+      "product_name": null,
+      "hs_code": null,
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 30,
+      "permit_no": "",
+      "product_name": null,
+      "hs_code": null,
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 31,
+      "permit_no": "pending2",
+      "product_name": "Calcium Nitrate",
+      "hs_code": "28342990",
+      "name_in_customs": "\t- - - Other",
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 32,
+      "permit_no": "Pending6",
+      "product_name": "Potassium Nitrate",
+      "hs_code": "283421000000",
+      "name_in_customs": "\t- - Of Potassium",
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 33,
+      "permit_no": "",
+      "product_name": null,
+      "hs_code": null,
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 34,
+      "permit_no": "Pending4",
+      "product_name": "Hydrogen Peroxide",
+      "hs_code": "284700000000",
+      "name_in_customs": "\tHydrogen peroxyde, whether or not solidified with urea .",
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 35,
+      "permit_no": "Pending5",
+      "product_name": "NITRIC ACID",
+      "hs_code": "280800100000",
+      "name_in_customs": "---Nitric acid",
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 36,
+      "permit_no": "",
+      "product_name": null,
+      "hs_code": null,
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 41,
+      "permit_no": "47400",
+      "product_name": "Phosphoric Acid 85%",
+      "hs_code": "280920100000",
+      "name_in_customs": "Phosphoric acid",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": "2024-12-30"
+    },
+    {
+      "id": 44,
+      "permit_no": "6581040",
+      "product_name": "Himalayan Pink Fine Salt",
+      "hs_code": "250100100003",
+      "name_in_customs": "Himalayan Pink Fine Salt",
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.15,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 45,
+      "permit_no": "47996",
+      "product_name": "Potassium Hydroxide 48%",
+      "hs_code": "281520000000",
+      "name_in_customs": "Potassium hydroxide (caustic potash)",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-05"
+    },
+    {
+      "id": 46,
+      "permit_no": "49688",
+      "product_name": "Dipottasium Phosphate (DPP)",
+      "hs_code": "283524000000",
+      "name_in_customs": "-- Of potassium",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-09-12"
+    },
+    {
+      "id": 48,
+      "permit_no": "45723",
+      "product_name": "TK-261",
+      "hs_code": "381511000000",
+      "name_in_customs": "Nickel compounds",
+      "permit_requirement": null,
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-05-22"
+    },
+    {
+      "id": 49,
+      "permit_no": "45696",
+      "product_name": "EDTA-2NA",
+      "hs_code": "292249000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-05-17"
+    },
+    {
+      "id": 50,
+      "permit_no": "49713",
+      "product_name": "Ammonium Bicarbonate",
+      "hs_code": "283699900001",
+      "name_in_customs": "ammonium carbonate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-09-16"
+    },
+    {
+      "id": 56,
+      "permit_no": "48090",
+      "product_name": "Copper Sulphate",
+      "hs_code": "283325000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-14"
+    },
+    {
+      "id": 57,
+      "permit_no": "45725",
+      "product_name": "Citric Acid",
+      "hs_code": "291814000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-05-22"
+    },
+    {
+      "id": 59,
+      "permit_no": "45724",
+      "product_name": "Sucralose",
+      "hs_code": "293299009999",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-05-22"
+    },
+    {
+      "id": 60,
+      "permit_no": "pending12",
+      "product_name": "Calcium Nitrate",
+      "hs_code": "280512000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 61,
+      "permit_no": "49017",
+      "product_name": "Sodium Bicarbonate",
+      "hs_code": "283630000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": "2025-07-01"
+    },
+    {
+      "id": 62,
+      "permit_no": "46006",
+      "product_name": "Antimony Trioxide",
+      "hs_code": "282580000000",
+      "name_in_customs": "Antimony Trioxide",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 63,
+      "permit_no": "46115",
+      "product_name": "Magnesium Sulphate Anhydrous",
+      "hs_code": "2833210000",
+      "name_in_customs": "Magnesium Sulphate Anhydrous",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-05-01"
+    },
+    {
+      "id": 64,
+      "permit_no": "pending64",
+      "product_name": "Zinc Stearate",
+      "hs_code": "29157090",
+      "name_in_customs": "Zinc Stearate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 65,
+      "permit_no": "Pending65",
+      "product_name": "Fructose",
+      "hs_code": "170250",
+      "name_in_customs": "Fructose",
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 66,
+      "permit_no": "49889",
+      "product_name": "Potassium Sorbate",
+      "hs_code": "291619009999",
+      "name_in_customs": "291619009999",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-10-09"
+    },
+    {
+      "id": 67,
+      "permit_no": "46872",
+      "product_name": "CMC",
+      "hs_code": "391231000000",
+      "name_in_customs": "Sodium Carboxymethyl Cellulose (CMC)",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 69,
+      "permit_no": "46658",
+      "product_name": "Sodium Tripolyphosphosphate (STPP)",
+      "hs_code": "283531",
+      "name_in_customs": "Sodium Tripolyphosphosphate (STPP)",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 72,
+      "permit_no": "46682",
+      "product_name": "Potassium Silicate",
+      "hs_code": "283990",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-10-01"
+    },
+    {
+      "id": 73,
+      "permit_no": "Pending80",
+      "product_name": "Manganese Sulphate Monohydrate",
+      "hs_code": "28332940",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 74,
+      "permit_no": "50549",
+      "product_name": "Coconut Diethanol Amide (CDEA)",
+      "hs_code": "340242000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 76,
+      "permit_no": "46913",
+      "product_name": "Tetrachloroethylene",
+      "hs_code": "290323000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-10-30"
+    },
+    {
+      "id": 77,
+      "permit_no": "46886",
+      "product_name": "Sodium Lauryl Ether Sulphate (SLES)",
+      "hs_code": "340239000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": "2024-10-28"
+    },
+    {
+      "id": 78,
+      "permit_no": "50550",
+      "product_name": "Boric Acid",
+      "hs_code": "281000200000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-12-25"
+    },
+    {
+      "id": 79,
+      "permit_no": "46929",
+      "product_name": "Potassium Iodide",
+      "hs_code": "282760000003",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-10-31"
+    },
+    {
+      "id": 80,
+      "permit_no": "46959",
+      "product_name": "n-Heptane",
+      "hs_code": "290110100000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": "2024-11-05"
+    },
+    {
+      "id": 82,
+      "permit_no": "46343",
+      "product_name": "Methylene Chloride",
+      "hs_code": "290312000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-08-14"
+    },
+    {
+      "id": 85,
+      "permit_no": "47061",
+      "product_name": "Dicalcium Phosphate (DCP)",
+      "hs_code": "283525000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-11-19"
+    },
+    {
+      "id": 86,
+      "permit_no": "47060",
+      "product_name": "ISO Octane",
+      "hs_code": "290110100000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": "2024-11-19"
+    },
+    {
+      "id": 88,
+      "permit_no": "47394",
+      "product_name": "Diammonium hydrogenphosphate (DAP)",
+      "hs_code": "310530000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": "2024-12-26"
+    },
+    {
+      "id": 89,
+      "permit_no": "47590",
+      "product_name": "Zinc Sulfate Monohydrate",
+      "hs_code": "283329",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 90,
+      "permit_no": "47561",
+      "product_name": "Sodium Acid Pyrophosphate (SAPP)",
+      "hs_code": "283539100000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-01-15"
+    },
+    {
+      "id": 93,
+      "permit_no": "47995",
+      "product_name": "Sodium Chlorite",
+      "hs_code": "282890300001",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-06"
+    },
+    {
+      "id": 94,
+      "permit_no": "47953",
+      "product_name": "TITANIUM DIOXIDE",
+      "hs_code": "282300000002",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-02-28"
+    },
+    {
+      "id": 95,
+      "permit_no": "pending 1234",
+      "product_name": "MCP",
+      "hs_code": "283526000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-06"
+    },
+    {
+      "id": 96,
+      "permit_no": "47845",
+      "product_name": "SODIUM SULPHITE",
+      "hs_code": "283210000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-02-18"
+    },
+    {
+      "id": 98,
+      "permit_no": "pending1",
+      "product_name": "Diammonium hydrogenphosphate (DAP)",
+      "hs_code": null,
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 101,
+      "permit_no": "48028",
+      "product_name": "Stearic Acid",
+      "hs_code": "382311000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-07"
+    },
+    {
+      "id": 102,
+      "permit_no": "46356",
+      "product_name": "Ammonium Sulphate",
+      "hs_code": "310221000001",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-04-30"
+    },
+    {
+      "id": 105,
+      "permit_no": "pending",
+      "product_name": "Guar Gum",
+      "hs_code": "130232",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 106,
+      "permit_no": "46384",
+      "product_name": "EDTA",
+      "hs_code": "292249000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2024-08-19"
+    },
+    {
+      "id": 107,
+      "permit_no": "48102",
+      "product_name": "ETHANOL",
+      "hs_code": "220720190000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-17"
+    },
+    {
+      "id": 108,
+      "permit_no": "48105",
+      "product_name": "Palmitic Acid",
+      "hs_code": "291570909999",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-17"
+    },
+    {
+      "id": 109,
+      "permit_no": "48158",
+      "product_name": "TRI SODIUM CITRATE",
+      "hs_code": "291815909999",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-20"
+    },
+    {
+      "id": 111,
+      "permit_no": "48157",
+      "product_name": "Formic acid",
+      "hs_code": "291511000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-03-20"
+    },
+    {
+      "id": 112,
+      "permit_no": "PENDING",
+      "product_name": "Sodium Benzoate",
+      "hs_code": "29631200002",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 114,
+      "permit_no": "pending-1",
+      "product_name": "Malic Acid\r\nDL-Malic Acid Food Grade-Fine Granular",
+      "hs_code": null,
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 115,
+      "permit_no": "48720",
+      "product_name": "Mono Potassium Phosphate (MKP)",
+      "hs_code": "283524000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-05-22"
+    },
+    {
+      "id": 116,
+      "permit_no": "48719",
+      "product_name": "Malic Acid\r\nDL-Malic Acid Food Grade-Fine Granular",
+      "hs_code": "291819009999",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-05-22"
+    },
+    {
+      "id": 117,
+      "permit_no": "48941",
+      "product_name": "Sucralose",
+      "hs_code": "293214000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-06-13"
+    },
+    {
+      "id": 120,
+      "permit_no": "123",
+      "product_name": "Sodium Bicarbonate",
+      "hs_code": "283630000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 121,
+      "permit_no": "49716",
+      "product_name": "MPG",
+      "hs_code": "290532",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": "2025-09-16"
+    },
+    {
+      "id": 122,
+      "permit_no": "1234",
+      "product_name": "Di Potassium Phosphate",
+      "hs_code": "283524000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 123,
+      "permit_no": "123456",
+      "product_name": "Ammonium Bicarbonate",
+      "hs_code": "283699900001",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 124,
+      "permit_no": "49714",
+      "product_name": "Potassium Humate",
+      "hs_code": "380893900000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-09-05"
+    },
+    {
+      "id": 125,
+      "permit_no": "49913",
+      "product_name": "CMC",
+      "hs_code": "391231000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": "2025-10-12"
+    },
+    {
+      "id": 126,
+      "permit_no": "50056",
+      "product_name": "Citric Acid",
+      "hs_code": "291814000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-10-28"
+    },
+    {
+      "id": 127,
+      "permit_no": "123",
+      "product_name": "Sodium Tripolyphosphosphate (STPP)",
+      "hs_code": "283531000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 128,
+      "permit_no": "49938",
+      "product_name": "Methylene Chloride",
+      "hs_code": "29031200",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2025-10-17"
+    },
+    {
+      "id": 129,
+      "permit_no": "49985",
+      "product_name": "Mono Ammonium Phosphate (MAP)",
+      "hs_code": "310540000001",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": "2025-10-20"
+    },
+    {
+      "id": 130,
+      "permit_no": "123",
+      "product_name": "Mono Ammonium Phosphate (MAP)",
+      "hs_code": "310540000001",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 131,
+      "permit_no": "50009",
+      "product_name": "Dextrose Monohydrate",
+      "hs_code": "170230",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": "2025-10-22"
+    },
+    {
+      "id": 133,
+      "permit_no": "50217",
+      "product_name": "n-Heptane",
+      "hs_code": "290110100000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": "2025-11-14"
+    },
+    {
+      "id": 134,
+      "permit_no": "123",
+      "product_name": "EDTA",
+      "hs_code": "292249000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 135,
+      "permit_no": "123",
+      "product_name": "Potassium Hydroxide 90%",
+      "hs_code": "281520000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 136,
+      "permit_no": "123",
+      "product_name": "Ascorbic Acid",
+      "hs_code": "293627000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 137,
+      "permit_no": "123",
+      "product_name": "SODIUM NITRITE",
+      "hs_code": "283410",
+      "name_in_customs": null,
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 139,
+      "permit_no": "147287",
+      "product_name": "WHITE OIL 15",
+      "hs_code": "271019970000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 140,
+      "permit_no": "123",
+      "product_name": "Fructose",
+      "hs_code": "1702500000",
+      "name_in_customs": "Fructose",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 141,
+      "permit_no": "1234",
+      "product_name": "Xanthan Gum",
+      "hs_code": "130239000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 142,
+      "permit_no": "159953",
+      "product_name": "Ascorbic Acid",
+      "hs_code": "293627000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 143,
+      "permit_no": "51139",
+      "product_name": "Copper Sulphate",
+      "hs_code": "283325000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": "2026-02-27"
+    },
+    {
+      "id": 144,
+      "permit_no": "123",
+      "product_name": "Activated Alumina",
+      "hs_code": "281820000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 145,
+      "permit_no": "123",
+      "product_name": "POLYACRYLAMIDE-A",
+      "hs_code": "39069090",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 146,
+      "permit_no": "123",
+      "product_name": "Manganese Sulphate Monohydrate",
+      "hs_code": "283329400000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 147,
+      "permit_no": "123",
+      "product_name": "Sodium sulphate Anhydrous",
+      "hs_code": "28321000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 148,
+      "permit_no": "123",
+      "product_name": "Citric Acid",
+      "hs_code": "291814000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 149,
+      "permit_no": "123",
+      "product_name": "Fructose",
+      "hs_code": "1702500000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 150,
+      "permit_no": "1234",
+      "product_name": "Glycerin",
+      "hs_code": "2905.45.0000",
+      "name_in_customs": null,
+      "permit_requirement": "68 - MOI",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 151,
+      "permit_no": "123456",
+      "product_name": "Mono Potassium Phosphate (MKP)",
+      "hs_code": "28352400000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 152,
+      "permit_no": "4567",
+      "product_name": "Mono Ammonium Phosphate (MAP)",
+      "hs_code": "310540000001",
+      "name_in_customs": "Mono Ammonium Phosphate (MAP)",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 153,
+      "permit_no": "123456",
+      "product_name": "SODIUM NITRITE",
+      "hs_code": "283410",
+      "name_in_customs": null,
+      "permit_requirement": null,
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 154,
+      "permit_no": "1234567",
+      "product_name": "Soda Ash Light",
+      "hs_code": "283620",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 155,
+      "permit_no": "1234",
+      "product_name": "POTASSIUM SULPHATE",
+      "hs_code": null,
+      "name_in_customs": "potassium sulphate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 156,
+      "permit_no": "1234",
+      "product_name": "Methylene Chloride",
+      "hs_code": "290312000000",
+      "name_in_customs": "Methylene Chloride\r\n290312000000",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 157,
+      "permit_no": "1234",
+      "product_name": "Sodium Benzoate",
+      "hs_code": "291631200002",
+      "name_in_customs": "Sodium Benzoate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 158,
+      "permit_no": "3456",
+      "product_name": "Dextrose Monohydrate",
+      "hs_code": "170230000001",
+      "name_in_customs": "Dextrose Monohydrate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.15,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 159,
+      "permit_no": "345",
+      "product_name": "Sodium Bicarbonate",
+      "hs_code": "283630000000",
+      "name_in_customs": "Sodium Bicarbonate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 160,
+      "permit_no": "1234",
+      "product_name": "Dicalcium Phosphate (DCP)",
+      "hs_code": "283525000000",
+      "name_in_customs": "Di Calcium Phosphate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 161,
+      "permit_no": "123456",
+      "product_name": "n-Heptane",
+      "hs_code": "290110100000",
+      "name_in_customs": "n-Heptane",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 163,
+      "permit_no": "1234",
+      "product_name": "Sodium Acid Pyrophosphate (SAPP)",
+      "hs_code": "2835391",
+      "name_in_customs": "Sodium Acid Pyrophosphate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 164,
+      "permit_no": "12314",
+      "product_name": "Sodium Tripolyphosphosphate (STPP)",
+      "hs_code": "283531000000",
+      "name_in_customs": "Sodium Tripolyphosphosphate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 165,
+      "permit_no": "1234",
+      "product_name": "Ascorbic Acid",
+      "hs_code": "293627",
+      "name_in_customs": "Ascorbic Acid",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": null,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 166,
+      "permit_no": "123",
+      "product_name": "MPG",
+      "hs_code": "290532000000",
+      "name_in_customs": "Propylene Glycol",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.055,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 167,
+      "permit_no": "1111",
+      "product_name": "Zinc Sulfate Monohydrate",
+      "hs_code": "28332930",
+      "name_in_customs": "zinc Sulphate Monohydrate",
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 169,
+      "permit_no": "123456",
+      "product_name": "Ammonium Bicarbonate",
+      "hs_code": "28369940",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 170,
+      "permit_no": "123456",
+      "product_name": "Di Potassium Phosphate",
+      "hs_code": "283524000000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 171,
+      "permit_no": "123456",
+      "product_name": "Ammonium Sulphate",
+      "hs_code": "3102210000",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 172,
+      "permit_no": "1234567",
+      "product_name": "TRI SODIUM CITRATE",
+      "hs_code": "29181500",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 175,
+      "permit_no": "123456",
+      "product_name": "Fructose",
+      "hs_code": "1702500000",
+      "name_in_customs": null,
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 176,
+      "permit_no": "123456",
+      "product_name": "Potassium Sorbate",
+      "hs_code": "291619009999",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 177,
+      "permit_no": "123456",
+      "product_name": "Potassium Sorbate",
+      "hs_code": "291619009999",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 178,
+      "permit_no": "123456",
+      "product_name": "Xanthan Gum",
+      "hs_code": "39139000",
+      "name_in_customs": null,
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 180,
+      "permit_no": "12345",
+      "product_name": "TITANIUM DIOXIDE",
+      "hs_code": "32061100",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.065,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 181,
+      "permit_no": "12345",
+      "product_name": "Sodium Benzoate",
+      "hs_code": "291631200002",
+      "name_in_customs": null,
+      "permit_requirement": "24 - MOC",
+      "duty_percent": 0.05,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 182,
+      "permit_no": "123456",
+      "product_name": "Magnesium Oxide",
+      "hs_code": "251990100001",
+      "name_in_customs": null,
+      "permit_requirement": "N/A",
+      "duty_percent": 0.15,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 183,
+      "permit_no": "123456",
+      "product_name": "IQF Shredded Mozzarella with Starch",
+      "hs_code": "040620",
+      "name_in_customs": null,
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.06,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 184,
+      "permit_no": "12345",
+      "product_name": "25 Kg Australian Buttery Spread KSA",
+      "hs_code": "15179090",
+      "name_in_customs": null,
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.06,
+      "qty": null,
+      "expiry_date": null
+    },
+    {
+      "id": 185,
+      "permit_no": "12345",
+      "product_name": "Halloumi Cheese 250g",
+      "hs_code": "040690",
+      "name_in_customs": null,
+      "permit_requirement": "61 - SFDA",
+      "duty_percent": 0.06,
+      "qty": null,
+      "expiry_date": null
+    }
+  ],
+  "lookups": {
+    "clearance_statuses": [
+      "SWB Docs Sent",
+      "Draft Docs Received",
+      "Copy Docs Sent",
+      "Pending Pay/LC",
+      "Pending Permit",
+      "Original Docs Sent",
+      "Bayan Paid"
+    ],
+    "currencies": [
+      "EUR",
+      "SAR",
+      "USD"
+    ],
+    "delivery_terms": [
+      "CFR",
+      "CIF",
+      "DAP",
+      "DDP",
+      "DDU",
+      "EXW"
+    ],
+    "packing_types": [
+      "1,000 kg Bags",
+      "200 kg Drum",
+      "25 kg Bags",
+      "250 kg Drum",
+      "56.7 kg Drum",
+      "Big Bags",
+      "ISO Tank",
+      "Jumbo Bags",
+      "270 KG Drum",
+      "150 kg Drums",
+      "200 Liters Drums",
+      "680 kg Bags",
+      "50 kg bags",
+      "45 Kg Drums",
+      "200 M3/Drum",
+      "35 KG CAN"
+    ],
+    "payment_terms_supplier": [
+      "20-80",
+      "30-70",
+      "50-50",
+      "Advance",
+      "LC 90 Days",
+      "Credit 90",
+      "Credit 60",
+      "Credit 30",
+      "LC 60 Days",
+      "Cash Against Docs"
+    ],
+    "payment_terms_customer": [
+      "120 Days from Invoice",
+      "30 Days from Invoice",
+      "45 Days after receipt of invoice & material",
+      "60 Days from BOL",
+      "60 Days from Invoice",
+      "60 Days from Invoice and Material Receipt",
+      "90 Days from Invoice",
+      "Advance Payment"
+    ],
+    "permit_requirements": [
+      "24 - MOC",
+      "61 - SFDA",
+      "68 - MOI",
+      "N/A"
+    ],
+    "ports_of_destination": [
+      "DMM",
+      "JED",
+      "RBG",
+      "RYD"
+    ],
+    "product_groups": [
+      "Catalysts",
+      "Drilling Chemicals",
+      "Food Chemicals",
+      "Polymer Additives",
+      "Fuel Additives",
+      "Solvents",
+      "Fertilizers"
+    ],
+    "sf_statuses": [
+      "Incoming",
+      "Ordered",
+      "Cleared",
+      "Canceled"
+    ],
+    "uom": [
+      "BAG",
+      "DR",
+      "KG",
+      "MT"
+    ],
+    "po_issued_to": [
+      "Grace",
+      "MPC",
+      "Other"
+    ],
+    "payment_request_statuses": [
+      "Done",
+      "NA",
+      "Required"
+    ]
+  },
+  "internal_contacts": {
+    "logistics": "mlogistic@Alfaisaliah.com; pbinu@Alfaisaliah.com",
+    "pay_req_to": "mismail@alfaisaliah.com",
+    "pay_req_cc": "mpcaccounts@Alfaisaliah.com; aaldemaiji@Alfaisaliah.com; faldemaiji@Alfaisaliah.com; sjawwad@Alfaisaliah.com",
+    "permit": "aaldrwish@Alfaisaliah.com",
+    "wh_jubail": "Jubailmpcwh@Alfaisaliah.com; rsharif@Alfaisaliah.com",
+    "wh_rabigh": "rabighmpcwh@Alfaisaliah.com; rsharif@Alfaisaliah.com; jpurushthman@Alfaisaliah.com",
+    "wh_riyadh": "riyadhmpcwh@Alfaisaliah.com"
+  }
+}
