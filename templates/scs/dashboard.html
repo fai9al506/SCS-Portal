@@ -1,143 +1,178 @@
 {% extends "base.html" %}
-{% block title %}Dashboard — SCS Portal{% endblock %}
+{% block title %}Main Menu — SCS Portal{% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <div>
-        <h1 class="page-title">Dashboard</h1>
-        <p class="page-subtitle">Supply Chain System Overview</p>
+<div class="main-menu">
+    <!-- Header -->
+    <div class="menu-header">
+        <div class="menu-brand">
+            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="MPC" class="menu-logo">
+            <div>
+                <h1 class="menu-title">MPC Supply Chain System</h1>
+                <p class="menu-subtitle">Developed by Eng. Faisal Al Demaiji</p>
+            </div>
+        </div>
+        <div class="menu-stats">
+            <div class="stat-chip stat-blue">{{ incoming_shipments }} Incoming</div>
+            <div class="stat-chip stat-green">{{ active_pos }} Active POs</div>
+            <div class="stat-chip stat-purple">{{ open_customer_pos }} Open CPOs</div>
+        </div>
     </div>
-</div>
 
-<!-- Summary Cards -->
-<div class="dashboard-cards">
-    <a href="{{ url_for('scs.shipments', status='Incoming') }}" class="dash-card" style="--card-accent: var(--blue);">
-        <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
-        <div class="dash-card-info">
-            <span class="dash-card-count">{{ incoming_shipments }}</span>
-            <span class="dash-card-label">Incoming Shipments</span>
-        </div>
-    </a>
-    <div class="dash-card" style="--card-accent: var(--yellow);">
-        <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div class="dash-card-info">
-            <span class="dash-card-count">{{ pending_clearance }}</span>
-            <span class="dash-card-label">Pending Clearance</span>
-        </div>
-    </div>
-    <a href="{{ url_for('scs.customer_pos', status='open') }}" class="dash-card" style="--card-accent: var(--purple);">
-        <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8M16 17H8M10 9H8"/></svg>
-        </div>
-        <div class="dash-card-info">
-            <span class="dash-card-count">{{ open_customer_pos }}</span>
-            <span class="dash-card-label">Open Customer POs</span>
-        </div>
-    </a>
-    <a href="{{ url_for('po.po_list') }}" class="dash-card" style="--card-accent: var(--green);">
-        <div class="dash-card-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14l2 2 4-4"/></svg>
-        </div>
-        <div class="dash-card-info">
-            <span class="dash-card-count">{{ active_pos }}</span>
-            <span class="dash-card-label">Active POs</span>
-        </div>
-    </a>
-</div>
+    <!-- 6-Section Grid -->
+    <div class="menu-grid">
 
-<!-- Arriving Soon -->
-<div class="card" style="margin-bottom: 1.5rem;">
-    <div class="card-header">
-        Arriving Soon
-        <a href="{{ url_for('scs.shipments', status='Incoming') }}" class="btn btn-ghost btn-sm">View All</a>
-    </div>
-    <div class="card-body" style="padding: 0;">
-        {% if arriving_data %}
-        <div class="table-wrapper">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>S/F #</th>
-                        <th>Product</th>
-                        <th>Supplier</th>
-                        <th>ETA</th>
-                        <th>DTA</th>
-                        <th>POD</th>
-                        <th>Containers</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for d in arriving_data %}
-                    <tr>
-                        <td><a href="{{ url_for('scs.shipment_detail', sid=d.sf.id) }}" class="link">{{ d.sf.sf_number or '—' }}</a></td>
-                        <td>{{ d.sf.product_name or '—' }}</td>
-                        <td>{{ d.sf.supplier_name or '—' }}</td>
-                        <td>{{ d.sf.eta|date_fmt }}</td>
-                        <td>
-                            {% if d.dta is not none %}
-                            <span class="dta-badge {% if d.dta < 0 %}dta-overdue{% elif d.dta < 7 %}dta-urgent{% elif d.dta < 14 %}dta-warning{% else %}dta-ok{% endif %}">
-                                {{ d.dta }}d
-                            </span>
-                            {% else %}—{% endif %}
-                        </td>
-                        <td>{{ d.sf.port_of_destination_name or (d.sf.port_of_destination.name if d.sf.port_of_destination else '—') }}</td>
-                        <td>{{ d.container_count }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <!-- Purchase Orders -->
+        <div class="menu-section">
+            <div class="section-title">Purchase Orders</div>
+            <div class="section-links">
+                <a href="{{ url_for('po.po_new') }}" class="menu-link">
+                    <span class="ml-icon ml-create"></span>
+                    Create new MPC PO
+                </a>
+                <a href="{{ url_for('po.po_list') }}" class="menu-link">
+                    <span class="ml-icon ml-update"></span>
+                    Updation of ETD, ETA, and Pay req.
+                </a>
+                <a href="{{ url_for('scs.shipments', status='Incoming') }}" class="menu-link">
+                    <span class="ml-icon ml-report"></span>
+                    Incoming Shipments Report
+                </a>
+                <a href="{{ url_for('scs.payments') }}" class="menu-link">
+                    <span class="ml-icon ml-report"></span>
+                    Pending Payments Report
+                </a>
+                <a href="{{ url_for('scs.shipments', status='Cleared') }}" class="menu-link">
+                    <span class="ml-icon ml-report"></span>
+                    Cleared Shipments Report
+                </a>
+                <a href="{{ url_for('scs.permits') }}" class="menu-link">
+                    <span class="ml-icon ml-permit"></span>
+                    Add Import Permit
+                </a>
+            </div>
         </div>
-        {% else %}
-        <div class="empty-state">
-            <h3>No incoming shipments</h3>
-            <p>No shipments with upcoming ETAs found.</p>
-        </div>
-        {% endif %}
-    </div>
-</div>
 
-<!-- Recent POs -->
-<div class="card">
-    <div class="card-header">
-        Recent Purchase Orders
-        <a href="{{ url_for('po.po_list') }}" class="btn btn-ghost btn-sm">View All</a>
-    </div>
-    <div class="card-body" style="padding: 0;">
-        {% if recent_pos %}
-        <div class="table-wrapper">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>PO No.</th>
-                        <th>Supplier</th>
-                        <th>Status</th>
-                        <th>Items</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for po in recent_pos %}
-                    <tr>
-                        <td><a href="{{ url_for('po.po_detail', po_id=po.id) }}" class="link">{{ po.po_number or '—' }}</a></td>
-                        <td>{{ po.supplier.name if po.supplier else '—' }}</td>
-                        <td><span class="badge badge-{{ po.status|lower }}">{{ po.status }}</span></td>
-                        <td>{{ po.items|length }}</td>
-                        <td>{{ po.created_at|riyadh_fmt }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <!-- Stock, Delivery, and Invoices -->
+        <div class="menu-section">
+            <div class="section-title">Stock, Delivery, and Invoices</div>
+            <div class="section-links">
+                <a href="{{ url_for('scs.shipments') }}" class="menu-link">
+                    <span class="ml-icon ml-update"></span>
+                    Updation of Clearance Status (GR)
+                </a>
+                <a href="{{ url_for('scs.shipments') }}" class="menu-link">
+                    <span class="ml-icon ml-stock"></span>
+                    Local Stock of Single Product
+                </a>
+                <a href="{{ url_for('delivery.delivery_new') }}" class="menu-link">
+                    <span class="ml-icon ml-create"></span>
+                    Create/Amend Delivery Note
+                </a>
+                <a href="{{ url_for('delivery.delivery_new') }}" class="menu-link">
+                    <span class="ml-icon ml-multi"></span>
+                    Deliver multi-items
+                </a>
+                <a href="{{ url_for('delivery.delivery_list') }}" class="menu-link">
+                    <span class="ml-icon ml-report"></span>
+                    Shipments Delivered without Invoice
+                </a>
+                <a href="{{ url_for('delivery.delivery_list') }}" class="menu-link">
+                    <span class="ml-icon ml-update"></span>
+                    Updation of Delivery/Invoice
+                </a>
+            </div>
         </div>
-        {% else %}
-        <div class="empty-state">
-            <h3>No purchase orders yet</h3>
-            <p>Create your first purchase order to get started.</p>
+
+        <!-- Shipment Files -->
+        <div class="menu-section">
+            <div class="section-title">Shipment Files</div>
+            <div class="section-links">
+                <a href="{{ url_for('scs.shipment_new') }}" class="menu-link">
+                    <span class="ml-icon ml-create"></span>
+                    Create new S/F
+                </a>
+                <a href="{{ url_for('scs.shipments') }}" class="menu-link">
+                    <span class="ml-icon ml-multi"></span>
+                    Add S/F Items
+                </a>
+                <a href="{{ url_for('scs.shipments') }}" class="menu-link">
+                    <span class="ml-icon ml-docs"></span>
+                    Docs to Broker
+                </a>
+                <a href="{{ url_for('scs.shipments') }}" class="menu-link">
+                    <span class="ml-icon ml-detail"></span>
+                    Full S/F Details
+                </a>
+            </div>
         </div>
-        {% endif %}
+
+        <!-- Customers PO's -->
+        <div class="menu-section">
+            <div class="section-title">Customers PO's</div>
+            <div class="section-links">
+                <a href="{{ url_for('scs.customer_po_new') }}" class="menu-link">
+                    <span class="ml-icon ml-create"></span>
+                    Add new Customer PO
+                </a>
+                <a href="{{ url_for('scs.customer_pos') }}" class="menu-link">
+                    <span class="ml-icon ml-multi"></span>
+                    Customers PO Report
+                </a>
+                <a href="{{ url_for('scs.customer_pos') }}" class="menu-link">
+                    <span class="ml-icon ml-stock"></span>
+                    Inquiry of Single PO
+                </a>
+                <a href="{{ url_for('scs.customer_pos') }}" class="menu-link">
+                    <span class="ml-icon ml-detail"></span>
+                    Delivery Schedule
+                </a>
+            </div>
+        </div>
+
+        <!-- Commission, Service, and Detention Invoices -->
+        <div class="menu-section">
+            <div class="section-title">Commission, Service, and Detention Invoices</div>
+            <div class="section-links">
+                <a href="#" class="menu-link menu-link-soon">
+                    <span class="ml-icon ml-report"></span>
+                    FCC Commission Invoices (Pending)
+                </a>
+                <a href="#" class="menu-link menu-link-soon">
+                    <span class="ml-icon ml-report"></span>
+                    FCC Commission Invoices Report (All)
+                </a>
+                <a href="#" class="menu-link menu-link-soon">
+                    <span class="ml-icon ml-report"></span>
+                    FCC Handling Invoices (Pending)
+                </a>
+                <a href="#" class="menu-link menu-link-soon">
+                    <span class="ml-icon ml-permit"></span>
+                    n-Heptane ISO-Tank Rental Invoices
+                </a>
+                <a href="#" class="menu-link menu-link-soon">
+                    <span class="ml-icon ml-report"></span>
+                    Tanks Not-Returned to SL Report
+                </a>
+            </div>
+        </div>
+
+        <!-- Master Data -->
+        <div class="menu-section">
+            <div class="section-title">Master Data</div>
+            <div class="section-buttons">
+                <a href="{{ url_for('manage.customers') }}" class="md-btn">Customers</a>
+                <a href="{{ url_for('manage.products') }}" class="md-btn">Products</a>
+                <a href="{{ url_for('manage.customers') }}" class="md-btn">Customers Add</a>
+                <a href="{{ url_for('manage.lookups') }}#brokers" class="md-btn">Brokers</a>
+                <a href="{{ url_for('manage.lookups') }}#packing_types" class="md-btn">Packing</a>
+                <a href="{{ url_for('manage.lookups') }}#shipping_lines" class="md-btn">Shipping Lines</a>
+                <a href="{{ url_for('manage.lookups') }}#transporters" class="md-btn">Trans.</a>
+                <a href="{{ url_for('manage.suppliers') }}" class="md-btn">Suppliers</a>
+                <a href="{{ url_for('manage.lookups') }}#return_terminals" class="md-btn">SL Terminals</a>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}
