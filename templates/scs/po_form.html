@@ -115,30 +115,21 @@
 {% block scripts %}
 <script>
 (function() {
-    // Dropdown data (rendered server-side for JS use)
-    var products = [
-        {% for p in products %}
-        { id: {{ p.id }}, name: "{{ p.name|e }}", sap: "{{ p.sap_code or ''|e }}" }{{ "," if not loop.last }}
-        {% endfor %}
-    ];
-    var uoms = [
-        {% for u in uoms %}
-        { name: "{{ u.name|e }}" }{{ "," if not loop.last }}
-        {% endfor %}
-    ];
-    var currencies = [
-        {% for c in currencies %}
-        { code: "{{ c.code|e }}" }{{ "," if not loop.last }}
-        {% endfor %}
-    ];
-    var pods = [
-        {% for p in pods %}
-        { id: {{ p.id }}, name: "{{ p.name|e }}" }{{ "," if not loop.last }}
-        {% endfor %}
-    ];
+    // Dropdown data (rendered server-side as JSON for safety)
+    var products = {{ products|map(attribute='id')|list|tojson }}.map(function(id, i) {
+        var names = {{ products|map(attribute='name')|list|tojson }};
+        var saps = {{ products|map(attribute='sap_code')|list|tojson }};
+        return { id: id, name: names[i], sap: saps[i] || "" };
+    });
+    var uoms = {{ uoms|map(attribute='name')|list|tojson }}.map(function(n) { return { name: n }; });
+    var currencies = {{ currencies|map(attribute='code')|list|tojson }}.map(function(c) { return { code: c }; });
+    var pods = {{ pods|map(attribute='id')|list|tojson }}.map(function(id, i) {
+        var names = {{ pods|map(attribute='name')|list|tojson }};
+        return { id: id, name: names[i] };
+    });
     var permits = [
         {% for p in permits %}
-        { id: {{ p.id }}, label: "{{ p.permit_no or ''|e }}{% if p.product_name %} — {{ p.product_name|e }}{% endif %}" }{{ "," if not loop.last }}
+        { id: {{ p.id }}, label: {{ (p.permit_no or '')|tojson }} + {% if p.product_name %}" — " + {{ p.product_name|tojson }}{% else %}""{% endif %} },
         {% endfor %}
     ];
     var statusOptions = ["Ordered", "Incoming", "Cleared", "Canceled"];
