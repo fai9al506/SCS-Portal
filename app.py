@@ -106,8 +106,8 @@ def create_app():
         inspector = inspect(db.engine)
         existing_tables = inspector.get_table_names()
         needs_reset = (
-            'shipment_files' in existing_tables
-            and 'purchase_orders' not in existing_tables
+            ('shipment_files' in existing_tables and 'purchase_orders' not in existing_tables)
+            or os.environ.get('RESET_DB') == 'true'
         )
         if needs_reset:
             print("Detected old schema — dropping all tables and recreating...")

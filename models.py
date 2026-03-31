@@ -130,7 +130,7 @@ class Product(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
-    sap_code = db.Column(db.String(50), nullable=True)
+    sap_code = db.Column(db.String(100), nullable=True)
     category_id = db.Column(db.Integer, db.ForeignKey("product_categories.id"), nullable=True)
     legacy_id = db.Column(db.Integer, nullable=True)
     is_active = db.Column(db.Boolean, default=True)
@@ -177,7 +177,7 @@ class CustomerAddress(db.Model):
     address_line2 = db.Column(db.String(300), nullable=True)
     city = db.Column(db.String(100), nullable=True)
     contact_person = db.Column(db.String(200), nullable=True)
-    contact_phone = db.Column(db.String(50), nullable=True)
+    contact_phone = db.Column(db.String(200), nullable=True)
     contact_email = db.Column(db.String(255), nullable=True)
     legacy_id = db.Column(db.Integer, nullable=True)
 
