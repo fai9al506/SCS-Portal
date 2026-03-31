@@ -101,6 +101,19 @@ def create_app():
 
     # Auto-create tables and seed data
     with app.app_context():
+        # Check if we need to reset the DB (old schema → new schema)
+        from sqlalchemy import inspect
+        inspector = inspect(db.engine)
+        existing_tables = inspector.get_table_names()
+        needs_reset = (
+            'shipment_files' in existing_tables
+            and 'purchase_orders' not in existing_tables
+        )
+        if needs_reset:
+            print("Detected old schema — dropping all tables and recreating...")
+            db.drop_all()
+            print("Old tables dropped.")
+
         db.create_all()
 
         # Seed default admin user
