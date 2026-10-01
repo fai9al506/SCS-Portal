@@ -124,6 +124,11 @@ def create_app():
             db.session.commit()
             print("Created default admin user")
 
+        # gunicorn --preload forks the workers after this: drop the startup connections so each
+        # worker opens its own (a shared SSL connection fails with "bad record mac").
+        db.session.remove()
+        db.engine.dispose()
+
     return app
 
 
