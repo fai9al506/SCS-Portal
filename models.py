@@ -47,6 +47,7 @@ class AppSetting(db.Model):
     """Values Access had hard-coded in VBA/queries (rates, bank details, e-mail lists) — decision B7.
     Edited by admins on Admin > Other lists > Settings. Read with services.settings.get()."""
     __tablename__ = "app_settings"
+    __access_table__ = "Settings"   # name used in the audit log (not an Access table)
     id = db.Column(db.Integer, primary_key=True)
     Key = db.Column("key", db.String(100), unique=True, nullable=False)
     Value = db.Column("value", db.Text)
