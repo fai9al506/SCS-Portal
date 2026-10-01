@@ -1,34 +1,29 @@
-{% extends "base.html" %}
-{% block title %}Login — MPC SCS Portal{% endblock %}
-
-{% block public_content %}
-<div class="auth-page">
-    <div class="auth-card">
-        <div class="auth-logo">
-            <img src="{{ url_for('static', filename='logo.jpg') }}" alt="MPC">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in — MPC Supply Chain System</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='access/access.css') }}">
+    <script>if (window.top !== window) window.top.location = window.location.href;</script>
+</head>
+<body>
+    <div class="login-box">
+        <div class="acc-titlebar"><img src="{{ url_for('static', filename='favicon.png') }}" alt=""><span class="t">MPC Database and Reporting System</span></div>
+        <div class="body">
+            <img class="logo" src="{{ url_for('static', filename='access/mpc_logo.png') }}" alt="MPC — Modern Petrochemicals Co.">
+            <h1>MPC Supply Chain System</h1>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}<div class="flash flash-{{ category }}">{{ message }}</div>{% endfor %}
+            {% endwith %}
+            <form method="POST">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <div class="field"><label for="email">Email</label><input type="email" id="email" name="email" required autofocus></div>
+                <div class="field"><label for="password">Password</label><input type="password" id="password" name="password" required></div>
+                <button type="submit" class="btn-blue">Sign in</button>
+            </form>
         </div>
-        <h1 class="auth-title">Supply Chain System</h1>
-        <p class="auth-subtitle">Sign in to your account</p>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        {% for category, message in messages %}
-        <div class="flash flash-{{ category }}" style="margin-bottom: 1rem;">{{ message }}</div>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-
-        <form method="POST" class="auth-form">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="your@email.com" autofocus>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required placeholder="Enter password">
-            </div>
-            <button type="submit" class="btn btn-primary btn-full">Sign In</button>
-        </form>
     </div>
-</div>
-{% endblock %}
+</body>
+</html>

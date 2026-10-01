@@ -14,4 +14,6 @@ class Config:
     SESSION_COOKIE_SECURE = os.environ.get("FLASK_ENV") != "development"
     SESSION_COOKIE_HTTPONLY = True
     SESSION_COOKIE_SAMESITE = "Lax"
-    PERMANENT_SESSION_LIFETIME = 28800  # 8 hours
+    # Like Access (DetectIdleTime): sign out after 30 min with no activity.
+    # The session is refreshed on every request, so the 30 min counts from the last action.
+    PERMANENT_SESSION_LIFETIME = 1800

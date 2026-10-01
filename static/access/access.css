@@ -1,0 +1,141 @@
+/* SCS Portal — replica of the Access app's look (spec 0). Sizes are Access px (twips / 15). */
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; color: #000; background: #f0f0f0; }
+
+/* ── Workspace (the Access application window) ─────────────────────── */
+.app-bar {
+    height: 32px; background: #fff; border-bottom: 1px solid #d4d4d4;
+    display: flex; align-items: center; padding: 0 10px; gap: 10px; font-size: 12px;
+}
+.app-bar img { width: 18px; height: 18px; }
+.app-bar .app-title { flex: 1; color: #333; }
+.app-bar a { color: #333; text-decoration: none; padding: 4px 8px; border-radius: 2px; }
+.app-bar a:hover { background: #e5e5e5; }
+.workspace { position: relative; min-height: calc(100vh - 32px); padding: 24px; overflow: auto; }
+
+/* ── Access window chrome (title bar, border) ──────────────────────── */
+.acc-window {
+    position: absolute; background: #fff; border: 1px solid #c42b1c;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, .28); display: flex; flex-direction: column;
+}
+.acc-window.inactive { border-color: #aaa; box-shadow: 0 4px 14px rgba(0, 0, 0, .18); }
+.acc-titlebar {
+    height: 30px; flex: none; display: flex; align-items: center; gap: 8px; padding-left: 8px;
+    font: 12px "Segoe UI", Arial, sans-serif; color: #000; background: #fff; cursor: default; user-select: none;
+}
+.acc-window.inactive .acc-titlebar { color: #888; }
+.acc-titlebar img { width: 16px; height: 16px; }
+.acc-titlebar .t { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.acc-titlebar .x {
+    width: 46px; height: 30px; display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: #000; cursor: pointer;
+}
+.acc-titlebar .x:hover { background: #e81123; color: #fff; }
+.acc-titlebar .x.disabled { color: #bbb; cursor: default; background: none; }
+.acc-window iframe { border: 0; flex: 1; width: 100%; display: block; background: #fff; }
+
+/* ── Main Menu (form MainMenu, 1076 x 704) ─────────────────────────── */
+.main-menu-window { position: relative; margin: 0 auto; width: 1078px; }
+.main-menu { position: relative; width: 1076px; height: 720px; background: #fff; overflow: hidden; }
+.main-menu .abs { position: absolute; }
+.mm-logo { left: 4px; top: 8px; width: 312px; height: 108px; object-fit: contain; object-position: left top; }
+.mm-title { left: 4px; top: 140px; width: 332px; height: 32px; font: bold 14pt "Times New Roman", serif; color: #203864; }
+.mm-dev { left: 4px; top: 176px; width: 332px; font: 11pt "Bookman Old Style", "Book Antiqua", serif; color: #666; line-height: 1.3; }
+.mm-frame {
+    background: #e7e6e6; border: 1px solid #a6a6a6;
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #c8c8c8;
+}
+.mm-frame-cap {
+    height: 24px; background: #bfbfbf; border: 1px solid #404040; text-align: center;
+    font: bold 11pt "Times New Roman", serif; line-height: 22px; white-space: nowrap;
+}
+.acc-btn {
+    background: linear-gradient(#8cbbe8 0%, #6fa6dc 45%, #5b9bd5 55%, #4f8fcb 100%);
+    border: 1px solid #5b9bd5; border-radius: 3px; box-shadow: 1px 2px 3px rgba(0, 0, 0, .35);
+    cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;
+}
+.acc-btn:hover { background: linear-gradient(#a3c9ee 0%, #8ebde6 45%, #7cafdd 55%, #6ea4d6 100%); }
+.acc-btn:active { background: #327dc2; box-shadow: inset 1px 1px 2px rgba(0, 0, 0, .4); }
+.acc-btn:focus-visible { outline: 1px dotted #000; outline-offset: -4px; }
+.acc-btn img { width: 16px; height: 16px; image-rendering: pixelated; }
+.mm-btn { width: 36px; height: 28px; }
+.mm-text { height: 21px; font: bold 11pt Arial, sans-serif; white-space: nowrap; cursor: pointer; }
+.mm-master { height: 29px; justify-content: flex-start; gap: 4px; padding-left: 5px; white-space: nowrap; font: 10pt Calibri, "Segoe UI", sans-serif; color: #000; }
+.mm-scroll { left: 0; bottom: 0; width: 100%; height: 16px; background: #c8c8c8; }
+
+/* ── Access forms (content of a popup window) ─────────────────────── */
+body.acc-form { background: #f2f2f2; overflow: hidden; }
+.form-header { height: 38px; background: #afabab; position: relative; }
+.form-header .title { position: absolute; left: 8px; top: 8px; font: bold 11pt "Segoe UI", sans-serif; white-space: nowrap; }
+.form-detail { position: relative; background: #f2f2f2; }
+.form-detail .lbl { position: absolute; height: 21px; font: 11pt "Segoe UI", sans-serif; line-height: 21px; white-space: nowrap; }
+.form-detail .ctl {
+    position: absolute; height: 21px; font: 11pt "Segoe UI", sans-serif; color: #404040; background: #fff;
+    border: 1px solid #a6a6a6; padding: 0 3px; outline: none; border-radius: 0;
+}
+.form-detail .ctl:focus { border-color: #5b9bd5; }
+.form-detail .ctl.bold { font-weight: bold; }
+.form-detail select.ctl { padding: 0 1px; }
+.form-detail .hint { position: absolute; font: 11pt Calibri, sans-serif; color: #7f7f7f; white-space: nowrap; }
+.gray-btn {
+    position: absolute; width: 38px; height: 38px; border: 1px solid #8f8f8f; border-radius: 2px; cursor: pointer;
+    background: linear-gradient(#c4c4c4, #a5a5a5 55%, #989898); display: flex; align-items: center; justify-content: center;
+}
+.gray-btn:hover { background: linear-gradient(#d2d2d2, #b7b7b7 55%, #ababab); }
+.gray-btn:active { background: #848484; }
+.gray-btn img { width: 16px; height: 16px; image-rendering: pixelated; }
+
+/* Record navigation bar: "Record: |< < [n of N] > >| >*  No Filter  Search" */
+.nav-bar {
+    height: 24px; display: flex; align-items: center; gap: 2px; padding: 0 4px; background: #f0f0f0;
+    border-top: 1px solid #c8c8c8; font: 12px "Segoe UI", sans-serif; color: #000; user-select: none;
+}
+.nav-bar button {
+    width: 18px; height: 18px; border: 0; background: none; padding: 0; font-size: 10px; cursor: pointer; color: #333;
+}
+.nav-bar button:hover:not(:disabled) { background: #cce4f7; }
+.nav-bar button:disabled { color: #bbb; cursor: default; }
+.nav-bar .pos { width: 86px; height: 18px; border: 1px solid #a6a6a6; font: 12px "Segoe UI", sans-serif; text-align: left; padding: 0 3px; }
+.nav-bar .filter { color: #999; margin: 0 8px; white-space: nowrap; }
+.nav-bar .search { width: 90px; height: 18px; border: 1px solid #a6a6a6; font: 12px "Segoe UI", sans-serif; padding: 0 3px; }
+.nav-bar .search::placeholder { color: #333; }
+
+/* Access-style message box and dialogs */
+.msg-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, .08); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.msg-box { background: #fff; border: 1px solid #888; box-shadow: 0 6px 20px rgba(0, 0, 0, .3); min-width: 300px; max-width: 460px; font: 12px "Segoe UI", sans-serif; }
+.msg-box .msg-title { height: 28px; line-height: 28px; padding: 0 10px; }
+.msg-box .msg-body { padding: 14px 18px 18px; display: flex; gap: 12px; align-items: flex-start; white-space: pre-wrap; }
+.msg-box .msg-icon { font-size: 26px; line-height: 1; }
+.msg-box .msg-actions { background: #f0f0f0; padding: 10px; display: flex; justify-content: flex-end; gap: 8px; }
+.msg-box button { min-width: 74px; height: 24px; border: 1px solid #adadad; background: #e1e1e1; font: 12px "Segoe UI", sans-serif; cursor: pointer; }
+.msg-box button:hover { border-color: #0078d7; background: #e5f1fb; }
+.msg-box input[type=text], .msg-box select { height: 22px; border: 1px solid #a6a6a6; font: 12px "Segoe UI", sans-serif; padding: 0 3px; }
+.find-grid { display: grid; grid-template-columns: 70px 1fr; gap: 8px 10px; align-items: center; padding: 14px 18px; }
+
+/* ── Login and admin pages ─────────────────────────────────────────── */
+.login-box { width: 360px; margin: 80px auto; background: #fff; border: 1px solid #c42b1c; box-shadow: 0 6px 22px rgba(0, 0, 0, .2); }
+.login-box .body { padding: 18px 22px 22px; }
+.login-box img.logo { width: 100%; max-width: 312px; display: block; margin: 0 auto 6px; }
+.login-box h1 { font: bold 14pt "Times New Roman", serif; color: #203864; margin: 6px 0 14px; }
+.field { margin-bottom: 10px; }
+.field label { display: block; font: 11pt "Segoe UI", sans-serif; margin-bottom: 3px; }
+.field input, .field select { width: 100%; height: 26px; border: 1px solid #a6a6a6; font: 11pt "Segoe UI", sans-serif; padding: 0 5px; }
+.btn-blue {
+    height: 30px; padding: 0 16px; border: 1px solid #4f8fcb; border-radius: 3px; color: #000; cursor: pointer;
+    background: linear-gradient(#8cbbe8, #5b9bd5); font: 11pt "Segoe UI", sans-serif;
+}
+.btn-blue:hover { background: linear-gradient(#a3c9ee, #7cafdd); }
+.flash { padding: 8px 10px; margin-bottom: 10px; border: 1px solid; font-size: 12px; }
+.flash-error { background: #fde7e9; border-color: #e81123; }
+.flash-success { background: #dff6dd; border-color: #107c10; }
+.panel { background: #fff; border: 1px solid #c8c8c8; margin: 0 auto 18px; max-width: 980px; }
+.panel h2 { margin: 0; padding: 8px 12px; background: #afabab; font: bold 11pt "Segoe UI", sans-serif; }
+.panel .inner { padding: 12px; }
+table.grid { border-collapse: collapse; width: 100%; font-size: 12px; }
+table.grid th, table.grid td { border: 1px solid #d4d4d4; padding: 4px 6px; text-align: left; }
+table.grid th { background: #e7e6e6; }
+.inline-form { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.inline-form input, .inline-form select { height: 24px; border: 1px solid #a6a6a6; font-size: 12px; padding: 0 4px; }
+.link-btn { color: #0563c1; cursor: pointer; text-decoration: underline; background: none; border: 0; font: inherit; padding: 0; }

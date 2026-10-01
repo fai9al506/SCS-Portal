@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='access/access.css') }}">
+    <script>if (window.top === window) document.documentElement.classList.add("standalone");</script>
+</head>
+<body class="acc-form">
+    {% block form %}{% endblock %}
+    <script src="{{ url_for('static', filename='access/forms.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

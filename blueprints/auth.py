@@ -1,5 +1,5 @@
 from urllib.parse import urlparse
-from flask import Blueprint, render_template, redirect, url_for, request, flash
+from flask import Blueprint, render_template, redirect, url_for, request, flash, session
 from flask_login import login_user, logout_user, login_required, current_user
 from extensions import db
 from models import User
@@ -18,7 +18,7 @@ def _is_safe_url(target):
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for("scs.dashboard"))
+        return redirect(url_for("menu.main_menu"))
 
     if request.method == "POST":
         email = request.form.get("email", "").strip().lower()
@@ -27,10 +27,11 @@ def login():
 
         if user and user.check_password(password):
             login_user(user)
+            session.permanent = True
             next_page = request.args.get("next")
             if not _is_safe_url(next_page):
                 next_page = None
-            return redirect(next_page or url_for("scs.dashboard"))
+            return redirect(next_page or url_for("menu.main_menu"))
 
         flash("Invalid email or password.", "error")
 

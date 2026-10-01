@@ -1,0 +1,67 @@
+{% extends "access/workspace.html" %}
+{% block title %}Admin{% endblock %}
+{% block workspace %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% for category, message in messages %}<div class="flash flash-{{ category }}" style="max-width:980px;margin:0 auto 12px">{{ message }}</div>{% endfor %}
+{% endwith %}
+
+<div class="panel">
+    <h2>Load data from Access</h2>
+    <div class="inner">
+        <p style="margin-top:0">Replaces <b>all</b> SCS data in the portal with the data in the Access file. Users are kept.</p>
+        <ol style="margin:0 0 10px;padding-left:20px;line-height:1.6">
+            <li>On a PC with Access, run: <code>python tools/export_access.py "SCS Database.accdb" scs_data.json.gz</code></li>
+            <li>Choose the <code>scs_data.json.gz</code> file below, type <b>REPLACE</b>, and click Import.</li>
+        </ol>
+        <form class="inline-form" method="POST" action="{{ url_for('admin.import_access') }}" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="file" name="export" accept=".gz,.json">
+            <input type="text" name="confirm" placeholder="Type REPLACE" style="width:120px">
+            <button class="btn-blue" type="submit">Import</button>
+        </form>
+        <details style="margin-top:10px"><summary>Records in the portal now ({{ counts.values() | sum }})</summary>
+            <table class="grid" style="margin-top:6px;max-width:420px">
+                {% for t, n in counts.items() %}<tr><td>{{ t }}</td><td style="text-align:right">{{ n }}</td></tr>{% endfor %}
+            </table>
+        </details>
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Other lists (no screen in Access)</h2>
+    <div class="inner" style="display:flex;flex-wrap:wrap;gap:8px">
+        {% for l in lists %}
+        <button class="acc-btn mm-master" style="position:static;width:auto;padding:0 12px"
+                data-open="{{ l.url }}" data-title="{{ l.title }}" data-w="{{ l.w }}" data-h="{{ l.h }}">{{ l.title }}</button>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="panel">
+    <h2>Users</h2>
+    <div class="inner">
+        {% for u in users %}
+        <form id="u{{ u.id }}" method="POST" action="{{ url_for('admin.save_user') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><input type="hidden" name="id" value="{{ u.id }}">
+        </form>
+        {% endfor %}
+        <form id="unew" method="POST" action="{{ url_for('admin.save_user') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        </form>
+        <table class="grid">
+            <tr><th>Name</th><th>Email</th><th>Role</th><th>Active</th><th>New password</th><th></th></tr>
+            {% for u in users + [None] %}
+            {% set fid = 'u' ~ u.id if u else 'unew' %}
+            <tr>
+                <td><input form="{{ fid }}" name="name" value="{{ u.name if u else '' }}" placeholder="New user name" style="width:150px"></td>
+                <td><input form="{{ fid }}" name="email" value="{{ u.email if u else '' }}" placeholder="email" style="width:220px"></td>
+                <td><select form="{{ fid }}" name="role">{% for r in roles %}<option {% if r == (u.role if u else 'Logistics') %}selected{% endif %}>{{ r }}</option>{% endfor %}</select></td>
+                <td><input form="{{ fid }}" type="checkbox" name="is_active" {% if not u or u.is_active %}checked{% endif %}></td>
+                <td><input form="{{ fid }}" type="password" name="password" placeholder="{{ '(unchanged)' if u else 'password' }}" style="width:120px"></td>
+                <td><button form="{{ fid }}" class="btn-blue" style="height:24px" type="submit">{{ 'Save' if u else 'Add' }}</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

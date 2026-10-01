@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from extensions import db
@@ -29,672 +29,6 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
 
-# ── Lookup Tables ───────────────────────────────────────────────────
-
-class ProductCategory(db.Model):
-    __tablename__ = "product_categories"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class Currency(db.Model):
-    __tablename__ = "currencies"
-
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(10), unique=True, nullable=False)
-    name = db.Column(db.String(50), nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class ShippingLine(db.Model):
-    __tablename__ = "shipping_lines"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), unique=True, nullable=False)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class PortOfDestination(db.Model):
-    __tablename__ = "ports_of_destination"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), unique=True, nullable=False)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class ReturnTerminal(db.Model):
-    __tablename__ = "return_terminals"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), unique=True, nullable=False)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class PackingType(db.Model):
-    __tablename__ = "packing_types"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class PaymentTermSupplier(db.Model):
-    __tablename__ = "payment_terms_supplier"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class PaymentTermCustomer(db.Model):
-    __tablename__ = "payment_terms_customer"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class DeliveryTerm(db.Model):
-    __tablename__ = "delivery_terms"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class PermitRequirement(db.Model):
-    __tablename__ = "permit_requirements"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-class UnitOfMeasure(db.Model):
-    __tablename__ = "units_of_measure"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True, nullable=False)
-    is_active = db.Column(db.Boolean, default=True)
-
-
-# ── Master Data ─────────────────────────────────────────────────────
-
-class Product(db.Model):
-    __tablename__ = "products"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    sap_code = db.Column(db.String(100), nullable=True)
-    category_id = db.Column(db.Integer, db.ForeignKey("product_categories.id"), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    category = db.relationship("ProductCategory")
-
-
-class Supplier(db.Model):
-    __tablename__ = "suppliers"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    sap_no = db.Column(db.String(50), nullable=True)
-    address = db.Column(db.Text, nullable=True)
-    phone = db.Column(db.String(50), nullable=True)
-    email = db.Column(db.String(255), nullable=True)
-    contact_person = db.Column(db.String(200), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-
-class Customer(db.Model):
-    __tablename__ = "customers"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    sap_id = db.Column(db.String(50), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    addresses = db.relationship("CustomerAddress", back_populates="customer", cascade="all, delete-orphan")
-
-
-class CustomerAddress(db.Model):
-    __tablename__ = "customer_addresses"
-
-    id = db.Column(db.Integer, primary_key=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=False)
-    plant = db.Column(db.String(200), nullable=True)
-    address_line1 = db.Column(db.String(300), nullable=True)
-    address_line2 = db.Column(db.String(300), nullable=True)
-    city = db.Column(db.String(100), nullable=True)
-    contact_person = db.Column(db.String(200), nullable=True)
-    contact_phone = db.Column(db.String(200), nullable=True)
-    contact_email = db.Column(db.String(255), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-
-    customer = db.relationship("Customer", back_populates="addresses")
-
-
-class Broker(db.Model):
-    __tablename__ = "brokers"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    full_name = db.Column(db.String(300), nullable=True)
-    address = db.Column(db.Text, nullable=True)
-    phone = db.Column(db.String(50), nullable=True)
-    email = db.Column(db.String(255), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-
-class Transporter(db.Model):
-    __tablename__ = "transporters"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(255), nullable=True)
-    phone = db.Column(db.String(50), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-
-class StorageLocation(db.Model):
-    __tablename__ = "storage_locations"
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(200), nullable=False)
-    email = db.Column(db.String(255), nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-
-# ── Permits ─────────────────────────────────────────────────────────
-
-class Permit(db.Model):
-    __tablename__ = "permits"
-
-    id = db.Column(db.Integer, primary_key=True)
-    permit_no = db.Column(db.String(50), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    name_in_customs = db.Column(db.String(200), nullable=True)
-    hs_code = db.Column(db.String(20), nullable=True)
-    expiry_date = db.Column(db.Date, nullable=True)
-    duty_percent = db.Column(db.Float, nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    qty_used = db.Column(db.Float, nullable=True)
-    permit_requirement_id = db.Column(db.Integer, db.ForeignKey("permit_requirements.id"), nullable=True)
-    notes = db.Column(db.Text, nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    product = db.relationship("Product")
-    permit_requirement = db.relationship("PermitRequirement")
-
-
-# ── Purchase Orders ─────────────────────────────────────────────────
-
-class PurchaseOrder(db.Model):
-    __tablename__ = "purchase_orders"
-
-    id = db.Column(db.Integer, primary_key=True)
-    po_number = db.Column(db.String(50), nullable=True, index=True)
-    supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"), nullable=True)
-    payment_terms_id = db.Column(db.Integer, db.ForeignKey("payment_terms_supplier.id"), nullable=True)
-    status = db.Column(db.String(30), default="Ordered")
-    notes = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-
-    supplier = db.relationship("Supplier", foreign_keys=[supplier_id])
-    payment_term = db.relationship("PaymentTermSupplier", foreign_keys=[payment_terms_id])
-    creator = db.relationship("User", foreign_keys=[created_by])
-    items = db.relationship("PurchaseOrderItem", back_populates="purchase_order", cascade="all, delete-orphan")
-
-
-class PurchaseOrderItem(db.Model):
-    __tablename__ = "purchase_order_items"
-
-    id = db.Column(db.Integer, primary_key=True)
-    po_id = db.Column(db.Integer, db.ForeignKey("purchase_orders.id"), nullable=False)
-    item_no = db.Column(db.Integer, nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    unit_price = db.Column(db.Float, nullable=True)
-    currency = db.Column(db.String(10), nullable=True)
-    total_amount = db.Column(db.Float, nullable=True)
-    etd = db.Column(db.Date, nullable=True)
-    eta = db.Column(db.Date, nullable=True)
-    lead_time = db.Column(db.Integer, nullable=True)
-    port_of_destination_id = db.Column(db.Integer, db.ForeignKey("ports_of_destination.id"), nullable=True)
-    permit_id = db.Column(db.Integer, db.ForeignKey("permits.id"), nullable=True)
-    sap_code = db.Column(db.String(50), nullable=True)
-    status = db.Column(db.String(30), default="Ordered")
-    first_payment_status = db.Column(db.String(30), default="Pending")
-    second_payment_status = db.Column(db.String(30), default="Pending")
-    notes = db.Column(db.Text, nullable=True)
-
-    purchase_order = db.relationship("PurchaseOrder", back_populates="items")
-    product = db.relationship("Product", foreign_keys=[product_id])
-    port_of_destination = db.relationship("PortOfDestination", foreign_keys=[port_of_destination_id])
-    permit = db.relationship("Permit", foreign_keys=[permit_id])
-
-
-# ── Shipment File (Header) ─────────────────────────────────────────
-
-class ShipmentFile(db.Model):
-    __tablename__ = "shipment_files"
-
-    id = db.Column(db.Integer, primary_key=True)
-    sf_number = db.Column(db.String(20), nullable=True, index=True)
-
-    # ── PO Link ─────────────────────────────────────────────────────
-    po_id = db.Column(db.Integer, db.ForeignKey("purchase_orders.id"), nullable=True)
-    po_item_no = db.Column(db.Integer, nullable=True)
-
-    # ── Supplier & Product ──────────────────────────────────────────
-    supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"), nullable=True)
-    supplier_name = db.Column(db.String(200), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)
-
-    # ── Shipping Details ────────────────────────────────────────────
-    bol_no = db.Column(db.String(50), nullable=True)
-    bol_date = db.Column(db.Date, nullable=True)
-    shipping_line_id = db.Column(db.Integer, db.ForeignKey("shipping_lines.id"), nullable=True)
-    etd = db.Column(db.Date, nullable=True)
-    eta = db.Column(db.Date, nullable=True)
-    actual_arrival = db.Column(db.Date, nullable=True)
-
-    # ── Port ────────────────────────────────────────────────────────
-    port_of_destination_id = db.Column(db.Integer, db.ForeignKey("ports_of_destination.id"), nullable=True)
-    port_of_destination_name = db.Column(db.String(100), nullable=True)
-
-    # ── Status ──────────────────────────────────────────────────────
-    status = db.Column(db.String(30), default="Incoming")
-    # Status: Incoming / Ordered / Cleared / Canceled
-
-    # ── Customer & Broker ───────────────────────────────────────────
-    intended_customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
-    customer_po_id = db.Column(db.Integer, db.ForeignKey("customer_pos.id"), nullable=True)
-    broker_id = db.Column(db.Integer, db.ForeignKey("brokers.id"), nullable=True)
-    permit_id = db.Column(db.Integer, db.ForeignKey("permits.id"), nullable=True)
-
-    # ── Supplier Invoice ────────────────────────────────────────────
-    supplier_inv_no = db.Column(db.String(50), nullable=True)
-    supplier_inv_date = db.Column(db.Date, nullable=True)
-    unit_price = db.Column(db.Float, nullable=True)
-    currency = db.Column(db.String(10), nullable=True)
-    total_inv_amount = db.Column(db.Float, nullable=True)
-
-    # ── Other Details ───────────────────────────────────────────────
-    packing = db.Column(db.String(100), nullable=True)
-    remarks = db.Column(db.Text, nullable=True)
-    entry_date = db.Column(db.Date, nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    notes = db.Column(db.Text, nullable=True)
-
-    # ── Timestamps ──────────────────────────────────────────────────
-    created_at = db.Column(db.DateTime, default=utcnow)
-    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-
-    # ── Relationships ───────────────────────────────────────────────
-    purchase_order = db.relationship("PurchaseOrder", foreign_keys=[po_id])
-    supplier = db.relationship("Supplier", foreign_keys=[supplier_id])
-    product = db.relationship("Product", foreign_keys=[product_id])
-    shipping_line = db.relationship("ShippingLine", foreign_keys=[shipping_line_id])
-    port_of_destination = db.relationship("PortOfDestination", foreign_keys=[port_of_destination_id])
-    intended_customer = db.relationship("Customer", foreign_keys=[intended_customer_id])
-    customer_po = db.relationship("CustomerPO", foreign_keys=[customer_po_id])
-    broker = db.relationship("Broker", foreign_keys=[broker_id])
-    permit = db.relationship("Permit", foreign_keys=[permit_id])
-    creator = db.relationship("User", foreign_keys=[created_by])
-
-    payment_tracking = db.relationship("ShipmentPaymentTracking", back_populates="shipment", uselist=False)
-    broker_covers = db.relationship("BrokerCover", back_populates="shipment")
-    containers = db.relationship("ShipmentContainer", back_populates="shipment", cascade="all, delete-orphan")
-
-
-# ── Shipment Container ─────────────────────────────────────────────
-
-class ShipmentContainer(db.Model):
-    __tablename__ = "shipment_containers"
-
-    id = db.Column(db.Integer, primary_key=True)
-    shipment_id = db.Column(db.Integer, db.ForeignKey("shipment_files.id"), nullable=False)
-    container_no = db.Column(db.String(50), nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    seal_no = db.Column(db.String(50), nullable=True)
-    packing = db.Column(db.String(100), nullable=True)
-
-    # ── Clearance ───────────────────────────────────────────────────
-    clearance_status = db.Column(db.String(30), default="Incoming")
-    clearance_date = db.Column(db.Date, nullable=True)
-
-    # ── Storage & GR ────────────────────────────────────────────────
-    storage_location_id = db.Column(db.Integer, db.ForeignKey("storage_locations.id"), nullable=True)
-    storage_location_name = db.Column(db.String(200), nullable=True)
-    gr_no = db.Column(db.String(50), nullable=True)
-    gr_date = db.Column(db.Date, nullable=True)
-
-    # ── Docs ────────────────────────────────────────────────────────
-    supplier_inv_no = db.Column(db.String(50), nullable=True)
-    bol_no = db.Column(db.String(50), nullable=True)
-
-    remarks = db.Column(db.Text, nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    # ── Relationships ───────────────────────────────────────────────
-    shipment = db.relationship("ShipmentFile", back_populates="containers")
-    storage_location = db.relationship("StorageLocation", foreign_keys=[storage_location_id])
-    delivery_items = db.relationship("DeliveryNoteItem", back_populates="shipment_container")
-    container_return = db.relationship("ContainerReturn", back_populates="shipment_container", uselist=False)
-
-
-# ── Customer PO (Header) ───────────────────────────────────────────
-
-class CustomerPO(db.Model):
-    __tablename__ = "customer_pos"
-
-    id = db.Column(db.Integer, primary_key=True)
-    po_no = db.Column(db.String(50), nullable=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
-    customer_name = db.Column(db.String(200), nullable=True)
-    po_date = db.Column(db.Date, nullable=True)
-    po_issued_to = db.Column(db.String(50), nullable=True)  # "MPC", "Grace", "Other"
-    delivery_terms_id = db.Column(db.Integer, db.ForeignKey("delivery_terms.id"), nullable=True)
-    payment_terms_id = db.Column(db.Integer, db.ForeignKey("payment_terms_customer.id"), nullable=True)
-    is_closed = db.Column(db.Boolean, default=False)
-    notes = db.Column(db.Text, nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
-
-    customer = db.relationship("Customer", foreign_keys=[customer_id])
-    delivery_term = db.relationship("DeliveryTerm", foreign_keys=[delivery_terms_id])
-    payment_term = db.relationship("PaymentTermCustomer", foreign_keys=[payment_terms_id])
-    items = db.relationship("CustomerPOItem", back_populates="customer_po", cascade="all, delete-orphan")
-
-
-# ── Customer PO Item ────────────────────────────────────────────────
-
-class CustomerPOItem(db.Model):
-    __tablename__ = "customer_po_items"
-
-    id = db.Column(db.Integer, primary_key=True)
-    customer_po_id = db.Column(db.Integer, db.ForeignKey("customer_pos.id"), nullable=False)
-    item_no = db.Column(db.Integer, nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)
-    affiliate_id = db.Column(db.Integer, db.ForeignKey("customer_addresses.id"), nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    unit_price = db.Column(db.Float, nullable=True)
-    currency = db.Column(db.String(10), nullable=True)
-    vat_percent = db.Column(db.Float, default=0)
-    vat_value = db.Column(db.Float, default=0)
-    total_value = db.Column(db.Float, nullable=True)
-    total_value_inc_vat = db.Column(db.Float, nullable=True)
-    packing = db.Column(db.String(100), nullable=True)
-    delivery_date = db.Column(db.Date, nullable=True)
-    sap_code = db.Column(db.String(50), nullable=True)
-    so_number = db.Column(db.String(50), nullable=True)
-    contract_no = db.Column(db.String(50), nullable=True)
-    remarks = db.Column(db.Text, nullable=True)
-
-    customer_po = db.relationship("CustomerPO", back_populates="items")
-    product = db.relationship("Product", foreign_keys=[product_id])
-    affiliate = db.relationship("CustomerAddress", foreign_keys=[affiliate_id])
-
-
-# ── Delivery Note ──────────────────────────────────────────────────
-
-class DeliveryNote(db.Model):
-    __tablename__ = "delivery_notes"
-
-    id = db.Column(db.Integer, primary_key=True)
-    dn_number = db.Column(db.String(20), nullable=True, index=True)
-    delivery_date = db.Column(db.Date, nullable=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
-    customer_name = db.Column(db.String(200), nullable=True)
-    affiliate_id = db.Column(db.Integer, db.ForeignKey("customer_addresses.id"), nullable=True)
-    transporter_id = db.Column(db.Integer, db.ForeignKey("transporters.id"), nullable=True)
-    customer_po_id = db.Column(db.Integer, db.ForeignKey("customer_pos.id"), nullable=True)
-    po_item_no = db.Column(db.Integer, nullable=True)
-    so_number = db.Column(db.String(50), nullable=True)
-    total_qty = db.Column(db.Float, nullable=True)
-    gp_docs_required = db.Column(db.Boolean, default=False)
-    packing = db.Column(db.String(100), nullable=True)
-    remarks = db.Column(db.Text, nullable=True)
-    status = db.Column(db.String(30), default="Delivered")
-    # Status: Draft / Delivered / Invoiced / Reversed
-    created_at = db.Column(db.DateTime, default=utcnow)
-    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
-    created_by = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
-
-    customer = db.relationship("Customer", foreign_keys=[customer_id])
-    affiliate = db.relationship("CustomerAddress", foreign_keys=[affiliate_id])
-    transporter = db.relationship("Transporter", foreign_keys=[transporter_id])
-    customer_po = db.relationship("CustomerPO", foreign_keys=[customer_po_id])
-    creator = db.relationship("User", foreign_keys=[created_by])
-    items = db.relationship("DeliveryNoteItem", back_populates="delivery_note", cascade="all, delete-orphan")
-
-
-# ── Delivery Note Item ─────────────────────────────────────────────
-
-class DeliveryNoteItem(db.Model):
-    __tablename__ = "delivery_note_items"
-
-    id = db.Column(db.Integer, primary_key=True)
-    delivery_note_id = db.Column(db.Integer, db.ForeignKey("delivery_notes.id"), nullable=False)
-    shipment_container_id = db.Column(db.Integer, db.ForeignKey("shipment_containers.id"), nullable=True)
-    sf_number = db.Column(db.String(20), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)
-    container_no = db.Column(db.String(50), nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    storage_location_id = db.Column(db.Integer, db.ForeignKey("storage_locations.id"), nullable=True)
-    packing = db.Column(db.String(100), nullable=True)
-    remarks = db.Column(db.Text, nullable=True)
-
-    delivery_note = db.relationship("DeliveryNote", back_populates="items")
-    shipment_container = db.relationship("ShipmentContainer", back_populates="delivery_items")
-    product = db.relationship("Product", foreign_keys=[product_id])
-    storage_location = db.relationship("StorageLocation", foreign_keys=[storage_location_id])
-
-
-# ── Container Return ───────────────────────────────────────────────
-
-class ContainerReturn(db.Model):
-    __tablename__ = "container_returns"
-
-    id = db.Column(db.Integer, primary_key=True)
-    shipment_container_id = db.Column(db.Integer, db.ForeignKey("shipment_containers.id"), unique=True, nullable=False)
-    container_no = db.Column(db.String(50), nullable=True)
-    sf_number = db.Column(db.String(20), nullable=True)
-    arrival_to_port_date = db.Column(db.Date, nullable=True)
-    empty_pickup_date = db.Column(db.Date, nullable=True)
-    empty_pickup_notified = db.Column(db.Boolean, default=False)
-    return_terminal_id = db.Column(db.Integer, db.ForeignKey("return_terminals.id"), nullable=True)
-    eir_no = db.Column(db.String(50), nullable=True)
-    container_return_date = db.Column(db.Date, nullable=True)
-    return_complete = db.Column(db.Boolean, default=False)
-    is_iso_tank = db.Column(db.Boolean, default=False)
-    rental_fee_amount = db.Column(db.Float, nullable=True)
-    rental_fee_claimed = db.Column(db.Boolean, default=False)
-    notes = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    shipment_container = db.relationship("ShipmentContainer", back_populates="container_return")
-    return_terminal = db.relationship("ReturnTerminal", foreign_keys=[return_terminal_id])
-
-
-# ── Commission Tracking ────────────────────────────────────────────
-
-class CommissionTracking(db.Model):
-    __tablename__ = "commission_tracking"
-
-    id = db.Column(db.Integer, primary_key=True)
-    delivery_note_id = db.Column(db.Integer, db.ForeignKey("delivery_notes.id"), nullable=True)
-    shipment_container_id = db.Column(db.Integer, db.ForeignKey("shipment_containers.id"), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    qty_delivered = db.Column(db.Float, nullable=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
-    supplier_id = db.Column(db.Integer, db.ForeignKey("suppliers.id"), nullable=True)
-
-    # ── Commission ──────────────────────────────────────────────────
-    commission_calc_received = db.Column(db.Boolean, default=False)
-    commission_calc_date = db.Column(db.Date, nullable=True)
-    commission_amount = db.Column(db.Float, nullable=True)
-    commission_invoice_no = db.Column(db.String(50), nullable=True)
-    commission_invoice_submitted = db.Column(db.Boolean, default=False)
-    commission_invoice_date = db.Column(db.Date, nullable=True)
-
-    # ── Handling Fee ────────────────────────────────────────────────
-    handling_fee_amount = db.Column(db.Float, nullable=True)
-    handling_invoice_no = db.Column(db.String(50), nullable=True)
-    handling_invoice_submitted = db.Column(db.Boolean, default=False)
-    handling_invoice_date = db.Column(db.Date, nullable=True)
-
-    notes = db.Column(db.Text, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    delivery_note = db.relationship("DeliveryNote", foreign_keys=[delivery_note_id])
-    shipment_container = db.relationship("ShipmentContainer", foreign_keys=[shipment_container_id])
-    product = db.relationship("Product", foreign_keys=[product_id])
-    customer = db.relationship("Customer", foreign_keys=[customer_id])
-    supplier = db.relationship("Supplier", foreign_keys=[supplier_id])
-
-
-# ── Shipment Payment Tracking ──────────────────────────────────────
-
-class ShipmentPaymentTracking(db.Model):
-    __tablename__ = "shipment_payment_tracking"
-
-    id = db.Column(db.Integer, primary_key=True)
-    shipment_id = db.Column(db.Integer, db.ForeignKey("shipment_files.id"), nullable=False)
-
-    # Payment stages
-    advance_payment_date = db.Column(db.Date, nullable=True)
-    advance_payment_amount = db.Column(db.Float, nullable=True)
-    advance_payment_ref = db.Column(db.String(50), nullable=True)
-
-    balance_payment_date = db.Column(db.Date, nullable=True)
-    balance_payment_amount = db.Column(db.Float, nullable=True)
-    balance_payment_ref = db.Column(db.String(50), nullable=True)
-
-    lc_no = db.Column(db.String(50), nullable=True)
-    lc_date = db.Column(db.Date, nullable=True)
-    lc_amount = db.Column(db.Float, nullable=True)
-    lc_expiry = db.Column(db.Date, nullable=True)
-
-    # Clearance cost tracking
-    duty_paid = db.Column(db.Boolean, default=False)
-    duty_payment_date = db.Column(db.Date, nullable=True)
-    vat_paid = db.Column(db.Boolean, default=False)
-    vat_payment_date = db.Column(db.Date, nullable=True)
-
-    payment_status = db.Column(db.String(30), nullable=True)
-    # Pending / Partial / Paid / Overdue
-    notes = db.Column(db.Text, nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-    updated_at = db.Column(db.DateTime, default=utcnow, onupdate=utcnow)
-
-    shipment = db.relationship("ShipmentFile", back_populates="payment_tracking")
-
-
-# ── Broker Cover ───────────────────────────────────────────────────
-
-class BrokerCover(db.Model):
-    __tablename__ = "broker_covers"
-
-    id = db.Column(db.Integer, primary_key=True)
-    shipment_id = db.Column(db.Integer, db.ForeignKey("shipment_files.id"), nullable=False)
-    broker_id = db.Column(db.Integer, db.ForeignKey("brokers.id"), nullable=True)
-    cover_date = db.Column(db.Date, nullable=True)
-    doc_count = db.Column(db.Integer, nullable=True)
-    fcl_count = db.Column(db.Integer, nullable=True)
-
-    # ── Document Originals & Copies ─────────────────────────────────
-    bol_originals = db.Column(db.Integer, default=0)
-    bol_copies = db.Column(db.Integer, nullable=True)
-    invoice_originals = db.Column(db.Integer, default=0)
-    invoice_copies = db.Column(db.Integer, nullable=True)
-    coo_originals = db.Column(db.Integer, default=0)
-    coo_copies = db.Column(db.Integer, default=0)
-    packing_list_originals = db.Column(db.Integer, default=0)
-    packing_list_copies = db.Column(db.Integer, nullable=True)
-    insurance_originals = db.Column(db.Integer, default=0)
-    insurance_copies = db.Column(db.Integer, default=0)
-    coa_copies = db.Column(db.Integer, nullable=True)
-    other_docs = db.Column(db.Text, nullable=True)
-
-    # ── Customer PO Details ─────────────────────────────────────────
-    show_customer_po_details = db.Column(db.Boolean, default=False)
-
-    # ── Courier ─────────────────────────────────────────────────────
-    courier_name = db.Column(db.String(100), nullable=True)
-    courier_tracking = db.Column(db.String(100), nullable=True)
-    courier_date = db.Column(db.Date, nullable=True)
-    send_via_dhl = db.Column(db.Boolean, default=False)
-    dhl_tracking = db.Column(db.String(100), nullable=True)
-
-    notes = db.Column(db.Text, nullable=True)
-    legacy_id = db.Column(db.Integer, nullable=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    shipment = db.relationship("ShipmentFile", back_populates="broker_covers")
-    broker = db.relationship("Broker", foreign_keys=[broker_id])
-
-
-# ── Customer Contract ──────────────────────────────────────────────
-
-class CustomerContract(db.Model):
-    __tablename__ = "customer_contracts"
-
-    id = db.Column(db.Integer, primary_key=True)
-    contract_no = db.Column(db.String(50), nullable=True)
-    customer_id = db.Column(db.Integer, db.ForeignKey("customers.id"), nullable=True)
-    customer_name = db.Column(db.String(200), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey("products.id"), nullable=True)
-    product_name = db.Column(db.String(200), nullable=True)
-    start_date = db.Column(db.Date, nullable=True)
-    end_date = db.Column(db.Date, nullable=True)
-    unit_price = db.Column(db.Float, nullable=True)
-    currency = db.Column(db.String(10), nullable=True)
-    qty = db.Column(db.Float, nullable=True)
-    uom = db.Column(db.String(30), nullable=True)
-    notes = db.Column(db.Text, nullable=True)
-    is_active = db.Column(db.Boolean, default=True)
-    created_at = db.Column(db.DateTime, default=utcnow)
-
-    customer = db.relationship("Customer", foreign_keys=[customer_id])
-    product = db.relationship("Product", foreign_keys=[product_id])
-
-
-# ── Audit Log ──────────────────────────────────────────────────────
-
 class AuditLog(db.Model):
     __tablename__ = "audit_log"
 
@@ -707,3 +41,423 @@ class AuditLog(db.Model):
     before_json = db.Column(db.JSON, nullable=True)
     after_json = db.Column(db.JSON, nullable=True)
     timestamp = db.Column(db.DateTime, default=utcnow)
+
+
+# ── SCS tables (mirror of Access back-end) ─────────────────────────
+# SCS data tables: an exact mirror of the Access back-end (SCS Database.accdb).
+# 
+# Python attribute names = Access field names (so the Access spec reads 1:1).
+# Column names = snake_case. ACCESS_FIELDS maps each model to its Access table/fields for import.
+# Natural-key masters (e.g. Customers.CusName) get a surrogate `id` plus a unique key, like Access.
+# Access "Required" rules on non-key fields were added after some rows existed (e.g. 2 customer POs
+# have no PODate), so the database accepts NULL there and the screens enforce the rule instead.
+
+
+class Brokers(db.Model):
+    __tablename__ = "brokers"
+    __access_table__ = "Brokers"
+    id = db.Column(db.Integer, primary_key=True)
+    BrokerName = db.Column("broker_name", db.String(255), unique=True, nullable=False)
+    BrokerFullName = db.Column("broker_full_name", db.String(255))
+    BrokerAdd1 = db.Column("broker_add1", db.String(255))
+    BrokerAdd2 = db.Column("broker_add2", db.String(255))
+    BrokerAdd3Tel = db.Column("broker_add3_tel", db.String(255))
+    BrokerAdd4Mob = db.Column("broker_add4_mob", db.String(255))
+    BrokerRepName = db.Column("broker_rep_name", db.String(255))
+    BrokerEmails = db.Column("broker_emails", db.String(255))
+
+
+class ClearanceStatus(db.Model):
+    __tablename__ = "clearance_status"
+    __access_table__ = "ClearanceStatus"
+    id = db.Column(db.Integer, primary_key=True)
+    ClearanceStatus = db.Column("clearance_status", db.String(255))
+    SN = db.Column("sn", db.Integer, default=0)
+
+
+class Currency(db.Model):
+    __tablename__ = "currency"
+    __access_table__ = "Currency"
+    id = db.Column(db.Integer, primary_key=True)
+    Currency = db.Column("currency", db.String(255), unique=True, nullable=False)
+
+
+class CustomerAdd(db.Model):
+    __tablename__ = "customer_add"
+    __access_table__ = "CustomerAdd"
+    id = db.Column(db.Integer, primary_key=True)
+    Customer = db.Column("customer", db.String(255))
+    CustomerPlant = db.Column("customer_plant", db.String(255))
+    CusAdd1 = db.Column("cus_add1", db.String(255))
+    CusAdd2 = db.Column("cus_add2", db.String(255))
+    CusCntName = db.Column("cus_cnt_name", db.String(255))
+    CusCntTel = db.Column("cus_cnt_tel", db.String(255))
+    CusCntMob = db.Column("cus_cnt_mob", db.String(255))
+
+
+class CustomerContracts(db.Model):
+    __tablename__ = "customer_contracts"
+    __access_table__ = "CustomerContracts"
+    id = db.Column(db.Integer, primary_key=True)
+    CusContractNo = db.Column("cus_contract_no", db.String(255), unique=True, nullable=False)
+    CusName = db.Column("cus_name", db.String(255))
+    ProductName = db.Column("product_name", db.String(50))
+    Qty = db.Column("qty", db.Float, default=0)
+    EffictiveDate = db.Column("effictive_date", db.Date)
+    ExpiryDate = db.Column("expiry_date", db.Date)
+    UnitPrice = db.Column("unit_price", db.Float, default=0)
+
+
+class Customers(db.Model):
+    __tablename__ = "customers"
+    __access_table__ = "Customers"
+    id = db.Column(db.Integer, primary_key=True)
+    CusName = db.Column("cus_name", db.String(255), unique=True, nullable=False)
+    SAPID = db.Column("sapid", db.String(255))
+
+
+class CustomersPO(db.Model):
+    __tablename__ = "customers_po"
+    __access_table__ = "CustomersPO"
+    ID = db.Column("id", db.Integer, primary_key=True)
+    CusPONo = db.Column("cus_po_no", db.String(255))
+    ItemNo = db.Column("item_no", db.Integer, default=1)
+    POIssuedTo = db.Column("po_issued_to", db.String(255))
+    Product = db.Column("product", db.String(50))
+    PODate = db.Column("po_date", db.Date)
+    Affiliate = db.Column("affiliate", db.String(255))
+    POQty = db.Column("po_qty", db.Float, default=0)
+    DeliveryTerms = db.Column("delivery_terms", db.String(255))
+    PaymentTerms = db.Column("payment_terms", db.String(255))
+    Curr = db.Column("curr", db.String(255))
+    UnitPrice = db.Column("unit_price", db.Float, default=0)
+    PerUOM = db.Column("per_uom", db.String(255))
+    VAT = db.Column("vat", db.Float, default=0)
+    VATValue = db.Column("vat_value", db.Float, db.Computed("unit_price * po_qty * vat", persisted=True))
+    Packing = db.Column("packing", db.String(255))
+    POValue = db.Column("po_value", db.Float, db.Computed("unit_price * po_qty", persisted=True))
+    POValueWVAT = db.Column("po_value_wvat", db.Float, db.Computed("unit_price * po_qty + unit_price * po_qty * vat", persisted=True))
+    SONo = db.Column("so_no", db.String(255))
+    ContractNo = db.Column("contract_no", db.String(255))
+    DeliveryDate = db.Column("delivery_date", db.Date)
+    Remarks = db.Column("remarks", db.String(255))
+    Closed = db.Column("closed", db.Boolean, default=False, nullable=False)
+
+
+class DeliveryTerms(db.Model):
+    __tablename__ = "delivery_terms"
+    __access_table__ = "DeliveryTerms"
+    id = db.Column(db.Integer, primary_key=True)
+    DeliveryTerm = db.Column("delivery_term", db.String(255), unique=True, nullable=False)
+
+
+class InternalContacts(db.Model):
+    __tablename__ = "internal_contacts"
+    __access_table__ = "InternalContacts"
+    id = db.Column(db.Integer, primary_key=True)
+    Group = db.Column("group", db.String(255), unique=True, nullable=False)
+    Groupemails = db.Column("groupemails", db.String(255))
+
+
+class Packing(db.Model):
+    __tablename__ = "packing"
+    __access_table__ = "Packing"
+    id = db.Column(db.Integer, primary_key=True)
+    PackinMode = db.Column("packin_mode", db.String(255), unique=True, nullable=False)
+
+
+class PaymentTerms(db.Model):
+    __tablename__ = "payment_terms"
+    __access_table__ = "Payment Terms"
+    id = db.Column(db.Integer, primary_key=True)
+    PaymentTerm = db.Column("payment_term", db.String(255), unique=True, nullable=False)
+
+
+class PayTermsCus(db.Model):
+    __tablename__ = "pay_terms_cus"
+    __access_table__ = "PayTermsCus"
+    id = db.Column(db.Integer, primary_key=True)
+    PayTermCus = db.Column("pay_term_cus", db.String(255), unique=True, nullable=False)
+
+
+class PermitReq(db.Model):
+    __tablename__ = "permit_req"
+    __access_table__ = "PermitReq"
+    ID = db.Column("id", db.Integer, primary_key=True, nullable=False)
+    PermitReq = db.Column("permit_req", db.String(255))
+
+
+class Permits(db.Model):
+    __tablename__ = "permits"
+    __access_table__ = "Permits"
+    ID = db.Column("id", db.Integer, primary_key=True)
+    PermitNo = db.Column("permit_no", db.String(255))
+    ProductName = db.Column("product_name", db.String(50))
+    HSCode = db.Column("hs_code", db.String(255))
+    NameinCustoms = db.Column("namein_customs", db.String(255))
+    PermitRequirement = db.Column("permit_requirement", db.String(255))
+    DutyPercent = db.Column("duty_percent", db.Float, default=0)
+    Qty = db.Column("qty", db.Numeric(18, 3), default=0)
+    ExpiryDate = db.Column("expiry_date", db.Date)
+
+
+class POIssuedToCompanies(db.Model):
+    __tablename__ = "poissued_to_companies"
+    __access_table__ = "POIssuedToCompanies"
+    id = db.Column(db.Integer, primary_key=True)
+    CompanyName = db.Column("company_name", db.String(255), unique=True, nullable=False)
+
+
+class PortOfDestinations(db.Model):
+    __tablename__ = "port_of_destinations"
+    __access_table__ = "Port of Destinations"
+    id = db.Column(db.Integer, primary_key=True)
+    PortOfDistination = db.Column("port_of_distination", db.String(255), unique=True, nullable=False)
+
+
+class ProductGroup(db.Model):
+    __tablename__ = "product_group"
+    __access_table__ = "ProductGroup"
+    ID = db.Column("id", db.Integer, primary_key=True, nullable=False)
+    ProductGroup = db.Column("product_group", db.String(255))
+
+
+class Products(db.Model):
+    __tablename__ = "products"
+    __access_table__ = "Products"
+    id = db.Column(db.Integer, primary_key=True)
+    ProductName = db.Column("product_name", db.String(50), unique=True, nullable=False)
+    ProductGroup = db.Column("product_group", db.String(255))
+    SAPName = db.Column("sap_name", db.String(255))
+
+
+class ReturningTerminal(db.Model):
+    __tablename__ = "returning_terminal"
+    __access_table__ = "ReturningTerminal"
+    id = db.Column(db.Integer, primary_key=True)
+    Terminal = db.Column("terminal", db.String(255), unique=True, nullable=False)
+
+
+class SF(db.Model):
+    __tablename__ = "sf"
+    __access_table__ = "SF"
+    UID = db.Column("uid", db.Integer, primary_key=True, nullable=False)
+    EntryDate = db.Column("entry_date", db.Date, default=date.today)
+    SF = db.Column("sf", db.Integer, default=0)
+    MPCPONo = db.Column("mpcpo_no", db.String(10))
+    MPCPOItemNo = db.Column("mpcpo_item_no", db.String(255))
+    Supplier = db.Column("supplier", db.String(255))
+    Product = db.Column("product", db.String(255))
+    SFQty = db.Column("sf_qty", db.Numeric(18, 3), default=0)
+    UOM = db.Column("uom", db.String(255))
+    Packing = db.Column("packing", db.String(255), default="Container")
+    ContainerNo = db.Column("container_no", db.String(255))
+    ETD = db.Column("etd", db.Date)
+    ETA = db.Column("eta", db.Date)
+    POD = db.Column("pod", db.String(255))
+    Status = db.Column("status", db.String(255))
+    IntendedCustomer = db.Column("intended_customer", db.String(255))
+    IntendedCustomerPO = db.Column("intended_customer_po", db.String(255))
+    DocsToBroker = db.Column("docs_to_broker", db.Date)
+    Broker = db.Column("broker", db.String(255))
+    PermitNo = db.Column("permit_no", db.String(255))
+    ShippingLine = db.Column("shipping_line", db.String(255))
+    BOL = db.Column("bol", db.String(255))
+    SupplierInv = db.Column("supplier_inv", db.String(255))
+    SupplierInvDate = db.Column("supplier_inv_date", db.Date)
+    UnitPrice = db.Column("unit_price", db.Float, default=0)
+    ACurr = db.Column("a_curr", db.String(255))
+    InvAmount = db.Column("inv_amount", db.Float, db.Computed("sf_qty * unit_price", persisted=True))
+    Remarks = db.Column("remarks", db.String(255))
+    BayanNo = db.Column("bayan_no", db.String(255))
+    ClearanceDate = db.Column("clearance_date", db.Date)
+    StorageLoc = db.Column("storage_loc", db.String(255))
+    MPCGRN = db.Column("mpcgrn", db.String(255))
+    MPCGRDate = db.Column("mpcgr_date", db.Date)
+    GRRemarks = db.Column("gr_remarks", db.String(255))
+    DeliveredOn = db.Column("delivered_on", db.Date)
+    DeliveredTo = db.Column("delivered_to", db.String(255))
+    DeliveredToPlant = db.Column("delivered_to_plant", db.String(255))
+    DeliveredToAdd1 = db.Column("delivered_to_add1", db.String(255))
+    DeliveredToAdd2 = db.Column("delivered_to_add2", db.String(255))
+    DeliveredToContactName = db.Column("delivered_to_contact_name", db.String(255))
+    DeliveredToContactTel = db.Column("delivered_to_contact_tel", db.String(255))
+    DeliveredToContactMob = db.Column("delivered_to_contact_mob", db.String(255))
+    DeliveredTransporter = db.Column("delivered_transporter", db.String(255))
+    DeliveredPO = db.Column("delivered_po", db.String(255))
+    DeliveredPOItem = db.Column("delivered_po_item", db.Integer)
+    DeliveredSO = db.Column("delivered_so", db.Integer)
+    DeliveredPacking = db.Column("delivered_packing", db.String(255))
+    DeliveryRemarks = db.Column("delivery_remarks", db.String(255))
+    SAPDNNo = db.Column("sapdn_no", db.String(255))
+    InvNo = db.Column("inv_no", db.String(255))
+    InvDate = db.Column("inv_date", db.Date)
+    DetentionInv = db.Column("detention_inv", db.String(255))
+    DetentionInvSubmitted = db.Column("detention_inv_submitted", db.Boolean, default=False, nullable=False)
+    CommissionActualInvValue = db.Column("commission_actual_inv_value", db.Numeric(18, 3), default=0)
+    CommissionActualInv = db.Column("commission_actual_inv", db.String(255))
+    CommissionInvSubmitted = db.Column("commission_inv_submitted", db.Boolean, default=False, nullable=False)
+    ServiceInv = db.Column("service_inv", db.String(255))
+    ServiceInvSubmitted = db.Column("service_inv_submitted", db.Boolean, default=False, nullable=False)
+    CusGR = db.Column("cus_gr", db.String(255))
+    DateofArrivaltoPort = db.Column("dateof_arrivalto_port", db.Date)
+    EmptyPickNotified = db.Column("empty_pick_notified", db.Date)
+    EmptyPickDate = db.Column("empty_pick_date", db.Date)
+    EmptyReturnDate = db.Column("empty_return_date", db.Date)
+    EIRNo = db.Column("eir_no", db.String(255))
+    ReturnTerminal = db.Column("return_terminal", db.String(255))
+    ReturnIsDone = db.Column("return_is_done", db.Boolean, default=False, nullable=False)
+
+
+class SFBrokerCover(db.Model):
+    __tablename__ = "sf_broker_cover"
+    __access_table__ = "SF_BrokerCover"
+    ID = db.Column("id", db.Integer, primary_key=True, nullable=False)
+    SFNo = db.Column("sf_no", db.Integer)
+    Product = db.Column("product", db.String(255))
+    SFQty = db.Column("sf_qty", db.Numeric(18, 3), default=0)
+    NoFCL = db.Column("no_fcl", db.Numeric(18, 3), default=0)
+    UOM = db.Column("uom", db.String(255))
+    ETD = db.Column("etd", db.Date)
+    ETA = db.Column("eta", db.Date)
+    POD = db.Column("pod", db.String(255))
+    DocsToBroker = db.Column("docs_to_broker", db.DateTime)
+    Broker = db.Column("broker", db.String(255))
+    BrokerFullName = db.Column("broker_full_name", db.String(255))
+    BrokerAdd1 = db.Column("broker_add1", db.String(255))
+    BrokerAdd2 = db.Column("broker_add2", db.String(255))
+    BrokerAdd3Tel = db.Column("broker_add3_tel", db.String(255))
+    BrokerAdd4Mob = db.Column("broker_add4_mob", db.String(255))
+    BrokerRepName = db.Column("broker_rep_name", db.String(255))
+    BrokerEmails = db.Column("broker_emails", db.String(255))
+    PermitNo = db.Column("permit_no", db.String(255))
+    ShippingLine = db.Column("shipping_line", db.String(255))
+    BOL = db.Column("bol", db.String(255))
+    SupplierInv = db.Column("supplier_inv", db.String(255))
+    SupplierInvDate = db.Column("supplier_inv_date", db.Date)
+    IntendedCustomer = db.Column("intended_customer", db.String(255))
+    IntendedCustomerPO = db.Column("intended_customer_po", db.Numeric(18, 0))
+    NoofOrgBOL = db.Column("noof_org_bol", db.Integer, default=0)
+    NoofCopyBOL = db.Column("noof_copy_bol", db.Integer, default=0)
+    NoofOrgInv = db.Column("noof_org_inv", db.Integer, default=0)
+    NoofCopyInv = db.Column("noof_copy_inv", db.Integer, default=0)
+    NoofOrgCOO = db.Column("noof_org_coo", db.Integer, default=0)
+    NoofCopyCOO = db.Column("noof_copy_coo", db.Integer, default=0)
+    NoofOrgCOA = db.Column("noof_org_coa", db.Integer, default=0)
+    NoofCopyCOA = db.Column("noof_copy_coa", db.Integer, default=0)
+    NoofOrgPL = db.Column("noof_org_pl", db.Integer, default=0)
+    NoofCopyPL = db.Column("noof_copy_pl", db.Integer, default=0)
+    NoofOrgInsurance = db.Column("noof_org_insurance", db.Integer, default=0)
+    NoofCopyInsurance = db.Column("noof_copy_insurance", db.Integer, default=0)
+    CourierNo = db.Column("courier_no", db.String(255))
+    EntryDate = db.Column("entry_date", db.DateTime, default=datetime.now)
+
+
+class ShipmentsStatus(db.Model):
+    __tablename__ = "shipments_status"
+    __access_table__ = "ShipmentsStatus"
+    ID = db.Column("id", db.Integer, primary_key=True, nullable=False)
+    MPCPONo = db.Column("mpcpo_no", db.String(10))
+    ItemNo = db.Column("item_no", db.String(255), default="1")
+    EntryDate = db.Column("entry_date", db.Date, default=date.today)
+    Supplier = db.Column("supplier", db.String(255))
+    Product = db.Column("product", db.String(50))
+    Qty = db.Column("qty", db.Numeric(18, 3), default=0)
+    UOM = db.Column("uom", db.String(255))
+    UnitPrice = db.Column("unit_price", db.Float, default=0)
+    ACurr = db.Column("a_curr", db.String(255))
+    TotalAmount = db.Column("total_amount", db.Float, db.Computed("qty * unit_price", persisted=True))
+    ETD = db.Column("etd", db.Date)
+    ETA = db.Column("eta", db.Date)
+    POD = db.Column("pod", db.String(255))
+    PayTerm = db.Column("pay_term", db.String(255))
+    FirstPayment = db.Column("first_payment", db.String(255))
+    FirstPayFB = db.Column("first_pay_fb", db.String(255))
+    FirstPayFBD = db.Column("first_pay_fbd", db.Boolean, default=False, nullable=False)
+    SecondPayment = db.Column("second_payment", db.String(255))
+    SecondPayFB = db.Column("second_pay_fb", db.String(255))
+    SecondPayFBD = db.Column("second_pay_fbd", db.Boolean, default=False, nullable=False)
+    PayType = db.Column("pay_type", db.String(243), db.Computed("CASE WHEN first_payment = 'Required' THEN 'Advance' WHEN second_payment = 'Required' THEN 'Balance' ELSE '' END", persisted=True))
+    SFNo = db.Column("sf_no", db.Integer)
+    DocsTrackingNo = db.Column("docs_tracking_no", db.String(255))
+    ClearanceStatus = db.Column("clearance_status", db.String(255))
+    Status = db.Column("status", db.String(255), default="Ordered")
+    PermitNo = db.Column("permit_no", db.String(255))
+
+
+class ShippingLines(db.Model):
+    __tablename__ = "shipping_lines"
+    __access_table__ = "ShippingLines"
+    id = db.Column(db.Integer, primary_key=True)
+    SLName = db.Column("sl_name", db.String(255), unique=True, nullable=False)
+
+
+class SStatus(db.Model):
+    __tablename__ = "sstatus"
+    __access_table__ = "SStatus"
+    id = db.Column(db.Integer, primary_key=True)
+    Status = db.Column("status", db.String(255), unique=True, nullable=False)
+
+
+class StorageLoc(db.Model):
+    __tablename__ = "storage_loc"
+    __access_table__ = "StorageLoc"
+    id = db.Column(db.Integer, primary_key=True)
+    StorageLocation = db.Column("storage_location", db.String(255), unique=True, nullable=False)
+    emails = db.Column("emails", db.String(255))
+
+
+class Suppliers(db.Model):
+    __tablename__ = "suppliers"
+    __access_table__ = "Suppliers"
+    id = db.Column(db.Integer, primary_key=True)
+    SupplierName = db.Column("supplier_name", db.String(255), unique=True, nullable=False)
+    SAPNo = db.Column("sap_no", db.String(255))
+
+
+class Transporters(db.Model):
+    __tablename__ = "transporters"
+    __access_table__ = "Transporters"
+    id = db.Column(db.Integer, primary_key=True)
+    TransporterName = db.Column("transporter_name", db.String(255), unique=True, nullable=False)
+    emails = db.Column("emails", db.String(255))
+
+
+class UOM(db.Model):
+    __tablename__ = "uom"
+    __access_table__ = "UOM"
+    id = db.Column(db.Integer, primary_key=True)
+    UOM = db.Column("uom", db.String(255), unique=True, nullable=False)
+
+
+# Access field name -> model attribute, per model (used by the importer).
+ACCESS_FIELDS = {
+    Brokers: {'BrokerName': 'BrokerName', 'BrokerFullName': 'BrokerFullName', 'BrokerAdd1': 'BrokerAdd1', 'BrokerAdd2': 'BrokerAdd2', 'BrokerAdd3Tel': 'BrokerAdd3Tel', 'BrokerAdd4Mob': 'BrokerAdd4Mob', 'BrokerRepName': 'BrokerRepName', 'BrokerEmails': 'BrokerEmails'},
+    ClearanceStatus: {'ClearanceStatus': 'ClearanceStatus', 'SN': 'SN'},
+    Currency: {'Currency': 'Currency'},
+    CustomerAdd: {'Customer': 'Customer', 'CustomerPlant': 'CustomerPlant', 'CusAdd1': 'CusAdd1', 'CusAdd2': 'CusAdd2', 'CusCntName': 'CusCntName', 'CusCntTel': 'CusCntTel', 'CusCntMob': 'CusCntMob'},
+    CustomerContracts: {'CusContractNo': 'CusContractNo', 'CusName': 'CusName', 'ProductName': 'ProductName', 'Qty': 'Qty', 'EffictiveDate': 'EffictiveDate', 'ExpiryDate': 'ExpiryDate', 'UnitPrice': 'UnitPrice'},
+    Customers: {'CusName': 'CusName', 'SAPID': 'SAPID'},
+    CustomersPO: {'ID': 'ID', 'CusPONo': 'CusPONo', 'ItemNo': 'ItemNo', 'POIssuedTo': 'POIssuedTo', 'Product': 'Product', 'PODate': 'PODate', 'Affiliate': 'Affiliate', 'POQty': 'POQty', 'DeliveryTerms': 'DeliveryTerms', 'PaymentTerms': 'PaymentTerms', 'Curr': 'Curr', 'UnitPrice': 'UnitPrice', 'PerUOM': 'PerUOM', 'VAT': 'VAT', 'VATValue': 'VATValue', 'Packing': 'Packing', 'POValue': 'POValue', 'POValueWVAT': 'POValueWVAT', 'SONo': 'SONo', 'ContractNo': 'ContractNo', 'DeliveryDate': 'DeliveryDate', 'Remarks': 'Remarks', 'Closed': 'Closed'},
+    DeliveryTerms: {'DeliveryTerm': 'DeliveryTerm'},
+    InternalContacts: {'Group': 'Group', 'Groupemails': 'Groupemails'},
+    Packing: {'PackinMode': 'PackinMode'},
+    PaymentTerms: {'PaymentTerm': 'PaymentTerm'},
+    PayTermsCus: {'PayTermCus': 'PayTermCus'},
+    PermitReq: {'ID': 'ID', 'PermitReq': 'PermitReq'},
+    Permits: {'ID': 'ID', 'PermitNo': 'PermitNo', 'ProductName': 'ProductName', 'HSCode': 'HSCode', 'NameinCustoms': 'NameinCustoms', 'PermitRequirement': 'PermitRequirement', 'DutyPercent': 'DutyPercent', 'Qty': 'Qty', 'ExpiryDate': 'ExpiryDate'},
+    POIssuedToCompanies: {'CompanyName': 'CompanyName'},
+    PortOfDestinations: {'Port of Distination': 'PortOfDistination'},
+    ProductGroup: {'ID': 'ID', 'ProductGroup': 'ProductGroup'},
+    Products: {'ProductName': 'ProductName', 'ProductGroup': 'ProductGroup', 'SAPName': 'SAPName'},
+    ReturningTerminal: {'Terminal': 'Terminal'},
+    SF: {'UID': 'UID', 'EntryDate': 'EntryDate', 'SF': 'SF', 'MPCPONo': 'MPCPONo', 'MPCPOItemNo': 'MPCPOItemNo', 'Supplier': 'Supplier', 'Product': 'Product', 'SFQty': 'SFQty', 'UOM': 'UOM', 'Packing': 'Packing', 'ContainerNo': 'ContainerNo', 'ETD': 'ETD', 'ETA': 'ETA', 'POD': 'POD', 'Status': 'Status', 'IntendedCustomer': 'IntendedCustomer', 'IntendedCustomerPO': 'IntendedCustomerPO', 'DocsToBroker': 'DocsToBroker', 'Broker': 'Broker', 'PermitNo': 'PermitNo', 'ShippingLine': 'ShippingLine', 'BOL': 'BOL', 'SupplierInv': 'SupplierInv', 'SupplierInvDate': 'SupplierInvDate', 'UnitPrice': 'UnitPrice', 'ACurr': 'ACurr', 'InvAmount': 'InvAmount', 'Remarks': 'Remarks', 'BayanNo': 'BayanNo', 'ClearanceDate': 'ClearanceDate', 'StorageLoc': 'StorageLoc', 'MPCGRN': 'MPCGRN', 'MPCGRDate': 'MPCGRDate', 'GRRemarks': 'GRRemarks', 'DeliveredOn': 'DeliveredOn', 'DeliveredTo': 'DeliveredTo', 'DeliveredToPlant': 'DeliveredToPlant', 'DeliveredToAdd1': 'DeliveredToAdd1', 'DeliveredToAdd2': 'DeliveredToAdd2', 'DeliveredToContactName': 'DeliveredToContactName', 'DeliveredToContactTel': 'DeliveredToContactTel', 'DeliveredToContactMob': 'DeliveredToContactMob', 'DeliveredTransporter': 'DeliveredTransporter', 'DeliveredPO': 'DeliveredPO', 'DeliveredPOItem': 'DeliveredPOItem', 'DeliveredSO': 'DeliveredSO', 'DeliveredPacking': 'DeliveredPacking', 'DeliveryRemarks': 'DeliveryRemarks', 'SAPDNNo': 'SAPDNNo', 'InvNo': 'InvNo', 'InvDate': 'InvDate', 'DetentionInv': 'DetentionInv', 'DetentionInvSubmitted': 'DetentionInvSubmitted', 'CommissionActualInvValue': 'CommissionActualInvValue', 'CommissionActualInv': 'CommissionActualInv', 'CommissionInvSubmitted': 'CommissionInvSubmitted', 'ServiceInv': 'ServiceInv', 'ServiceInvSubmitted': 'ServiceInvSubmitted', 'CusGR': 'CusGR', 'DateofArrivaltoPort': 'DateofArrivaltoPort', 'EmptyPickNotified': 'EmptyPickNotified', 'EmptyPickDate': 'EmptyPickDate', 'EmptyReturnDate': 'EmptyReturnDate', 'EIRNo': 'EIRNo', 'ReturnTerminal': 'ReturnTerminal', 'ReturnIsDone': 'ReturnIsDone'},
+    SFBrokerCover: {'ID': 'ID', 'SFNo': 'SFNo', 'Product': 'Product', 'SFQty': 'SFQty', 'NoFCL': 'NoFCL', 'UOM': 'UOM', 'ETD': 'ETD', 'ETA': 'ETA', 'POD': 'POD', 'DocsToBroker': 'DocsToBroker', 'Broker': 'Broker', 'BrokerFullName': 'BrokerFullName', 'BrokerAdd1': 'BrokerAdd1', 'BrokerAdd2': 'BrokerAdd2', 'BrokerAdd3Tel': 'BrokerAdd3Tel', 'BrokerAdd4Mob': 'BrokerAdd4Mob', 'BrokerRepName': 'BrokerRepName', 'BrokerEmails': 'BrokerEmails', 'PermitNo': 'PermitNo', 'ShippingLine': 'ShippingLine', 'BOL': 'BOL', 'SupplierInv': 'SupplierInv', 'SupplierInvDate': 'SupplierInvDate', 'IntendedCustomer': 'IntendedCustomer', 'IntendedCustomerPO': 'IntendedCustomerPO', 'NoofOrgBOL': 'NoofOrgBOL', 'NoofCopyBOL': 'NoofCopyBOL', 'NoofOrgInv': 'NoofOrgInv', 'NoofCopyInv': 'NoofCopyInv', 'NoofOrgCOO': 'NoofOrgCOO', 'NoofCopyCOO': 'NoofCopyCOO', 'NoofOrgCOA': 'NoofOrgCOA', 'NoofCopyCOA': 'NoofCopyCOA', 'NoofOrgPL': 'NoofOrgPL', 'NoofCopyPL': 'NoofCopyPL', 'NoofOrgInsurance': 'NoofOrgInsurance', 'NoofCopyInsurance': 'NoofCopyInsurance', 'CourierNo': 'CourierNo', 'EntryDate': 'EntryDate'},
+    ShipmentsStatus: {'ID': 'ID', 'MPCPONo': 'MPCPONo', 'ItemNo': 'ItemNo', 'EntryDate': 'EntryDate', 'Supplier': 'Supplier', 'Product': 'Product', 'Qty': 'Qty', 'UOM': 'UOM', 'UnitPrice': 'UnitPrice', 'ACurr': 'ACurr', 'TotalAmount': 'TotalAmount', 'ETD': 'ETD', 'ETA': 'ETA', 'POD': 'POD', 'PayTerm': 'PayTerm', '1stPayment': 'FirstPayment', '1stPayFB': 'FirstPayFB', '1stPayFBD': 'FirstPayFBD', '2ndPayment': 'SecondPayment', '2ndPayFB': 'SecondPayFB', '2ndPayFBD': 'SecondPayFBD', 'PayType': 'PayType', 'SFNo': 'SFNo', 'DocsTrackingNo': 'DocsTrackingNo', 'ClearanceStatus': 'ClearanceStatus', 'Status': 'Status', 'PermitNo': 'PermitNo'},
+    ShippingLines: {'SLName': 'SLName'},
+    SStatus: {'Status': 'Status'},
+    StorageLoc: {'StorageLocation': 'StorageLocation', 'emails': 'emails'},
+    Suppliers: {'Supplier Name': 'SupplierName', 'SAPNo': 'SAPNo'},
+    Transporters: {'TransporterName': 'TransporterName', 'emails': 'emails'},
+    UOM: {'UOM': 'UOM'},
+}

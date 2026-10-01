@@ -11,3 +11,11 @@ dist/
 build/
 .DS_Store
 Thumbs.db
+
+# Access data exports (business data)
+*.json.gz
+
+# Access spec and design notes (contain business data) — kept local, repo is public
+access_spec/
+SCS_DESIGN.md
+SCS_DESIGN_REVIEW.html

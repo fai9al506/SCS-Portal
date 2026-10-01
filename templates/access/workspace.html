@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" data-icon="{{ url_for('static', filename='favicon.png') }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MPC Database and Reporting System{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='access/access.css') }}">
+</head>
+<body>
+    <div class="app-bar">
+        <img src="{{ url_for('static', filename='favicon.png') }}" alt="">
+        <span class="app-title">MPC Database and Reporting System</span>
+        <a href="{{ url_for('menu.main_menu') }}">Main Menu</a>
+        {% if current_user.role == 'Admin' %}<a href="{{ url_for('admin.index') }}">Admin</a>{% endif %}
+        <span style="color:#666">{{ current_user.name }}</span>
+        <a href="{{ url_for('auth.logout') }}">Sign out</a>
+    </div>
+    <div class="workspace">
+        {% block workspace %}{% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='access/windows.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

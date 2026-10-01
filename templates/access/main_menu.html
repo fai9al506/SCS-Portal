@@ -1,0 +1,38 @@
+{% extends "access/workspace.html" %}
+{% block title %}Main Menu{% endblock %}
+{% block workspace %}
+<div class="acc-window main-menu-window" style="position:relative">
+    <div class="acc-titlebar">
+        <img src="{{ url_for('static', filename='favicon.png') }}" alt=""><span class="t">Main Menu</span>
+        <span class="x disabled">&#x2715;</span>
+    </div>
+    <div class="main-menu">
+        <img class="abs mm-logo" src="{{ url_for('static', filename='access/mpc_logo.png') }}" alt="MPC — Modern Petrochemicals Co.">
+        <div class="abs mm-title">MPC Supply Chain System</div>
+        <div class="abs mm-dev">Developed by<br>Eng. Faisal Al Demaiji</div>
+
+        {% for cap, x, y, w, h, cx, cw in frames %}
+        <div class="abs mm-frame" style="left:{{ x }}px;top:{{ y }}px;width:{{ w }}px;height:{{ h }}px"></div>
+        <div class="abs mm-frame-cap" style="left:{{ cx }}px;top:{{ y - 8 }}px;width:{{ cw }}px">{{ cap }}</div>
+        {% endfor %}
+
+        {% for it in items %}
+        <button class="abs acc-btn mm-btn" style="left:{{ it.x }}px;top:{{ it.y }}px" title="Open Report"
+                data-open="{{ it.url }}" data-title="{{ it.title }}" data-w="{{ it.w }}" data-h="{{ it.h }}"
+                {% if loop.index == 3 %}autofocus{% endif %}>
+            <img src="{{ url_for('static', filename='access/icons/' ~ it.icon ~ '.png') }}" alt="">
+        </button>
+        <div class="abs mm-text" style="left:{{ it.x + 40 }}px;top:{{ it.y + 4 }}px"
+             data-open="{{ it.url }}" data-title="{{ it.title }}" data-w="{{ it.w }}" data-h="{{ it.h }}">{{ it.text }}</div>
+        {% endfor %}
+
+        {% for m in masters %}
+        <button class="abs acc-btn mm-master" style="left:{{ m.x }}px;top:{{ m.y }}px;width:{{ m.w }}px"
+                data-open="{{ m.url }}" data-title="{{ m.title }}" data-w="{{ m.ww }}" data-h="{{ m.wh }}" data-x="396" data-y="182">
+            <img src="{{ url_for('static', filename='access/icons/' ~ ('dd67f8a8_form_stack_alt' if loop.first else 'ac862d27_form_stack') ~ '.png') }}" alt="">{{ m.caption }}
+        </button>
+        {% endfor %}
+        <div class="abs mm-scroll"></div>
+    </div>
+</div>
+{% endblock %}

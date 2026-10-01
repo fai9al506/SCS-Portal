@@ -1,0 +1,50 @@
+{% extends "access/form_page.html" %}
+{% block title %}{{ form.title }}{% endblock %}
+{% block form %}
+{% set bx, by = form.buttons %}
+<div class="form-header" style="width:{{ form.width }}px"><div class="title">{{ form.title }}</div></div>
+<div class="form-detail" style="width:{{ form.width }}px;height:{{ form.detail_h }}px">
+    {% for fl in form.fields %}
+    <label class="lbl" for="f_{{ fl.attr }}" style="left:{{ fl.lx }}px;top:{{ fl.y }}px;width:{{ fl.lw }}px">{{ fl.label }}</label>
+    {% if fl.kind == 'group' %}
+    <select class="ctl" id="f_{{ fl.attr }}" style="left:{{ fl.cx }}px;top:{{ fl.y }}px;width:{{ fl.cw }}px"
+            {% if fl.tab is not none %}tabindex="{{ fl.tab + 1 }}"{% endif %}>
+        <option value=""></option>
+        {% for gid, gname in options.group %}<option value="{{ gid }}">{{ gname }}</option>{% endfor %}
+    </select>
+    {% else %}
+    <input class="ctl{% if fl.bold %} bold{% endif %}" id="f_{{ fl.attr }}" type="text" maxlength="{{ fl.maxlen }}" autocomplete="off"
+           style="left:{{ fl.cx }}px;top:{{ fl.y }}px;width:{{ fl.cw }}px"
+           {% if fl.kind == 'customer' %}list="customer_list"{% endif %}
+           {% if fl.tab is not none %}tabindex="{{ fl.tab + 1 }}"{% endif %}>
+    {% endif %}
+    {% endfor %}
+    {% if form.hint %}<div class="hint" style="left:{{ form.hint[1] }}px;top:{{ form.hint[2] }}px">{{ form.hint[0] }}</div>{% endif %}
+    <button class="gray-btn" id="btn_new" title="Add Record" style="left:{{ bx }}px;top:{{ by }}px"
+            {% if form.button_tab %}tabindex="{{ form.button_tab[0] + 1 }}"{% endif %}>
+        <img src="{{ url_for('static', filename='access/icons/master_NewRBtn.png') }}" alt="Add Record">
+    </button>
+    <button class="gray-btn" id="btn_find" title="Find Record" style="left:{{ bx + 52 }}px;top:{{ by }}px"
+            {% if form.button_tab %}tabindex="{{ form.button_tab[1] + 1 }}"{% endif %}>
+        <img src="{{ url_for('static', filename='access/icons/master_FindBtn.png') }}" alt="Find Record">
+    </button>
+</div>
+{% if options.customer %}
+<datalist id="customer_list">{% for c in options.customer %}<option value="{{ c }}">{% endfor %}</datalist>
+{% endif %}
+<div class="nav-bar" style="width:{{ form.width }}px">
+    <span>Record:</span>
+    <button id="nav_first" title="First record">|&#9664;</button>
+    <button id="nav_prev" title="Previous record">&#9664;</button>
+    <input class="pos" id="nav_pos" title="Current Record">
+    <button id="nav_next" title="Next record">&#9654;</button>
+    <button id="nav_last" title="Last record">&#9654;|</button>
+    <button id="nav_new" title="New (blank) record">&#9654;*</button>
+    <span class="filter">&#9663; No Filter</span>
+    <input class="search" id="nav_search" placeholder="Search">
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='access/record_form.js') }}"></script>
+<script>RecordForm({{ js_cfg | tojson }});</script>
+{% endblock %}
