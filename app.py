@@ -83,11 +83,14 @@ def create_app():
     from blueprints.menu import bp as menu_bp
     from blueprints.master import bp as master_bp
     from blueprints.admin import bp as admin_bp
+    from blueprints.screens import bp as screens_bp
+    import screens_def  # noqa: F401  registers every SCS screen
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(menu_bp)
     app.register_blueprint(master_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(screens_bp)
 
     # Root route
     @app.route("/")
@@ -111,6 +114,8 @@ def create_app():
     with app.app_context():
         _drop_redesign_tables()
         db.create_all()
+        from services import settings
+        settings.ensure_all()
 
         # Seed default admin user
         if User.query.count() == 0:

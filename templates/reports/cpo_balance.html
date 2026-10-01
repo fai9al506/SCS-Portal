@@ -1,0 +1,24 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="font:bold 14pt 'Times New Roman';margin-bottom:8px">Customers' PO Status Report for Product: {{ title_product }}</div>
+<table style="font-size:11pt;table-layout:fixed">
+    <colgroup><col style="width:110px"><col style="width:44px"><col style="width:84px"><col style="width:92px"><col style="width:208px">
+        <col style="width:96px"><col style="width:96px"><col style="width:140px"><col style="width:92px"></colgroup>
+    <thead><tr><th class="c">PO No.</th><th class="c">Item#</th><th class="c">PO Date</th><th class="c">PO Qty</th><th class="c">Customer</th>
+        <th class="c">Delivered Qty</th><th class="c">Balance Qty</th><th class="c">Unit Price</th><th class="c">SO No.</th></tr></thead>
+    <tbody>
+    {% for r, dlv, bal in rows %}
+    <tr style="border-bottom:1px solid #d9d9d9">
+        <td>{{ r.CusPONo or '' }}</td><td class="c">{{ r.ItemNo if r.ItemNo is not none else '' }}</td>
+        <td class="c">{{ fmt.short_date(r.PODate) }}</td><td class="r">{{ fmt.standard(r.POQty) }}</td>
+        <td>{{ r.Affiliate or '' }}</td><td class="r">{{ fmt.standard(dlv) if dlv is not none else '' }}</td>
+        <td class="r b" style="color:#2F5597">{{ fmt.standard(bal) }}</td>
+        <td class="c" style="color:#BA1419">{{ price(r) }}</td><td class="c">{{ r.SONo or '' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div style="display:flex;justify-content:space-between;margin-top:18px;font-weight:bold;font-style:italic">
+    <span>{{ fmt.short_date(now) }}</span><span></span>
+</div>
+{% endblock %}

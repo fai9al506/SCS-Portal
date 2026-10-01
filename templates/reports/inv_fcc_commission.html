@@ -1,0 +1,25 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="text-align:center;font:bold 14pt 'Times New Roman';margin-bottom:10px">FCC Commission Report</div>
+{% for g in groups %}
+<div style="page-break-inside:avoid;margin:14px 0 4px;background:#BDD7EE;text-align:center;font-weight:bold;{{ 'color:#C0504D' if not g.submitted }}">
+    {{ 'Submitted Commissions' if g.submitted else 'Pending Commissions' }}</div>
+<table style="font-size:11pt;table-layout:fixed">
+    <colgroup><col style="width:113px"><col style="width:48px"><col style="width:107px"><col style="width:79px"><col style="width:71px">
+        <col style="width:97px"><col style="width:146px"></colgroup>
+    <thead><tr><th>PRC PO#</th><th>Item#</th><th class="c">Container #</th><th class="c">Qty (kg)</th><th class="c">DN#</th>
+        <th class="c">Delivery Date</th><th class="c">Commission Inv#</th></tr></thead>
+    {% for i in g.invs %}
+    <tbody>
+    <tr><td colspan="7" class="b" style="padding-top:6px">Grace Invoice: {{ i.inv }}</td></tr>
+    {% for r in i.rows %}
+    <tr><td>{{ r.DeliveredPO or '' }}</td><td>{{ r.DeliveredPOItem if r.DeliveredPOItem is not none else '' }}</td>
+        <td class="c">{{ r.ContainerNo or '' }}</td><td class="r">{{ fmt.standard(r.SFQty) }}</td><td class="c">{{ r.UID }}</td>
+        <td class="c">{{ fmt.short_date(r.DeliveredOn) }}</td><td class="c">{{ r.CommissionActualInv or '' }}</td></tr>
+    {% endfor %}
+    </tbody>
+    {% endfor %}
+</table>
+{% endfor %}
+<div style="margin-top:18px;font-weight:bold;font-style:italic">{{ fmt.short_date(now) }}</div>
+{% endblock %}

@@ -43,6 +43,16 @@ class AuditLog(db.Model):
     timestamp = db.Column(db.DateTime, default=utcnow)
 
 
+class AppSetting(db.Model):
+    """Values Access had hard-coded in VBA/queries (rates, bank details, e-mail lists) — decision B7.
+    Edited by admins on Admin > Other lists > Settings. Read with services.settings.get()."""
+    __tablename__ = "app_settings"
+    id = db.Column(db.Integer, primary_key=True)
+    Key = db.Column("key", db.String(100), unique=True, nullable=False)
+    Value = db.Column("value", db.Text)
+    Description = db.Column("description", db.String(255))
+
+
 # ── SCS tables (mirror of Access back-end) ─────────────────────────
 # SCS data tables: an exact mirror of the Access back-end (SCS Database.accdb).
 # 

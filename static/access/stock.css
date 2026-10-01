@@ -1,0 +1,4 @@
+/* Stock, Delivery, and Invoices: orange theme buttons of the Delivery Note forms (#ED7D31). */
+.abtn.orange { background: linear-gradient(#f4a46f, #ed7d31); border-color: #c8641f; color: #000; }
+.abtn.orange.white { color: #fff; }
+.abtn.round { border-radius: 8px; font-weight: bold; white-space: normal; }

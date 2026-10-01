@@ -1,0 +1,27 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="display:flex;justify-content:space-between;align-items:flex-start">
+    <div style="flex:1;text-align:center;font:bold 14pt 'Times New Roman'">Delivery Schedule of Customers Purchase Orders</div>
+    <div style="width:136px;text-align:right">{{ fmt.short_date(now) }}</div>
+</div>
+{% for g in groups %}
+<div style="page-break-inside:avoid;margin-top:16px;background:#E7E6E6;font-weight:bold;padding:1px 4px">Product: {{ g.product }}</div>
+<table style="font-size:11pt;table-layout:fixed;margin-top:2px">
+    <colgroup><col style="width:112px"><col style="width:48px"><col style="width:80px"><col style="width:223px"><col style="width:100px">
+        <col style="width:127px"><col style="width:96px"><col style="width:96px"><col style="width:80px"></colgroup>
+    <thead><tr><th>PO#</th><th>Item#</th><th>PO Date</th><th>Customer</th><th class="c">PO Qty</th><th class="c">Unit Price</th>
+        <th class="c">Delivery Date</th><th class="c">Balance Qty</th><th class="c">SO# </th></tr></thead>
+    <tbody>
+    {% for r, dlv, bal in g.rows %}
+    <tr><td>{{ r.CusPONo or '' }}</td><td>{{ r.ItemNo if r.ItemNo is not none else '' }}</td><td>{{ fmt.short_date(r.PODate) }}</td>
+        <td class="nowrap">{{ r.Affiliate or '' }}</td><td class="r">{{ fmt.standard(r.POQty) }}</td>
+        <td class="r" style="color:#BA1419">{{ price(r) }}</td>
+        <td class="c">{{ fmt.short_date(r.DeliveryDate) if r.DeliveryDate else 'N/A' }}</td>
+        <td class="r b" style="color:#2F3699">{{ fmt.standard(bal) }}</td><td class="c">{{ r.SONo or '' }}</td></tr>
+    {% endfor %}
+    <tr><td colspan="4" class="r b">Total:</td><td class="r b"><span style="border-top:1px solid #000">{{ fmt.standard(g.total) }}</span></td><td colspan="4"></td></tr>
+    </tbody>
+</table>
+{% endfor %}
+{% if not groups %}<p style="margin-top:20px">No open customer PO items.</p>{% endif %}
+{% endblock %}

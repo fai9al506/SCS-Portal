@@ -1,0 +1,60 @@
+{# Render one Access control at its position. `c` = control dict, `idp` = id prefix (form: "f_", grid rows: none) #}
+{% macro control(c, idp="f_", top_offset=0) -%}
+{% set key = c.field or c.name or '' %}
+{% set pos = "left:%spx;top:%spx;width:%spx;height:%spx;" % (c.x or 0, (c.y or 0) - top_offset, c.w or 96, c.h or 21) %}
+{% set st = pos ~ (c.style or '') ~ (';background:' ~ c.bg if c.bg else '') ~ (';color:' ~ c.color if c.color else '') ~ (';text-align:' ~ c.align if c.align else '') %}
+{% set cls = ('bold ' if c.bold else '') ~ ('locked ' if c.locked else '') %}
+{% if c.type == 'label' %}
+<div class="lbl {{ cls }}" style="{{ st }}{% if c.label_style %};{{ c.label_style }}{% endif %}">{{ c.text | replace('\n', '<br>') | safe if c.html else c.text }}</div>
+{% elif c.type == 'box' %}
+<div class="box" style="{{ st }}"></div>
+{% elif c.type == 'line' %}
+<div class="hline" style="{{ st }}"></div>
+{% elif c.type == 'image' %}
+<img class="img" src="{{ c.src }}" alt="" style="{{ st }};object-fit:contain">
+{% elif c.type == 'button' %}
+<button type="button" class="abtn {{ c.cls or '' }}" style="{{ st }}" data-action='{{ c.action | tojson }}'
+        {% if c.tip %}title="{{ c.tip }}"{% endif %} {% if c.tab is not none and c.tab is defined %}tabindex="{{ c.tab + 1 }}"{% endif %}>
+    {% if c.icon %}<img src="{{ url_for('static', filename='access/icons/' ~ c.icon ~ '.png') }}" alt="">{% endif %}{% if c.caption %}<span>{{ c.caption }}</span>{% endif %}
+</button>
+{% elif c.type == 'check' %}
+<input type="checkbox" class="chk {{ cls }}" id="{{ idp }}{{ key }}" data-key="{{ key }}" style="{{ pos }}{{ c.style or '' }}"
+       {% if c.locked %}disabled{% endif %} {% if c.tab is defined and c.tab is not none %}tabindex="{{ c.tab + 1 }}"{% endif %}>
+{% elif c.type == 'select' %}
+<select class="ctl {{ cls }}" id="{{ idp }}{{ key }}" data-key="{{ key }}" style="{{ st }}" {% if c.locked %}disabled{% endif %}
+        {% if c.tab is defined and c.tab is not none %}tabindex="{{ c.tab + 1 }}"{% endif %}>
+    <option value=""></option>
+    {% for o in c.options %}<option value="{{ o[0] }}">{{ o[1] if o|length > 1 else o[0] }}</option>{% endfor %}
+</select>
+{% elif c.type == 'memo' %}
+<textarea class="ctl {{ cls }}" id="{{ idp }}{{ key }}" data-key="{{ key }}" style="{{ st }};resize:none" {% if c.locked or c.type == 'calc' %}readonly{% endif %}
+          {% if c.tab is defined and c.tab is not none %}tabindex="{{ c.tab + 1 }}"{% endif %}></textarea>
+{% else %}
+<input class="ctl {{ cls }}{{ 'calc ' if c.type == 'calc' }}" id="{{ idp }}{{ key }}" data-key="{{ key }}" type="text" autocomplete="off"
+       style="{{ st }}" {% if c.locked or c.type == 'calc' %}readonly tabindex="-1"{% elif c.tab is defined and c.tab is not none %}tabindex="{{ c.tab + 1 }}"{% endif %}
+       {% if c.type == 'combo' %}list="dl_{{ key }}"{% endif %} {% if c.type == 'date' %}placeholder="" data-date="1"{% endif %}
+       {% if c.tip %}title="{{ c.tip }}"{% endif %}>
+{% endif %}
+{%- endmacro %}
+
+{% macro datalists(items) -%}
+{% for c in items if c.type == 'combo' %}
+<datalist id="dl_{{ c.field or c.name }}">
+    {% for o in c.options %}<option value="{{ o[0] }}"{% if o|length > 1 %} label="{{ o[1:] | join('  |  ') }}"{% endif %}>{% endfor %}
+</datalist>
+{% endfor %}
+{%- endmacro %}
+
+{% macro nav_bar(width) -%}
+<div class="nav-bar" style="width:{{ width }}px">
+    <span>Record:</span>
+    <button type="button" id="nav_first" title="First record">|&#9664;</button>
+    <button type="button" id="nav_prev" title="Previous record">&#9664;</button>
+    <input class="pos" id="nav_pos" title="Current Record">
+    <button type="button" id="nav_next" title="Next record">&#9654;</button>
+    <button type="button" id="nav_last" title="Last record">&#9654;|</button>
+    <button type="button" id="nav_new" title="New (blank) record">&#9654;*</button>
+    <span class="filter">&#9663; No Filter</span>
+    <input class="search" id="nav_search" placeholder="Search">
+</div>
+{%- endmacro %}

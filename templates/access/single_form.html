@@ -1,0 +1,27 @@
+{% extends "access/form_page.html" %}
+{% from "access/_controls.html" import control, datalists, nav_bar %}
+{% block title %}{{ d.title }}{% endblock %}
+{% block head %}{% for s in d.styles or [] %}<link rel="stylesheet" href="{{ url_for('static', filename=s) }}">{% endfor %}{% endblock %}
+{% block form %}
+{% set W = d.width %}
+{% if d.header %}
+<div class="sec" style="width:{{ W }}px;height:{{ d.header.h }}px;background:{{ d.header.bg or '#fff' }}">
+    {% for c in items if c.sec == 'header' %}{{ control(c) }}{% endfor %}
+</div>
+{% endif %}
+<div class="sec detail" style="width:{{ W }}px;height:{{ d.detail.h }}px;background:{{ d.detail.bg or '#fff' }};{{ d.detail.style or '' }}">
+    {% for c in items if not c.sec or c.sec == 'detail' %}{{ control(c) }}{% endfor %}
+</div>
+{% if d.footer %}
+<div class="sec" style="width:{{ W }}px;height:{{ d.footer.h }}px;background:{{ d.footer.bg or '#fff' }}">
+    {% for c in items if c.sec == 'footer' %}{{ control(c) }}{% endfor %}
+</div>
+{% endif %}
+{{ datalists(items) }}
+{% if cfg.nav %}{{ nav_bar(W) }}{% endif %}
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='access/single_form.js') }}"></script>
+{% for s in d.scripts or [] %}<script src="{{ url_for('static', filename=s) }}"></script>{% endfor %}
+<script>SingleForm({{ cfg | tojson }});</script>
+{% endblock %}

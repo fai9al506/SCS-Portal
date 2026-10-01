@@ -1,0 +1,81 @@
+{% extends "access/report_base.html" %}
+{# Cover letter to the customs broker — Access reports SF_BrokerCover / SF_BrokerCover_wCusPO.
+   The top 156 px stay blank for the pre-printed letterhead (the logos are Visible = No in Access). #}
+{% block head %}
+<style>
+    .cl { position: relative; width: 745px; height: 1000px; font-family: Arial, sans-serif; }
+    .cl .a { position: absolute; white-space: nowrap; }
+    .cl .lb { font: bold 12pt Arial; }
+    .cl .lb11 { font: bold 11pt Arial; }
+    .cl .v12 { font: 12pt Arial; }
+    .cl .v11 { font: 11pt Arial; }
+    .cl .n { font: 11pt Arial; color: #404040; text-align: center; width: 36px; }
+</style>
+{% endblock %}
+{% block report %}
+{% set top = 156 %}
+<div class="cl">
+    <div class="a lb" style="left:16px;top:{{ top + 8 }}px;text-decoration:underline">To:</div>
+    <div class="a lb" style="left:52px;top:{{ top + 8 }}px;width:356px">{{ (r.BrokerFullName if with_cus_po else r.Broker) or '' }}</div>
+    <div class="a lb" style="left:548px;top:{{ top + 8 }}px">Date:</div>
+    <div class="a v12" style="left:628px;top:{{ top + 8 }}px">{{ fmt.short_date(today) }}</div>
+    <div class="a lb" style="left:548px;top:{{ top + 32 }}px">Ref File#</div>
+    <div class="a v12" style="left:628px;top:{{ top + 32 }}px">{{ r.SFNo or '' }}</div>
+    {% for v, y in [(r.BrokerAdd1, 32), (r.BrokerAdd2, 56), (r.BrokerAdd3Tel, 80), (r.BrokerAdd4Mob, 104)] %}
+    <div class="a v12" style="left:16px;top:{{ top + y }}px;width:392px">{{ v or '' }}</div>
+    {% endfor %}
+    <div class="a lb" style="left:16px;top:{{ top + 160 }}px">Attention:</div>
+    <div class="a v12" style="left:100px;top:{{ top + 160 }}px">{{ r.BrokerRepName or '' }}</div>
+    <div class="a v12" style="left:16px;top:{{ top + 200 }}px">Please find herewith attached original shipping documents for customs clearance as follows:</div>
+
+    {% set left = [("MPC S/F #", r.SFNo, 244), ("Product Name:", r.Product, 272), ("Quantity:", none, 301),
+                   ("ETD:", fmt.short_date(r.ETD), 329), ("ETA:", fmt.short_date(r.ETA), 358), ("POD:", r.POD, 386),
+                   ("BOL #", r.BOL, 415)] %}
+    {% for label, v, y in left %}
+    <div class="a lb11" style="left:32px;top:{{ top + y }}px">{{ label }}</div>
+    {% if label == "Quantity:" %}
+    <div class="a v11" style="left:164px;top:{{ top + y }}px;width:105px;text-align:right">{{ fmt.standard(r.SFQty) }}</div>
+    <div class="a v11" style="left:276px;top:{{ top + y }}px">{{ r.UOM or '' }}</div>
+    {% else %}
+    <div class="a v11" style="left:164px;top:{{ top + y }}px;width:248px">{{ v if v is not none else '' }}</div>
+    {% endif %}
+    {% endfor %}
+    {% if with_cus_po %}
+    {% if r.IntendedCustomer %}
+    <div class="a lb11" style="left:32px;top:{{ top + 440 }}px">Customer:</div>
+    <div class="a v11" style="left:164px;top:{{ top + 440 }}px;width:248px">{{ r.IntendedCustomer }}</div>
+    <div class="a lb11" style="left:32px;top:{{ top + 469 }}px">Customer PO#</div>
+    <div class="a v11" style="left:164px;top:{{ top + 469 }}px;width:248px">{{ fmt.general(r.IntendedCustomerPO) }}</div>
+    {% endif %}
+    {% else %}
+    <div class="a lb11" style="left:32px;top:{{ top + 443 }}px">Permit No.</div>
+    <div class="a v11" style="left:164px;top:{{ top + 443 }}px;width:248px">{{ r.PermitNo or '' }}</div>
+    {% endif %}
+    <div class="a" style="left:424px;top:{{ top + 244 }}px;height:{{ 244 if with_cus_po else 192 }}px;border-left:1px solid #000"></div>
+
+    <div class="a lb11" style="left:560px;top:{{ top + 244 }}px;text-decoration:underline"># Originals</div>
+    <div class="a lb11" style="left:648px;top:{{ top + 244 }}px;text-decoration:underline"># Copies</div>
+    {% for label, key, y in [("BOL", "BOL", 276), ("Invoice", "Inv", 303), ("Cert. of Origin", "COO", 330),
+                             ("Cert. of Analysis", "COA", 358), ("Packing List", "PL", 385), ("Insurance", "Insurance", 412)] %}
+    <div class="a lb11" style="left:452px;top:{{ top + y }}px">{{ label }}</div>
+    <div class="a n" style="left:572px;top:{{ top + y }}px">{{ r['NoofOrg' ~ key] if r['NoofOrg' ~ key] is not none else '' }}</div>
+    <div class="a n" style="left:656px;top:{{ top + y }}px">{{ r['NoofCopy' ~ key] if r['NoofCopy' ~ key] is not none else '' }}</div>
+    {% endfor %}
+
+    <div class="a v12" style="left:16px;top:{{ top + (508 if with_cus_po else 484) }}px;width:704px;white-space:pre-line">Please keep us updated with the custom clearance process by referring to product name and MPC Shipment File Number.
+
+With regards,
+
+
+
+
+Logistics in-Charge
+Modern Petrochemicals Co. Ltd.,
+A Subsidiary of Al Faisaliah Group.
+P.O. Box 2728, Riyadh 11461,
+Tel : +966 11 243 9112/4
+Fax: +966 11 243 9199
+Email: mlogistic@alfaisaliah.com
+Web: www.alfaisaliah.com</div>
+</div>
+{% endblock %}

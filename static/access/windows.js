@@ -25,7 +25,31 @@
         win.remove();
     }
 
-    function openWindow(url, title, width, height, pos) {
+    /* Access parameter prompt ("Enter Parameter Value"). Resolves the typed value, or null on Cancel. */
+    function askParam(prompt) {
+        return new Promise(resolve => {
+            const ov = document.createElement("div");
+            ov.className = "msg-overlay";
+            ov.innerHTML = '<div class="msg-box param-box" style="width:300px"><div class="msg-title">Enter Parameter Value</div>' +
+                '<div class="msg-body"><span class="p"></span><input type="text"></div>' +
+                '<div class="msg-actions"><button class="ok">OK</button><button class="cancel">Cancel</button></div></div>';
+            ov.querySelector(".p").textContent = prompt;
+            const inp = ov.querySelector("input");
+            const done = v => { ov.remove(); resolve(v); };
+            ov.querySelector(".ok").onclick = () => done(inp.value);
+            ov.querySelector(".cancel").onclick = () => done(null);
+            ov.addEventListener("keydown", e => { if (e.key === "Enter") done(inp.value); if (e.key === "Escape") done(null); });
+            document.body.appendChild(ov);
+            inp.focus();
+        });
+    }
+
+    async function openWindow(url, title, width, height, pos, prompt) {
+        if (prompt) {
+            const v = await askParam(prompt);
+            if (v === null) return null;
+            url += (url.includes("?") ? "&" : "?") + "p=" + encodeURIComponent(v.trim());
+        }
         const key = url;
         if (open[key]) { activate(open[key]); return open[key]; }
         const ws = document.querySelector(".workspace");
@@ -97,6 +121,6 @@
         if (!el) return;
         const d = el.dataset;
         const pos = d.x ? [parseInt(d.x, 10), parseInt(d.y, 10)] : null;
-        openWindow(d.open, d.title, parseInt(d.w, 10), parseInt(d.h, 10), pos);
+        openWindow(d.open, d.title, parseInt(d.w, 10), parseInt(d.h, 10), pos, d.prompt);
     });
 })();

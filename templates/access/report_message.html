@@ -1,0 +1,4 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><link rel="stylesheet" href="{{ url_for('static', filename='access/access.css') }}"></head>
+<body class="acc-form"><script src="{{ url_for('static', filename='access/forms.js') }}"></script>
+<script>msgBox({{ message | tojson }}).then(() => closeForm());</script></body></html>

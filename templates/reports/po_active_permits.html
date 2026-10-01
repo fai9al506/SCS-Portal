@@ -1,0 +1,19 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="background:#D6DCE5;display:flex;align-items:center;gap:14px;padding:3px 10px;font-family:Calibri,sans-serif">
+    <img src="{{ url_for('static', filename='favicon.png') }}" alt="" style="width:46px;height:46px">
+    <div style="flex:1;font:bold italic 18pt 'Times New Roman';color:#44546A">Active Permits</div>
+    <div style="text-align:right;color:#44546A">{{ fmt.long_date(now.date()) }}<br>{{ now.strftime('%I:%M:%S %p').lstrip('0') }}</div>
+</div>
+<table style="font:11pt Calibri,sans-serif;margin-top:8px">
+    <thead><tr><th style="width:93px">PermitNo</th><th style="width:236px">Product</th><th>HS Code</th><th class="r">Qty</th><th class="r">Ordered</th>
+        <th class="r">Incoming</th><th class="r">Cleared</th><th class="r" style="color:#1F497D">Remaining</th><th class="c">Expiry Date</th></tr></thead>
+    <tbody>
+    {% for a in rows %}{% set p = a.p %}
+    <tr><td>{{ p.PermitNo or '' }}</td><td class="b">{{ p.ProductName or '' }}</td><td>{{ p.HSCode or '' }}</td><td class="r">{{ fmt.standard(p.Qty) }}</td>
+        <td class="r">{{ fmt.standard(a.ordered) }}</td><td class="r">{{ fmt.standard(a.incoming) }}</td><td class="r">{{ fmt.standard(a.cleared) }}</td>
+        <td class="r b" style="color:#1F497D">{{ fmt.standard(a.remaining) }}</td><td class="c">{{ fmt.short_date(p.ExpiryDate) }}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

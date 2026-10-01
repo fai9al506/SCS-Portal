@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ d.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='access/access.css') }}">
+    <style>@page { size: {{ 'A4 portrait' if d.portrait else 'A4 landscape' }}; }</style>
+    {% block head %}{% endblock %}
+</head>
+<body class="report-view">
+    <div class="rpt-toolbar">
+        <button onclick="window.print()">&#128424; Print</button>
+        <button onclick="closeForm()">Close Print Preview</button>
+        <span style="color:#555">{{ d.title }}</span>
+    </div>
+    <div class="rpt-page {{ 'portrait' if d.portrait else 'landscape' }} rpt">
+        {% block report %}{% endblock %}
+    </div>
+    <script src="{{ url_for('static', filename='access/forms.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

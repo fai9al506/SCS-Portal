@@ -13,7 +13,7 @@ from models import (
     Brokers, Customers, CustomerAdd, CustomersPO, CustomerContracts, Packing, Products, ProductGroup,
     ReturningTerminal, SF, SFBrokerCover, ShipmentsStatus, ShippingLines, Suppliers, Transporters,
     Permits, StorageLoc, InternalContacts, Currency, UOM, DeliveryTerms, PaymentTerms, PayTermsCus,
-    PortOfDestinations, ClearanceStatus, PermitReq, POIssuedToCompanies, ACCESS_FIELDS,
+    PortOfDestinations, ClearanceStatus, PermitReq, POIssuedToCompanies, ACCESS_FIELDS, AppSetting,
 )
 from services.audit import log_action
 
@@ -137,6 +137,8 @@ _lookup("permit_req", "Permit Requirements", PermitReq, [("PermitReq", "Permit R
 _lookup("po_issued_to", "PO Issued To Companies", POIssuedToCompanies, [("CompanyName", "Company Name")],
         [(CustomersPO, "POIssuedTo")])
 _lookup("product_groups", "Product Groups", ProductGroup, [("ProductGroup", "Product Group")], [])
+_lookup("settings", "Settings (rates, bank details, e-mails)", AppSetting,
+        [("Key", "Setting"), ("Value", "Value"), ("Description", "Meaning")], [])
 FORMS["clearance_status"]["key"] = None  # Access table has no primary key
 FORMS["product_groups"]["key"] = None    # Products store the group ID, so renaming is safe
 

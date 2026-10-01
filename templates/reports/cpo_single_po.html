@@ -1,0 +1,29 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="font:bold 14pt 'Times New Roman';text-decoration:underline">Delivery Report of Purchase Order No. {{ po }}{% if contract %}(Contract No. {{ contract }}){% endif %}</div>
+{% for b in blocks %}
+<table style="width:auto;font:12pt 'Times New Roman';margin:8px 0 10px 2px">
+    <tr><td class="b" style="width:84px">Customer:</td><td style="width:176px">{{ b.customer }}</td>
+        <td class="b" style="width:81px;padding-left:5px">PO Qty:</td><td>{{ fmt.standard(b.qty) }} {{ b.uom }}{% if b.n_items != 1 %} ({{ b.n_items }} Items){% endif %}</td></tr>
+    <tr><td class="b">Product:</td><td>{{ b.product }}</td><td class="b" style="padding-left:5px">Delivered:</td><td>{{ fmt.standard(b.delivered) }} {{ b.uom }}</td></tr>
+    <tr><td class="b">SO No.:</td><td>{{ b.so }}</td><td class="b" style="padding-left:5px">Balance:</td><td>{{ fmt.standard(b.qty - b.delivered) }} {{ b.uom }}</td></tr>
+</table>
+{% endfor %}
+<table style="font-size:11pt;table-layout:fixed">
+    <colgroup><col style="width:62px"><col style="width:68px"><col style="width:112px"><col style="width:180px"><col style="width:104px">
+        <col style="width:52px"><col style="width:104px"><col style="width:68px"><col style="width:103px"><col style="width:103px"></colgroup>
+    <thead><tr><th class="c">PO Item</th><th class="c">SF#</th><th class="c">Container No</th><th class="c">Product</th><th class="c">Qty</th>
+        <th class="c">UOM</th><th class="c">Delivered Date</th><th class="c">DN#</th><th class="c">Invoice No</th><th class="c">Customer GR</th></tr></thead>
+    <tbody>
+    {% for it, s in lines if s %}
+    <tr style="border-bottom:1px solid #d9d9d9">
+        <td class="c">{{ s.DeliveredPOItem if s.DeliveredPOItem is not none else '' }}</td><td class="c">{{ s.SF or '' }}</td>
+        <td class="c">{{ s.ContainerNo or '' }}</td><td>{{ s.Product or '' }}</td><td class="r">{{ fmt.standard(s.SFQty) }}</td>
+        <td class="c">{{ s.UOM or '' }}</td><td class="c">{{ fmt.short_date(s.DeliveredOn) }}</td><td class="c">{{ s.UID }}</td>
+        <td class="c">{{ s.InvNo or '' }}</td><td class="c">{{ s.CusGR or '' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div style="margin-top:18px;font-weight:bold;font-style:italic">{{ fmt.short_date(now) }}</div>
+{% endblock %}

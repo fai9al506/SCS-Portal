@@ -1,0 +1,38 @@
+{% extends "access/form_page.html" %}
+{% from "access/_controls.html" import control, datalists, nav_bar %}
+{% block title %}{{ d.title }}{% endblock %}
+{% block head %}{% for s in d.styles or [] %}<link rel="stylesheet" href="{{ url_for('static', filename=s) }}">{% endfor %}{% endblock %}
+{% block form %}
+{% set W = d.width %}
+<div class="grid-wrap" id="grid_wrap">
+    <div class="grid-inner" style="width:{{ W }}px">
+        {% if d.header %}
+        <div class="sec grid-head" style="width:{{ W }}px;height:{{ d.header.h }}px;background:{{ d.header.bg or '#fff' }}">
+            {% for c in items if c.sec == 'header' %}{{ control(c) }}{% endfor %}
+            {% for c in items if c.label and not c.sec %}
+            <div class="lbl colhead" style="left:{{ c.hx if c.hx is defined else c.x }}px;top:{{ d.header.col_y or (d.header.h - 22) }}px;width:{{ c.hw or c.w or 96 }}px;{{ d.header.label_style or '' }};{{ c.head_style or '' }}">{{ c.label }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div id="grid_rows" class="grid-rows" style="width:{{ W }}px;--row-h:{{ cfg.row_h }}px;--alt:{{ d.alt_bg or '#ffffff' }};--row-bg:{{ d.row_bg or '#ffffff' }}"></div>
+        <template id="row_tpl">
+            <div class="grow" style="height:{{ cfg.row_h }}px">
+                {% for c in items if not c.sec %}{{ control(c, idp="c_") }}{% endfor %}
+            </div>
+        </template>
+        {% if d.footer %}
+        <div class="sec" style="width:{{ W }}px;height:{{ d.footer.h }}px;background:{{ d.footer.bg or '#fff' }}">
+            {% for c in items if c.sec == 'footer' %}{{ control(c) }}{% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{{ datalists(items) }}
+{% if cfg.nav %}{{ nav_bar(d.nav_w or 600) }}{% endif %}
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='access/single_form.js') }}"></script>
+<script src="{{ url_for('static', filename='access/grid_form.js') }}"></script>
+{% for s in d.scripts or [] %}<script src="{{ url_for('static', filename=s) }}"></script>{% endfor %}
+<script>GridForm({{ cfg | tojson }});</script>
+{% endblock %}

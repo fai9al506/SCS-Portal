@@ -1,0 +1,19 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="text-align:center;font-size:14pt;font-weight:bold;margin-bottom:12px">Cleared Shipments Report</div>
+<table style="font-size:11pt;table-layout:fixed">
+    <colgroup><col style="width:96px"><col style="width:44px"><col style="width:65px"><col style="width:172px"><col style="width:172px"><col style="width:120px">
+        <col style="width:104px"><col style="width:64px"><col style="width:92px"><col style="width:96px"></colgroup>
+    <thead><tr><th class="c">MPC PO#</th><th class="c">Item#</th><th class="c">S/F#</th><th class="c">Supplier</th><th class="c">Product</th>
+        <th class="c">Qty</th><th class="c">Unit Price</th><th class="c">POD</th><th class="c">ETA</th><th class="c">Permit#</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+    <tr><td class="c">{{ r.MPCPONo or '' }}</td><td class="c">{{ r.ItemNo or '' }}</td><td class="c">{{ r.SFNo or '' }}</td>
+        <td class="nowrap">{{ r.Supplier or '' }}</td><td class="nowrap">{{ r.Product or '' }}</td><td class="r">{{ fmt.standard(r.Qty) }}</td>
+        <td class="r">{{ fmt.general(r.UnitPrice) }} {{ r.ACurr or '' }}</td><td class="c">{{ r.POD or '' }}</td>
+        <td class="c">{{ fmt.short_date(r.ETA) }}</td><td class="c">{{ r.PermitNo or '' }}</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div style="margin-top:18px;font-weight:bold;font-style:italic">{{ fmt.long_date(now.date()) }}</div>
+{% endblock %}

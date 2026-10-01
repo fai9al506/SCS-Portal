@@ -1,0 +1,30 @@
+{% extends "access/report_base.html" %}
+{% block head %}
+<style>
+    .wi td, .wi th { font: 11pt "Times New Roman", serif; padding: 2px 3px; text-align: center; }
+    .wi th { border: 0; }
+</style>
+{% endblock %}
+{% block report %}
+<div style="text-align:center;font:bold 14pt 'Times New Roman';margin-bottom:8px">Shipment Delivered without MPC Invoice</div>
+{% for p in products %}
+<div style="page-break-inside:avoid;margin-top:12px;border:1px solid #000;background:#E7E6E6;height:27px;line-height:27px;font:bold 12pt 'Times New Roman';white-space:pre">  Product: {{ p.product }}</div>
+<table class="wi" style="table-layout:fixed;width:726px">
+    <colgroup><col style="width:67px"><col style="width:115px"><col style="width:86px"><col style="width:105px"><col style="width:102px">
+        <col style="width:97px"><col style="width:74px"><col style="width:80px"></colgroup>
+    <thead><tr><th>S/F#</th><th>Container No</th><th>Qty</th><th>Customer GR#</th><th>MPC GR#</th><th>Dlvr Date</th><th>SO#</th><th>DN#</th></tr></thead>
+    {% for g in p.pos %}
+    <tbody>
+    <tr><td colspan="8" style="text-align:left;font-weight:bold;color:#0072BC;white-space:pre">  Delivered to: {{ g.to }}, PO# {{ g.po }}</td></tr>
+    {% for r in g.rows %}
+    <tr><td>{{ r.SF or '' }}</td><td>{{ container(r.ContainerNo) }}</td><td class="r">{{ fmt.standard(r.SFQty) }}</td><td>{{ r.CusGR or '' }}</td>
+        <td>{{ r.MPCGRN or '' }}</td><td>{{ fmt.short_date(r.DeliveredOn) }}</td><td>{{ r.DeliveredSO if r.DeliveredSO is not none else '' }}</td><td>{{ r.UID }}</td></tr>
+    {% endfor %}
+    <tr><td></td><td class="r b">Total:</td><td class="r b">{{ fmt.standard(g.total) }}</td><td colspan="5"></td></tr>
+    </tbody>
+    {% endfor %}
+</table>
+<div style="border-top:1px solid #D0CECE;margin-top:4px"></div>
+{% endfor %}
+<div style="margin-top:18px;font:bold italic 11pt 'Times New Roman'">{{ fmt.long_date(now.date()) }}</div>
+{% endblock %}

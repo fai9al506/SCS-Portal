@@ -1,0 +1,37 @@
+{% extends "access/report_base.html" %}
+{% block report %}
+<div style="display:flex;justify-content:space-between;align-items:center;font-size:11pt">
+    <div style="font-size:14pt;font-weight:bold">Pending Payments Report</div>
+    <div style="font-weight:bold;font-style:italic">Date: &nbsp;{{ fmt.short_date(now) }}</div>
+</div>
+{% for g in groups %}
+<div style="page-break-inside:avoid;margin-top:16px">
+    <div style="background:#E7E6E6;height:25px;line-height:25px;padding-left:4px;font:bold italic 14pt 'Times New Roman'">{{ g.pay_type }} Payments</div>
+</div>
+<table style="font-size:11pt;margin-top:6px;table-layout:fixed">
+    <colgroup><col style="width:93px"><col style="width:40px"><col style="width:109px"><col style="width:122px"><col style="width:100px"><col style="width:46px">
+        <col style="width:68px"><col style="width:95px"><col style="width:92px"><col style="width:91px"><col style="width:130px"></colgroup>
+    <thead><tr><th>MPC PO No</th><th>Item</th><th>Supplier</th><th>Product</th><th class="c">Qty</th><th>UOM</th><th class="c">UP</th>
+        <th class="c">P. Terms</th><th class="c">Status</th><th class="c">ETA</th><th>Required Amount</th></tr></thead>
+    {% for c in g.curs %}
+    <tbody>
+    <tr><td colspan="11" style="font-weight:bold;text-decoration:underline;color:#203864;padding-top:6px">Currency: {{ c.cur }}</td></tr>
+    {% for r, amt in c.rows %}
+    <tr><td>{{ r.MPCPONo or '' }}</td><td>{{ r.ItemNo or '' }}</td><td class="nowrap">{{ r.Supplier or '' }}</td><td class="nowrap">{{ r.Product or '' }}</td>
+        <td class="r">{{ fmt.standard(r.Qty) }}</td><td>{{ r.UOM or '' }}</td><td class="r">{{ fmt.standard(r.UnitPrice) }}</td>
+        <td class="c">{{ r.PayTerm or '' }}</td><td class="c">{{ r.Status or '' }}</td><td class="c">{{ fmt.short_date(r.ETA) }}</td>
+        <td class="r">{{ fmt.standard(amt) if amt is not none else '' }}</td></tr>
+    {% endfor %}
+    <tr><td colspan="11" class="r b" style="padding-bottom:8px"><span style="border-top:1px solid #000;padding-top:2px">Total amount ({{ c.cur }}): &nbsp;{{ fmt.standard(c.total) }}</span></td></tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endfor %}
+{% if not groups %}<p style="margin-top:20px">No payments are pending.</p>{% endif %}
+<div style="display:flex;justify-content:flex-end;gap:16px;margin-top:24px;font-size:11pt">
+    <div style="font-weight:bold;text-decoration:underline;color:#BA1419">Grand Total:</div>
+    <table style="width:auto;color:#BA1419;font-weight:bold">
+        {% for cur, amt in grand %}<tr><td style="padding:2px 8px 2px 0">{{ cur }}</td><td class="r">{{ fmt.standard(amt) }}</td></tr>{% endfor %}
+    </table>
+</div>
+{% endblock %}

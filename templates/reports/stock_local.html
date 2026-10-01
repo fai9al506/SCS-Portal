@@ -1,0 +1,54 @@
+{% extends "access/report_base.html" %}
+{% block head %}
+<style>
+    .ls td, .ls th { font: 11pt "Times New Roman", serif; padding: 3px 3px; }
+    .ls th { text-align: center; border-top: 0; }
+    .ls tbody td { border-bottom: 1px solid #000; }
+    .ls .act { background: #d9d9d9; text-align: center; font-weight: bold; cursor: pointer; padding: 0; }
+    .ls .act:hover { background: #c4c4c4; }
+    .ls .act.off { background: #fff; color: #fff; cursor: default; }
+</style>
+{% endblock %}
+{% block report %}
+<div style="font:bold 14pt 'Times New Roman';margin:4px 0 6px 12px">Local Stock of {{ product }}</div>
+{% for g in groups %}
+<div style="margin:14px 0 6px 12px;font:bold italic 11pt 'Times New Roman'">Status: &nbsp;
+    <span style="color:{{ '#22B14C' if g.status == 'Cleared' else '#BA1419' if g.status == 'Incoming' else '#000' }}">{{ g.status }}</span></div>
+<table class="ls" style="table-layout:fixed;width:1004px">
+    <colgroup><col style="width:58px"><col style="width:111px"><col style="width:80px"><col style="width:100px"><col style="width:120px">
+        <col style="width:88px"><col style="width:96px"><col style="width:81px"><col style="width:109px"><col style="width:81px"><col style="width:42px"><col style="width:38px"></colgroup>
+    <thead><tr><th>SF</th><th>Container #</th><th>Qty</th><th>Supplier</th><th>Int. Customer</th><th>Cust. PO#</th><th>ETA</th>
+        <th>C'l Date</th><th>ST' Location</th><th>UID</th><th>Dlvr</th><th>Splt</th></tr></thead>
+    <tbody>
+    {% for r in g.rows %}{% set on = r.Status == 'Cleared' %}
+    <tr>
+        <td class="c">{{ r.SF or '' }}</td><td class="c">{{ container(r.ContainerNo) }}</td><td class="r">{{ fmt.standard(r.SFQty) }}</td>
+        <td class="nowrap">{{ r.Supplier or '' }}</td><td class="nowrap">{{ r.IntendedCustomer or '' }}</td><td class="c">{{ r.IntendedCustomerPO or '' }}</td>
+        <td class="c">{{ fmt.short_date(r.ETA) }}</td><td class="c">{{ fmt.short_date(r.ClearanceDate) }}</td><td class="c b">{{ r.StorageLoc or '' }}</td>
+        <td class="c">{{ r.UID }}</td>
+        <td class="act{{ '' if on else ' off' }}" style="font-size:14pt" title="Create DN" data-dn="{{ r.UID }}" data-on="{{ 1 if on else 0 }}">&#10003;</td>
+        <td class="act{{ '' if on else ' off' }}" style="font-size:10pt" title="Split" data-split="{{ r.UID }}" data-on="{{ 1 if on else 0 }}">S</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<div style="display:flex;width:330px;justify-content:flex-end;gap:12px;margin-top:6px;font:bold 11pt 'Times New Roman'">
+    <span>Total:</span><span>{{ fmt.standard(g.total) }}</span></div>
+{% endfor %}
+<div style="display:flex;width:340px;justify-content:flex-end;gap:12px;margin-top:22px;font:bold 11pt 'Times New Roman'">
+    <span>Grand Total:</span><span>{{ fmt.standard(grand) }}</span></div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='access/stock.js') }}"></script>
+<script>
+/* ✓ = Create DN (form DN), S = split the line (Copy SF (for LS)). Access acted on Cleared lines only and
+   always closed the report afterwards. */
+document.querySelectorAll("[data-dn],[data-split]").forEach(td => td.addEventListener("click", async () => {
+    if (td.dataset.on === "1") {
+        if (td.dataset.dn) await stockOpen("dn", "/f/dn?id=" + td.dataset.dn, "Create Delivery Note");
+        else await stockOpen("copy_sf_ls", "/g/copy_sf_ls?UID=" + td.dataset.split, "Copy SF");
+    }
+    closeForm();
+}));
+</script>
+{% endblock %}

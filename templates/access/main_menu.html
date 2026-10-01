@@ -19,11 +19,12 @@
         {% for it in items %}
         <button class="abs acc-btn mm-btn" style="left:{{ it.x }}px;top:{{ it.y }}px" title="Open Report"
                 data-open="{{ it.url }}" data-title="{{ it.title }}" data-w="{{ it.w }}" data-h="{{ it.h }}"
-                {% if loop.index == 3 %}autofocus{% endif %}>
+                {% if it.prompt %}data-prompt="{{ it.prompt }}"{% endif %} {% if loop.index == 3 %}autofocus{% endif %}>
             <img src="{{ url_for('static', filename='access/icons/' ~ it.icon ~ '.png') }}" alt="">
         </button>
         <div class="abs mm-text" style="left:{{ it.x + 40 }}px;top:{{ it.y + 4 }}px"
-             data-open="{{ it.url }}" data-title="{{ it.title }}" data-w="{{ it.w }}" data-h="{{ it.h }}">{{ it.text }}</div>
+             data-open="{{ it.url }}" data-title="{{ it.title }}" data-w="{{ it.w }}" data-h="{{ it.h }}"
+             {% if it.prompt %}data-prompt="{{ it.prompt }}"{% endif %}>{{ it.text }}</div>
         {% endfor %}
 
         {% for m in masters %}
