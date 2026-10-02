@@ -75,16 +75,39 @@ class ParseError(ValueError):
     pass
 
 
+MONTHS = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
+
+
 def parse_date(s):
+    """Dates as Access accepts them: 15-10-2026, 15/10/26, 15.10.2026, 2026-10-15, and short forms that take
+    the current year: 15-10, 15/10, 15 Oct, Oct 15, 15-Oct-2026."""
     s = (s or "").strip()
     if not s:
         return None
-    for f in ("%d-%m-%Y", "%d/%m/%Y", "%d.%m.%Y", "%Y-%m-%d", "%d-%m-%y", "%d/%m/%y"):
+    for f in ("%d-%m-%Y", "%d/%m/%Y", "%d.%m.%Y", "%Y-%m-%d", "%d-%m-%y", "%d/%m/%y", "%d.%m.%y"):
         try:
             return datetime.strptime(s, f).date()
         except ValueError:
             pass
-    raise ParseError("The value you entered isn't valid for this field.\n\nFor example, you may have entered text in a numeric field or a number that is larger than the FieldSize setting permits.")
+    parts = [p for p in re.split(r"[\s\-/.,]+", s.lower()) if p]
+    try:
+        year = date.today().year
+        if len(parts) in (2, 3):
+            if parts[0].isdigit() and parts[1].isdigit():                    # 15-10 / 15-10-2026
+                d, m = int(parts[0]), int(parts[1])
+            elif parts[0].isdigit() and parts[1][:3] in MONTHS:              # 15 Oct / 15-Oct-2026
+                d, m = int(parts[0]), MONTHS[parts[1][:3]]
+            elif parts[0][:3] in MONTHS and parts[1].isdigit():              # Oct 15 / Oct 15 2026
+                d, m = int(parts[1]), MONTHS[parts[0][:3]]
+            else:
+                raise ValueError
+            if len(parts) == 3:
+                year = int(parts[2]) + (2000 if len(parts[2]) <= 2 else 0)
+            return date(year, m, d)
+    except ValueError:
+        pass
+    raise ParseError("The value you entered isn't valid for this field.\n\nFor example, you may have entered text "
+                     "in a numeric field or a number that is larger than the FieldSize setting permits.")
 
 
 def parse_number(s, fmt=None):

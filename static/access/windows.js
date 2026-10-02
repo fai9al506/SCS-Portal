@@ -53,6 +53,9 @@
         const key = url;
         if (open[key]) { activate(open[key]); return open[key]; }
         const ws = document.querySelector(".workspace");
+        // Keep the whole window, and its close button, on screen; the screen scrolls inside it.
+        width = Math.min(width, window.innerWidth - 24);
+        height = Math.min(height, window.innerHeight - 32 - 16);
         const win = document.createElement("div");
         win.className = "acc-window popup";
         win.dataset.key = key;
@@ -65,6 +68,8 @@
             y = Math.max(8, ws.scrollTop + (window.innerHeight - 32 - height) / 2 + cascade);
             cascade = (cascade + 24) % 120;
         }
+        x = Math.max(0, Math.min(x, ws.scrollLeft + window.innerWidth - width - 12));
+        y = Math.max(ws.scrollTop, Math.min(y, ws.scrollTop + window.innerHeight - 32 - height - 8));
         win.style.left = x + "px";
         win.style.top = y + "px";
         win.innerHTML =

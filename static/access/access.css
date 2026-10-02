@@ -66,7 +66,7 @@ body { font-family: "Segoe UI", Arial, sans-serif; font-size: 13px; color: #000;
 .mm-scroll { left: 0; bottom: 0; width: 100%; height: 16px; background: #c8c8c8; }
 
 /* ── Access forms (content of a popup window) ─────────────────────── */
-body.acc-form { background: #f2f2f2; overflow: hidden; }
+body.acc-form { background: #f2f2f2; overflow: auto; padding-bottom: 24px; }
 .form-header { height: 38px; background: #afabab; position: relative; }
 .form-header .title { position: absolute; left: 8px; top: 8px; font: bold 11pt "Segoe UI", sans-serif; white-space: nowrap; }
 .form-detail { position: relative; background: #f2f2f2; }
@@ -157,6 +157,21 @@ body.acc-form { --font: 11pt Calibri, "Segoe UI", sans-serif; }
 .sec .box { position: absolute; }
 .sec .hline { position: absolute; border-top: 1px solid #a6a6a6; height: 0 !important; }
 .sec .img { position: absolute; }
+/* Date picker (Access shows a calendar icon next to a focused date field) */
+.acc-cal-btn { position: absolute; width: 20px; padding: 0; border: 1px solid #a6a6a6; background: #f3f3f3; cursor: pointer; font-size: 11px; line-height: 1; z-index: 3; }
+.acc-cal-btn:hover { background: #e5f1fb; border-color: #0078d7; }
+.acc-cal { position: fixed; z-index: 60; width: 222px; background: #fff; border: 1px solid #888; box-shadow: 0 4px 14px rgba(0,0,0,.25); font: 12px "Segoe UI", sans-serif; user-select: none; }
+.acc-cal .cal-head { display: flex; align-items: center; justify-content: space-between; padding: 4px; background: #f0f0f0; font-weight: bold; }
+.acc-cal .cal-head button { border: 0; background: none; cursor: pointer; font-size: 11px; padding: 2px 6px; }
+.acc-cal .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; padding: 4px; text-align: center; }
+.acc-cal .cal-grid b { font-weight: normal; color: #666; padding: 2px 0; }
+.acc-cal .cal-grid a { padding: 3px 0; cursor: pointer; border: 1px solid transparent; }
+.acc-cal .cal-grid a:hover { background: #e5f1fb; border-color: #cce4f7; }
+.acc-cal .cal-grid a.sel { background: #0078d7; color: #fff; }
+.acc-cal .cal-grid a.today { border-color: #0078d7; }
+.acc-cal .cal-foot { border-top: 1px solid #e0e0e0; padding: 4px; text-align: center; }
+.acc-cal .cal-foot a { cursor: pointer; color: #0563c1; }
+
 .abtn {
     position: absolute; display: flex; align-items: center; justify-content: center; gap: 4px; padding: 0 4px;
     border: 1px solid #8f8f8f; border-radius: 3px; cursor: pointer; font: var(--font); color: #000;

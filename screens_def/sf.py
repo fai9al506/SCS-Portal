@@ -45,9 +45,11 @@ def _sf_total_by_item():
 
 
 def open_po_lines():
-    """SFminusPO: PO lines whose Qty − Σ SFQty (same PO + item) > 0; lines with an ETA first, by ETA."""
+    """SFminusPO: PO lines whose Qty − Σ SFQty (same PO + item) > 0; lines with an ETA first, by ETA.
+    User request (2026-10-02): only open lines — not yet GR'd (Cleared) and not Canceled."""
     used = _sf_total_by_item()
-    rows = SS.query.order_by(SS.ETA.is_(None), SS.ETA, SS.ID).all()
+    rows = (SS.query.filter(SS.Status.notin_(["Cleared", "Canceled"]))
+            .order_by(SS.ETA.is_(None), SS.ETA, SS.ID).all())
     return [r for r in rows if float(r.Qty or 0) - used.get((r.MPCPONo, r.ItemNo), 0) > 0]
 
 
